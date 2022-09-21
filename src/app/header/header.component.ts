@@ -8,27 +8,4 @@ import { CurrentUserService } from '../service/currentUser.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent  {
-  public userIsAuthenticated = false;
-
-  constructor(private currentUserService:CurrentUserService) { }
-
-  // ngOnInit(): void {
-  //   this.authListenerSubs = this.currentUserService
-  //   .getAuthStatusListener()
-  //   .subscribe(
-  //     isAuthenticated =>{
-  //       this.userIsAuthenticated = isAuthenticated;
-  //     }
-  //   )
-  // }
-
-  isLogin() {
-    return this.currentUserService.getLoginStatus();
-  }
-
-  logout() {
-    this.currentUserService.logout();
-    console.log("logout");
-    return;
-  }
 }
