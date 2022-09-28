@@ -1,18 +1,16 @@
 export interface User{
-  id:String;
-  userID: String;
-  username: String;
-  email: String;
-  password: String;
-  name: String;
-  acctype: String;
-
-  centreID: String;
-  staffID: String;
-
-  ID: String;
-  IDno: String;
-  IDtype: String;
+  id: string;
+  userID: string;
+  username: string;
+  password: string;
+  fullname: string;
+  email: string;
   phone: number;
-  first: boolean; //vaccinated?
+  staffid: string;
+  position: string;
+  occupation:string;
+  dateofbirth:string;
+  role: string;
+
+
 }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
 import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { GlobalPositionStrategy } from '@angular/cdk/overlay';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +12,22 @@ export class UserService {
   private users:User [] = [];
   private usersUpdated = new Subject<User[]>();
 
-  constructor(private http: HttpClient){}
+  constructor(){}
 
   getUsers(){
-    // return this.users;
-    this.http.get<{message: string, users: User[]}>('http://localhost:3000/api/users')
-    .subscribe((userData)=>{
-      this.users = userData.users;
-      this.usersUpdated.next([...this.users]);
-    })
+    return this.users;
   }
 
   getUserByEmail(email:String){
     let found=this.users.find(i=>i.email === email);
+    if (typeof(found)!="undefined"){
+      return found;
+    }
+    return;
+  }
+
+  getUserByUsername(username:string){
+    let found=this.users.find(i=>i.username === username);
     if (typeof(found)!="undefined"){
       return found;
     }
@@ -37,57 +42,56 @@ export class UserService {
     return false;
   }
 
-  addAdmin(userID: String,username: String,email: String,password: String,
-    name: String,centreID: String, staffID: String) {
+  addAdmin(userID: string,username: string,email: string,password: string,
+   fullname: string, staffid: string, position: string, occupation:string, dateofbirth:string) {
     const user:User  = {
       id: "",
       userID:userID,
       username:username,
       email:email,
       password:password,
-      name:name,
-      centreID:centreID,
-      staffID:staffID,
-      ID: '',
-      IDtype: '',
-      IDno: '',
+      fullname:fullname,
+      position:position,
+      staffid:staffid,
+      occupation:occupation,
+      dateofbirth:dateofbirth,
       phone: 0,
-      first: false,
-      acctype: "admin"
+
+      role: "admin"
     }
-    this.http.post<{message:string}>('http://localhost:3000/api/users',user)
-    .subscribe((responseData) => {
-      console.log(responseData.message);
-      this.users.push(user);
-      this.usersUpdated.next([...this.users]);
-    });
+    this.users.push(user);
+    // this.http.post<{message:string}>('http://localhost:3000/api/users',user)
+    // .subscribe((responseData) => {
+    //   console.log(responseData.message);
+    //   this.users.push(user);
+    //   this.usersUpdated.next([...this.users]);
+    // });
   }
 
-  addPatient(userID: String,username: String,email: String,
-    password: String,name: String,IDno: String,IDtype: String,
-    phone: number,first: boolean){
+  addVolunteer(userID: string,username: string,email: string,
+    password: string, fullname: string,IDno: String,IDtype: String,
+    phone: number, occupation: string, dateofbirth: string, position:string, staffid:string){
       const user:User = {
         id:"",
         userID:userID,
         username:username,
         email:email,
         password:password,
-        name:name,
-        centreID:'',
-        staffID:'',
-        ID: "",
-        IDno: IDno,
-        IDtype: IDtype,
+        fullname:fullname,
+        occupation:occupation,
+        dateofbirth:dateofbirth,
         phone: phone,
-        first: first,
-        acctype: "patient"
+        staffid:staffid,
+        position:position,
+        //first: first,
+        role: "volunteer"
       }
-      this.http.post<{message:string}>('http://localhost:3000/api/users',user)
-      .subscribe((responseData) => {
-        console.log(responseData.message);
+      // this.http.post<{message:string}>('http://localhost:3000/api/users',user)
+      // .subscribe((responseData) => {
+      //   console.log(responseData.message);
         this.users.push(user);
-        this.usersUpdated.next([...this.users]);
-       });
+      //   this.usersUpdated.next([...this.users]);
+      //  });
   }
 
   getUserByID(userID:String){

@@ -8,4 +8,5 @@ import { CurrentUserService } from '../service/currentUser.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent  {
+constructor(){}
 }
