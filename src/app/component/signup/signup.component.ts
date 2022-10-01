@@ -25,7 +25,7 @@ export class SignupComponent  {
 
   @Component({
     selector: 'app-signup',
-    templateUrl: 'signup.component.html',
+    templateUrl: 'loginVol.component.html',
     styleUrls: ['signup.component.css']
   })
 
@@ -33,7 +33,7 @@ export class SignupComponent  {
 
     constructor(){}
 
-    onSignup(form: NgForm){
+    onLogin(form: NgForm){
 
 
     }

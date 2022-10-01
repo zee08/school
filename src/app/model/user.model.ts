@@ -11,6 +11,8 @@ export interface User{
   occupation:string;
   dateofbirth:string;
   role: string;
+  centreID: String;
+
 
 
 }

@@ -1,0 +1,31 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center-card {
+  width: auto;
+  margin-bottom: 20px;
+}
+
+.login-card-full-width {
+  width: 100%;
+
+  margin-bottom: 10px;
+}
+/* mat-grid-tile {
+  background: lightblue;
+} */
+
+.vac-tiles{
+  color: rgb(85, 85, 85);
+  width: 100%;
+  padding: 3px 3px 3px 12px;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+mat-icon {
+  padding-right: 5px;
+  font-size: 22px;
+}

@@ -1,0 +1,93 @@
+<!--Resource request-->
+<h1><b>Resource Requests</b></h1>
+<hr>
+<mat-tab-group>
+
+
+<mat-tab label="Resource Request"><p><b>Select resource to request.</b></p>
+<br>
+
+<!--all resource types-->
+<mat-card class="center-card" multi= "true" *ngFor="let vaccine of vaccines" matRipple [matRippleColor]="'#8ca9ca'">
+  <mat-grid-list cols="5" rowHeight="40px">
+    <mat-grid-tile colspan="4"><div class="vac-tiles" style="font-size: 16px;">
+      <b>{{vaccine.vaccineName}}</b>
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>blur_on</mat-icon>Batches: {{getTotalBatches(vaccine)}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon> store_mall_directory</mat-icon>
+      {{vaccine.manufacturer}}
+    </div></mat-grid-tile>
+  </mat-grid-list>
+  <mat-toolbar-row class="action-bar">
+    <span class="spacer"></span>
+    <button mat-stroked-button color='accent' routerLink="/admin/request/{{vaccine.vaccineName}}/batches"
+    style="display: block;margin-left: auto;margin-right: 0px;">
+    Manage Batches</button>
+  </mat-toolbar-row >
+</mat-card>
+</mat-tab>
+
+
+<!--tutorial request-->
+<mat-tab label="Tutorial Request"><p><b>Add tutorial to request.</b></p>
+
+<mat-card class="center-card" multi= "true">
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <mat-form-field appearance="fill" class="login-card-full-width">
+    <mat-label >Description</mat-label>
+    <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="login-card-full-width">
+    <mat-label >Required Date</mat-label>
+    <input matInput type="date" name="date" #date="ngModel" ngModel required min="20">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="login-card-full-width">
+    <mat-label >Required Time</mat-label>
+    <input matInput type="time" name="time" #time="ngModel" ngModel required min="20">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="login-card-full-width">
+    <mat-label >Student Level</mat-label>
+    <input matInput type="text" name="studentLevel" #studentLevel="ngModel" ngModel required min="20">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="login-card-full-width">
+    <mat-label >Number of Students</mat-label>
+    <input matInput type="number" name="number" #number="ngModel" ngModel required min="20">
+  </mat-form-field>
+
+  <button
+mat-raised-button color="accent"
+  type="submit">Save Post</button>
+</form>
+</mat-card>
+
+<mat-card class="center-card" multi="true" *ngFor="let tutorial of tutorials">
+  <mat-grid-list cols="6" rowHeight="40px">
+    <mat-grid-tile colspan="2"><div class="vac-tiles">
+      <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{tutorial.date}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>description</mat-icon>
+     Description: {{tutorial.description}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>numbers</mat-icon>
+      No of Students: {{tutorial.numOfStudents}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+      Student Level: {{tutorial.studentLevel}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+      Status: {{tutorial.status}}
+    </div></mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
+
+<p *ngIf="tutorials.length<1" style="text-align: center;">There are no added tutorials.</p>
+</mat-tab>
+
+
+
+</mat-tab-group>

@@ -172,7 +172,7 @@ return;
   public registerPatient() {
     this.userService.addVolunteer(Math.floor(Math.random()*999999).toString( ),this.inputUser,this.inputEmail,
     this.inputPassword,this.inputName,this.inputIC,this.inputICType,this.inputPhone, this.inputPosition,
-    this.inputOccupation, this.inputDateofbirth,this.inputStaffID
+    this.inputOccupation, this.inputDateofbirth,this.inputStaffID, this.centreID
     );
     this.page=0;
     this.dialog.open(RegSuccessDialog);
@@ -189,7 +189,7 @@ return;
     this.inputStaffID=form.value.staffID;
     this.userService.addAdmin(Math.floor(Math.random()*999999).toString( )
     ,this.inputUser,this.inputEmail,this.inputPassword, this.inputName,
-    this.inputCentreID,this.inputStaffID, this.inputPosition, this.inputOccupation)
+    this.inputCentreID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.centreID)
     this.page=0;
     this.dialog.open(RegSuccessDialog);
   }

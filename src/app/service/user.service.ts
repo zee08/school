@@ -43,7 +43,7 @@ export class UserService {
   }
 
   addAdmin(userID: string,username: string,email: string,password: string,
-   fullname: string, staffid: string, position: string, occupation:string, dateofbirth:string) {
+   fullname: string, staffid: string, position: string, occupation:string, dateofbirth:string, centreID:String) {
     const user:User  = {
       id: "",
       userID:userID,
@@ -56,6 +56,7 @@ export class UserService {
       occupation:occupation,
       dateofbirth:dateofbirth,
       phone: 0,
+      centreID:centreID,
 
       role: "admin"
     }
@@ -70,7 +71,8 @@ export class UserService {
 
   addVolunteer(userID: string,username: string,email: string,
     password: string, fullname: string,IDno: String,IDtype: String,
-    phone: number, occupation: string, dateofbirth: string, position:string, staffid:string){
+    phone: number, occupation: string, dateofbirth: string, position:string, staffid:string, centreID: String,
+  ){
       const user:User = {
         id:"",
         userID:userID,
@@ -83,6 +85,8 @@ export class UserService {
         phone: phone,
         staffid:staffid,
         position:position,
+        centreID: centreID,
+
         //first: first,
         role: "volunteer"
       }

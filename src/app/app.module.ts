@@ -35,7 +35,7 @@ import { NgControlStatus } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
-import { HomeComponent } from './component/home/home.component';
+
 import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { SignupComponent } from './component/signup/signup.component';
@@ -43,7 +43,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { LoginComponent } from './component/login/login.component';
 import { Routes, RouterModule} from '@angular/router';
-import { AdminPageComponent } from './component/admin-page/admin-page.component';
+
 import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -53,9 +53,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatGridListModule, MatGridTile} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { UserService } from './service/user.service';
 import { LoginVolComponent } from './component/signup/signup.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AdminRequestComponent } from './component/admin-request/admin-request.component';
+import { RequestInfoComponent } from './component/request-info/request-info.component';
+import { AddBatchDialogueComponent } from './component/request-info/request-info.component';
+import { ViewOfferComponent } from './component/view-offer/view-offer.component';
+import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-home.component';
+import { VolunteerNavComponent } from './component/volunteer-nav/volunteer-nav.component';
 const appRoutes: Routes = [
   {path:'login',component:LoginComponent},
   {path: 'signup', component: SignupComponent},
@@ -64,9 +69,21 @@ const appRoutes: Routes = [
   {path:'admin',component:AdminNavComponent,
     children:[
       {path:'home',component:AdminHomeComponent},
+      {path:'request', component:AdminRequestComponent},
+      {path:'request/:vacname/batches', component:RequestInfoComponent},
+      {path:'offer', component:ViewOfferComponent},
+      {path:'offer/:vacname/:batchID', component:ViewOfferComponent},
 
     ]
   },
+  {path:'volunteer', redirectTo:'volunteer/home', pathMatch:'full'},
+  {path:'volunteer', component:VolunteerHomeComponent,
+    children:[
+      {path:'home', component:VolunteerHomeComponent},
+
+    ]},
+
+
 
 
 ]
@@ -76,19 +93,17 @@ const appRoutes: Routes = [
     AdminHomeComponent,
     AdminNavComponent,
     LoginVolComponent,
-
-
-
-    //InvalidLoginSnackbarComponent,
+    AdminRequestComponent,
     ErrorComponent,
-    //old
+    RequestInfoComponent,
     AppComponent,
     HeaderComponent,
 LoginComponent,
     SignupComponent,
-    HomeComponent,
-    AdminPageComponent,
-
+    AddBatchDialogueComponent,
+    VolunteerHomeComponent,
+    ViewOfferComponent,
+    VolunteerNavComponent,
 
 
 
