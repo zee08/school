@@ -1,8 +1,8 @@
- <h2 >Sign up</h2>
+ <!-- <h2 >Sign up</h2>
 <mat-card>
 
   <form (submit)="onSignup(loginform)" #loginform= "ngForm" >
-
+    <mat-icon mat-list-icon>mail_outline</mat-icon>
     <mat-form-field>
       <input
       matInput
@@ -34,4 +34,49 @@
   </button>
   </form>
 
+</mat-card> -->
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title><b>Login</b></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" (submit)="onSignup(loginform)" #loginform= "ngForm">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input
+            matInput
+            name="username"
+            type = "text"
+            ngModel
+            #username="ngModel"
+            placeholder="Username"
+            required>
+            <mat-error *ngIf="">Please enter a valid username</mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td><mat-form-field class="example-full-width">
+          <input
+      matInput
+      name="password"
+      ngModel
+      type = "password"
+      #password="ngModel"
+      placeholder="Password"
+      required>
+      <mat-error *ngIf="">Please enter a valid password</mat-error>
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button  mat-raised-button
+    color = "primary"
+    type = "submit"  routerLink="/admin">Submit</button>
+  </mat-card-actions>
 </mat-card>
+
