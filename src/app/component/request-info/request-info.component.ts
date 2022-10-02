@@ -2,20 +2,20 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
-import { Batch } from 'src/app/model/batch.model';
-import { VaccineService } from 'src/app/service/vaccine.service';
+import { Resource, Tutorial } from 'src/app/model/resource.model';
+import { RequestService } from 'src/app/service/request.service';
 import { VaccinationService } from 'src/app/service/vaccination.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Vaccine } from 'src/app/service/vaccine.service';
+import { Vaccine } from 'src/app/service/request.service';
 import { Time } from '@angular/common';
-import { Tutorial } from 'src/app/model/batch.model';
 
 export interface DialogData {
   enteredNumber: String;
-  selecteddate: Date;
+  //selecteddate: Date;
   enteredQuantity: number;
+  enteredDescription: String;
 }
 
 @Component({
@@ -26,24 +26,24 @@ export interface DialogData {
 
 export class RequestInfoComponent implements OnInit {
   constructor(private router:Router,private route: ActivatedRoute, public vaccinationService:VaccinationService,
-    public currentUserService:CurrentUserService, public vaccineService:VaccineService,
+    public currentUserService:CurrentUserService, public requestService:RequestService,
     public dialog: MatDialog) {}
 
     selecteddate: "" | undefined;
   enteredQuantity=0;
   enteredNumber="";
-  batchID:String="";
-  vacName:String="";
-  batches_:Batch[] = [];
-  batches:Batch[] = [];
+  enteredDescription="";
+  resourceID:String="";
+  resName:String="";
+  resources_:Resource[] = [];
+  resources:Resource[] = [];
   tutorials: Tutorial[]=[];
   vaccines:Vaccine[] = [];
   private batchSub:Subscription | undefined;
   private sub: any;
 
   ngOnInit() {
-    this.batches = this.vaccineService.getBatches();
-    this.tutorials = this.vaccineService.getTutorials();
+    this.resources = this.requestService.getResources();
 
   }
 
@@ -55,28 +55,24 @@ export class RequestInfoComponent implements OnInit {
     const dialogRef = this.dialog.open(AddBatchDialogueComponent, {
       width: '250px',
       data: {
-        selecteddate: this.selecteddate,
+
         enteredNumber: this.enteredNumber,
-        enteredQuantity: this.enteredQuantity}
+        enteredQuantity: this.enteredQuantity,
+        enteredDescription: this.enteredDescription,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result!=undefined){
-        this.enteredNumber = result.enteredNumber;
-        this.enteredQuantity = result.enteredQuantity;
-        this.selecteddate = result.selecteddate;
-        if (this.selecteddate!=undefined){
-          let date = new Date(this.selecteddate);
-          this.vaccineService.addBatches(this.vacName, Math.floor(Math.random()*999999).toString( ),
-          this.enteredNumber,date,this.enteredQuantity,
-          this.currentUserService.getCentreID(), this.vacName);
-
-          return;
-        }
       }
-    });
-  }
-}
+        return;
+
+        })
+      }
+      }
+
+
+
 
 @Component({
   selector: './add-batch-dialogue',

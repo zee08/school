@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { MatRippleModule} from '@angular/material/core';
 
 
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { AdminHomeComponent } from './component/admin-home/admin-home.component';
 import { AdminNavComponent } from './component/admin-nav/admin-nav.component';
 
@@ -35,7 +35,7 @@ import { NgControlStatus } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { SignupComponent } from './component/signup/signup.component';
@@ -43,7 +43,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { LoginComponent } from './component/login/login.component';
 import { Routes, RouterModule} from '@angular/router';
-
+import {MatSortModule} from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -70,9 +70,9 @@ const appRoutes: Routes = [
     children:[
       {path:'home',component:AdminHomeComponent},
       {path:'request', component:AdminRequestComponent},
-      {path:'request/:vacname/batches', component:RequestInfoComponent},
+      {path:'request/:resname/resources', component:RequestInfoComponent},
       {path:'offer', component:ViewOfferComponent},
-      {path:'offer/:vacname/:batchID', component:ViewOfferComponent},
+      {path:'offer/:resname/:resourceID', component:ViewOfferComponent},
 
     ]
   },
@@ -115,7 +115,7 @@ LoginComponent,
 
     //old
     BrowserModule,
-
+    MatExpansionModule,
     FormsModule,
     MatToolbarModule,
     MatCardModule,
@@ -136,8 +136,8 @@ LoginComponent,
     MatStepperModule,
     MatDatepickerModule,
     MatDialogModule,
-
-
+    MatPaginatorModule,
+    MatSortModule,
     MatButtonToggleModule,
     MatNativeDateModule,
     MatSnackBarModule,

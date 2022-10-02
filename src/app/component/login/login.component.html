@@ -202,8 +202,8 @@ style="margin-top: 5em;">
         <mat-label>Select from existing centres:</mat-label>
         <mat-select ngModel name="centre" #centre="ngModel" required
         [disabled]="newCentreSelect.value">
-          <mat-option *ngFor="let centre of centres" [value]="centre.centreID">
-          <b>{{centre.centreName}}</b>, {{centre.centreState}}
+          <mat-option *ngFor="let school of schools" [value]="school.centreID">
+          <b>{{school.centreName}}</b>, {{school.centreState}}
           </mat-option>
         </mat-select>
       </mat-form-field>

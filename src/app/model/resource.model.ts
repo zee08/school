@@ -1,15 +1,16 @@
 import { Time } from "@angular/common";
 
-export interface Batch{
-  id: String;
-  batchID: String;
-  batchNumber: String;
-  expiry: Date;
+export interface Resource{
+  // id: String;
+  // resourceID: String;
+  // resourceNumber: String;
+  description:String;
   quantity: number;
-  pending: number;
-  administered: number;
-  centre: String;
-  vaccine: String;
+  resourceType:String;
+  // centre: String;
+  // vaccine: String;
+
+
 
 }
 

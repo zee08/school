@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Batch, Tutorial } from 'src/app/model/batch.model';
-import { VaccineService } from 'src/app/service/vaccine.service';
+import { Resource, Tutorial } from 'src/app/model/resource.model';
+import { RequestService } from 'src/app/service/request.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
-import { Vaccine } from 'src/app/service/vaccine.service';
+import { Vaccine } from 'src/app/service/request.service';
 import { Vaccination } from 'src/app/model/vaccination.model';
-import { NgForm } from "@angular/forms";
+import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: 'app-admin-request',
@@ -13,16 +13,19 @@ import { NgForm } from "@angular/forms";
 })
 
 export class AdminRequestComponent implements OnInit {
-  batches:Batch[] = [];
+  resources:Resource[] = [];
   vaccines:Vaccine[] = [];
   tutorials: Tutorial[]=[];
 
-  constructor(public vaccineService:VaccineService,
+
+
+  constructor(public requestService:RequestService,
     public currentUserService:CurrentUserService) { }
 
   ngOnInit(): void {
-    this.vaccines = this.vaccineService.getVaccines();
-    this.tutorials=this.vaccineService.getTutorials();
+    this.resources = this.requestService.getResources();
+    this.tutorials=this.requestService.getTutorials();
+    //this.vaccines = this.vaccineService.getVaccines();
 
 
   }
@@ -34,12 +37,22 @@ export class AdminRequestComponent implements OnInit {
     if(form.invalid){
       return;
     }
-    this.vaccineService.addTutorial(form.value.description,
+    this.requestService.addTutorial(form.value.description,
       form.value.date, form.value.time, form.value.numOfStudents,
       form.value.studentLevel, form.value.status)
   }
 
-  getTotalBatches(vaccine:Vaccine) {
-    return this.vaccineService.getTotalBatches(vaccine,this.currentUserService.getCentreID());
+  onAddResource(form: NgForm){
+
+    if(form.invalid){
+      return;
+    }
+    this.requestService.addResource(form.value.description,
+      form.value.quantity, form.value.resourceType);
   }
+
+
+  // getTotalBatches(vaccine:Vaccine) {
+  //   return this.vaccineService.getTotalResources(vaccine,this.currentUserService.getCentreID());
+  // }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Centre } from '../model/centre.model';
+import { School } from '../model/school.model';
 import { Subject } from 'rxjs';
 
 
@@ -7,15 +7,15 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CentresService {
-  private centres: Centre[] = [
+  private schools: School[] = [
   ];
    //set type to post array(model) and assign to empty array
   // private centresUpdated = new Subject<Centre[]>();
 
   constructor() {}
 
-  getCentres(){
-    return this.centres;
+  getschools(){
+    return this.schools;
     // this.http.get<{message: string, centres: Centre[]}>('http://localhost:3000/api/centres')
     // .subscribe((centreData)=>{
     //   this.centres = centreData.centres;
@@ -23,9 +23,9 @@ export class CentresService {
     // })
   }
 
-  addCentre(centreID: String, centreName: String, centreAddress: String,
+  addSchool(centreID: String, centreName: String, centreAddress: String,
     centrePos:number, centreState:String) {
-    const centre: Centre = {
+    const school: School = {
       centreID: centreID,
       centreName: centreName,
       centreAddress: centreAddress,
@@ -33,7 +33,7 @@ export class CentresService {
       centreState: centreState,
     }//var storing values
 
-    this.centres.push(centre);
+    this.schools.push(school);
     // this.http.post<{message: string}>('http://localhost:3000/api/centres', centre)
     // .subscribe((responseData)=>{
     //   console.log(responseData.message);
@@ -42,17 +42,17 @@ export class CentresService {
     // })
   }
 
-  getCentreByID(centreID: String){
-    for (let i=0;i<this.centres.length;i++){
+  getschoolByID(schoolID: String){
+    for (let i=0;i<this.schools.length;i++){
 
-      if (this.centres[i].centreID === centreID)
-        return this.centres[i]
+      if (this.schools[i].centreID === schoolID)
+        return this.schools[i]
     }
     return;
   }
 
-  getCentreIDbyName(name:string,address:string){
-    let found = this.centres.find(i=>i.centreName === name&&i.centreAddress===address);
+  getSchoolIDbyName(name:string,address:string){
+    let found = this.schools.find(i=>i.centreName === name&&i.centreAddress===address);
     if (typeof(found) != "undefined")
       return found.centreID;
     return;

@@ -1,4 +1,4 @@
-export interface Centre{
+export interface School{
   centreID: String;
   centreName: String;
   centreAddress: String;

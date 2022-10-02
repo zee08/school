@@ -1,6 +1,6 @@
-<h1><b>Manage Batches</b></h1>
+<!-- <h1><b>Manage Batches</b></h1>
 <hr>
-<p>Bathes for {{vacName}}</p>
+<p>Bathes for {{resName}}</p>
 <br>
 
 
@@ -11,29 +11,27 @@
 </div>
 
 
-<!--all vaccine types-->
-<mat-card class="center-card" multi= "true" *ngFor="let batch of batches" matRipple [matRippleColor]="'#8ca9ca'">
+all vaccine types
+<mat-card class="center-card" multi= "true" *ngFor="let resource of resources" matRipple [matRippleColor]="'#8ca9ca'">
   <mat-grid-list cols="6" rowHeight="40px">
     <mat-grid-tile colspan="6"><div class="vac-tiles" style="font-size: 20px;">
-      <b><mat-icon style="font-size: 17px;padding-right: 0px;"> vpn_key</mat-icon>{{batch.batchNumber}}</b>
+      <b><mat-icon style="font-size: 17px;padding-right: 0px;"> vpn_key</mat-icon>{{resource.resourceNumber}}</b>
     </div></mat-grid-tile>
-    <mat-grid-tile colspan="3"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Expiry: {{displayDate(batch.expiry)}}</div></mat-grid-tile>
-    <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>check_circle_outline</mat-icon>
-      Available: {{batch.quantity-batch.pending-batch.administered}}
+
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>done_all</mat-icon>
+      Quantity: {{resource.quantity}}
     </div></mat-grid-tile>
-    <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>hourglass_empty</mat-icon>
-      Pending: {{batch.pending}}
-    </div></mat-grid-tile>
-    <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>done_all</mat-icon>
-      Completed: {{batch.administered}}
+
+    <mat-grid-tile colspan="6"><div class="vac-tiles"><mat-icon>done_all</mat-icon>
+      Description: {{resource.description}}
     </div></mat-grid-tile>
   </mat-grid-list>
   <mat-toolbar-row class="action-bar">
     <span class="spacer"></span>
-    <button mat-stroked-button color='accent' routerLink="../../../offer/{{vacName}}/{{batch.batchID}}"
+    <button mat-stroked-button color='accent' routerLink="../../../offer/{{resName}}/{{resource.resourceID}}"
     style="display: block;margin-left: auto;margin-right: 0px;">
     View Batch Info</button>
   </mat-toolbar-row >
 </mat-card>
 
-<p *ngIf="batches.length<1" style="text-align: center;">There are no batches.</p>
+<p *ngIf="resources.length<1" style="text-align: center;">There are no batches.</p> -->

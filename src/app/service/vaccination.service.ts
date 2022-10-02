@@ -4,9 +4,9 @@ import { Subject } from 'rxjs';
 import { Vaccination } from '../model/vaccination.model';
 import { User } from '../model/user.model';
 import { CentresService } from './centres.service';
-import { VaccineService } from './vaccine.service';
+import { RequestService } from './request.service';
 
-import { Centre } from '../model/centre.model';
+import { School } from '../model/school.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class VaccinationService {
   private vaccinations: Vaccination[] = [];
   private vaccinationUpdated = new Subject<Vaccination[]>();
 
-  constructor(public centreService:CentresService, public vaccineService:VaccineService){}
+  constructor(public centreService:CentresService, public vaccineService:RequestService){}
 
   getVaccinations(){
     // this.http.get<{message: string, vaccinations: any}>('http://localhost:3000/api/vaccinations')
@@ -60,11 +60,11 @@ export class VaccinationService {
   // }
 
   addVaccinations(vaccinationID: String,
-    batchID: String,centreID: String,userID: String, Appointdate: Date,centre: Centre) {
+    resourceID: String,centreID: String,userID: String, Appointdate: Date,school: School) {
       const vac: Vaccination = {
         id : "",
         vaccinationID: vaccinationID,
-        batch: batchID,
+        resource: resourceID,
         centre: centreID,
         user: userID,
         status: "Pending", //pending approve completed
@@ -97,31 +97,31 @@ this.vaccinations.push(vac);
     return vaccinations;
   }
 
-  checkUserAppointed(batchID:String,user:User) {
+  checkUserAppointed(resourceID:String,user:User) {
     let appointed = false;
     for (let i=0;i<this.vaccinations.length;i++){
-      if (this.vaccinations[i].batch == batchID){
+      if (this.vaccinations[i].resource == resourceID){
         appointed = true;
       }
     }
     return appointed;
   }
 
-  checkAvailable(batchID:String){
-    let batch = this.vaccineService.getBatchbyID(batchID);
-    if (batch!=undefined){
-      let i=batch.quantity-batch.pending-batch.administered;
-      if (i<1){
-        return false;
-      }
-      let now = new Date();
-      if (now > batch.expiry){
-        return false;
-      }
-      return true;
-    }
-    return true;
-  }
+  // checkAvailable(batchID:String){
+  //   let batch = this.vaccineService.getResourcebyID(batchID);
+  //   if (batch!=undefined){
+  //     let i=batch.quantity-batch.pending-batch.administered;
+  //     if (i<1){
+  //       return false;
+  //     }
+  //     let now = new Date();
+  //     if (now > batch.expiry){
+  //       return false;
+  //     }
+  //     return true;
+  //   }
+  //   return true;
+  // }
 
   approveVaccination(vaccination:Vaccination){
     vaccination.status = "Approved";

@@ -1,7 +1,7 @@
 
 import  { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
-import { Centre } from 'src/app/model/centre.model';
+import { School } from 'src/app/model/school.model';
 import { CentresService } from 'src/app/service/centres.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -18,7 +18,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginComponent {
 page: number;
 users:User[]=[];
-centres:Centre[]=[];
+schools:School[]=[];
   ICoptionValue:any;
   inputEmail='';inputUser='';inputName='';inputPhone=0;inputIC='';inputICType='';inputPassword='';inputFirstDose=false;inputStaffID='';inputCentreID='';
   inputPosition=''; inputOccupation=''; inputDateofbirth='';
@@ -39,7 +39,7 @@ this.page=0;
 
 ngOnInit(): void {
 this.users=this.userService.getUsers();
-this.centres=this.centresService.getCentres();
+this.schools=this.centresService.getschools();
 }
 
   // ngOnInit(): void {
@@ -111,7 +111,7 @@ this.centres=this.centresService.getCentres();
   existingCentre(form: NgForm){
     // if (form.invalid){console.log("invalid exist centre");return;}
     // this.inputCentreID=form.value.centre;
-    this.centres = this.centresService.getCentres();
+    this.schools = this.centresService.getschools();
     this.page=4;
 
   }
@@ -126,7 +126,7 @@ this.centres=this.centresService.getCentres();
 
       return;
     }
-    this.centresService.addCentre( form.value.centreID, form.value.centreName, form.value.centreAddress,
+    this.centresService.addSchool( form.value.centreID, form.value.centreName, form.value.centreAddress,
       form.value.centrePos, form.value.centreState);
       this.dialog.open(RegSuccessDialog);
       this.page=4;

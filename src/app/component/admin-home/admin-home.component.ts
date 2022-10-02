@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent  {
+  public inactive:boolean = true;
   constructor(){
 
   }
-
+  changeStatus(){
+    this.inactive = false;
+ }
 
 
 

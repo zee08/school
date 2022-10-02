@@ -3,29 +3,62 @@
 <hr>
 <mat-tab-group>
 
+  <mat-tab label="Resource Request"><p><b>Add resources to request.</b></p>
+    <mat-card class="center-card" multi="true">
 
-<mat-tab label="Resource Request"><p><b>Select resource to request.</b></p>
-<br>
+      <form (submit)="onAddResource(resourceForm)" #resourceForm="ngForm">
 
-<!--all resource types-->
-<mat-card class="center-card" multi= "true" *ngFor="let vaccine of vaccines" matRipple [matRippleColor]="'#8ca9ca'">
-  <mat-grid-list cols="5" rowHeight="40px">
-    <mat-grid-tile colspan="4"><div class="vac-tiles" style="font-size: 16px;">
-      <b>{{vaccine.vaccineName}}</b>
-    </div></mat-grid-tile>
-    <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>blur_on</mat-icon>Batches: {{getTotalBatches(vaccine)}}</div></mat-grid-tile>
-    <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon> store_mall_directory</mat-icon>
-      {{vaccine.manufacturer}}
-    </div></mat-grid-tile>
-  </mat-grid-list>
-  <mat-toolbar-row class="action-bar">
-    <span class="spacer"></span>
-    <button mat-stroked-button color='accent' routerLink="/admin/request/{{vaccine.vaccineName}}/batches"
-    style="display: block;margin-left: auto;margin-right: 0px;">
-    Manage Batches</button>
-  </mat-toolbar-row >
-</mat-card>
-</mat-tab>
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
+
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="fill"  class="login-card-full-width">
+            <mat-label >Resource Type:</mat-label>
+            <mat-select name="resourceType" #resourceType="ngModel" ngModel required>
+              <mat-option value="mobile device">Mobile Device</mat-option>
+              <mat-option value="personal computer">Personal Computer</mat-option>
+              <mat-option value="networking device">Networking Device</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+            <mat-form-field appearance="fill" class="login-card-full-width">
+              <mat-label>Quantity:</mat-label>
+              <input matInput type="number" name="quantity" #quantity="ngModel" ngModel required min="0">
+            </mat-form-field>
+
+          <button
+mat-raised-button color="accent"
+  type="submit">Submit</button>
+      </form>
+    </mat-card>
+
+    <mat-card class="center-card" multi="true" *ngFor="let resource of resources">
+      <mat-grid-list cols="7" rowHeight="40px">
+
+          <mat-grid-tile colspan="3"><div class="vac-tiles">
+            <mat-icon>description</mat-icon>Description: {{resource.description}}
+            </div></mat-grid-tile>
+
+            <mat-grid-tile colspan="2"><div class="vac-tiles">
+              <mat-icon>list</mat-icon>Type: {{resource.resourceType}}
+            </div></mat-grid-tile>
+
+            <mat-grid-tile colspan="2"><div class="vac-tiles">
+              <mat-icon>numbers</mat-icon>Quantity: {{resource.quantity}}
+            </div></mat-grid-tile>
+
+
+      </mat-grid-list>
+    </mat-card>
+    <p *ngIf="resources.length <1" style="text-align: center;">No resources added</p>
+
+    </mat-tab>
+
 
 
 <!--tutorial request-->
@@ -43,6 +76,7 @@
     <input matInput type="date" name="date" #date="ngModel" ngModel required min="20">
   </mat-form-field>
 
+
   <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Required Time</mat-label>
     <input matInput type="time" name="time" #time="ngModel" ngModel required min="20">
@@ -55,12 +89,12 @@
 
   <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Number of Students</mat-label>
-    <input matInput type="number" name="number" #number="ngModel" ngModel required min="20">
+    <input matInput type="number" name="numOfStudents" #numOfStudents="ngModel" ngModel required min="20">
   </mat-form-field>
 
   <button
 mat-raised-button color="accent"
-  type="submit">Save Post</button>
+  type="submit">Submit</button>
 </form>
 </mat-card>
 
