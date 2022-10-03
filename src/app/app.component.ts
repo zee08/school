@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CentresService } from 'src/app/service/centres.service';
+
 import { CurrentUserService } from './service/currentUser.service';
 import { UserService } from './service/user.service';
 

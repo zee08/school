@@ -7,7 +7,7 @@ export interface Resource{
   description:String;
   quantity: number;
   resourceType:String;
-  // centre: String;
+  school: String
   // vaccine: String;
 
 
@@ -21,4 +21,5 @@ export interface Tutorial{
   studentLevel: String;
   numOfStudents: number;
   status: String;
+  school: String;
 }

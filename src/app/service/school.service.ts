@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CentresService {
+export class SchoolService {
   private schools: School[] = [
   ];
    //set type to post array(model) and assign to empty array

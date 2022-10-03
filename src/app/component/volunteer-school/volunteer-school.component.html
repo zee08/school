@@ -1,0 +1,29 @@
+<h1><b>Request Appointment</b></h1>
+<hr>
+<p>Select a healthcare centre to continue.</p>
+<br>
+
+<mat-card class="center-card" multi= "true" *ngFor="let school of schools" matRipple [matRippleColor]="'#fcc2c2'">
+  <mat-grid-list cols="5" rowHeight="40px">
+    <mat-grid-tile colspan="5"><div class="vac-tiles" style="font-size: 16px;">
+      <b>{{school.centreName}}</b>
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon>location_on</mat-icon>{{school.centreAddress}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>location_city</mat-icon>
+      {{school.centreState}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="3"><div class="vac-tiles"><mat-icon> my_location</mat-icon>
+      {{school.centrePos}}
+    </div></mat-grid-tile>
+
+  </mat-grid-list>
+  <mat-toolbar-row class="action-bar">
+    <span class="spacer"></span>
+    <button mat-stroked-button color='accent' routerLink='{{school.centreID}}'
+    style="display: block;margin-left: auto;margin-right: 0px;">
+    Select centre</button>
+  </mat-toolbar-row >
+</mat-card>
+
+
+<p *ngIf="schools.length<1" style="text-align: center;">There are no healthcare centre providing this vaccine.</p>

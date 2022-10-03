@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
-import { Resource, Tutorial } from 'src/app/model/resource.model';
+import { Resource, Tutorial } from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
 import { VaccinationService } from 'src/app/service/vaccination.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';

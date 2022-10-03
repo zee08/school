@@ -61,6 +61,8 @@ import { AddBatchDialogueComponent } from './component/request-info/request-info
 import { ViewOfferComponent } from './component/view-offer/view-offer.component';
 import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-home.component';
 import { VolunteerNavComponent } from './component/volunteer-nav/volunteer-nav.component';
+import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer-school.component';
+import { VolunteerRequestComponent } from './component/volunteer-request/volunteer-request.component';
 const appRoutes: Routes = [
   {path:'login',component:LoginComponent},
   {path: 'signup', component: SignupComponent},
@@ -77,9 +79,11 @@ const appRoutes: Routes = [
     ]
   },
   {path:'volunteer', redirectTo:'volunteer/home', pathMatch:'full'},
-  {path:'volunteer', component:VolunteerHomeComponent,
+  {path:'volunteer', component:VolunteerNavComponent,
     children:[
       {path:'home', component:VolunteerHomeComponent},
+      {path:'request', component:VolunteerRequestComponent},
+      {path:'request/schools/:tutorial', component:VolunteerSchoolComponent},
 
     ]},
 
@@ -104,6 +108,8 @@ LoginComponent,
     VolunteerHomeComponent,
     ViewOfferComponent,
     VolunteerNavComponent,
+    VolunteerSchoolComponent,
+    VolunteerRequestComponent,
 
 
 

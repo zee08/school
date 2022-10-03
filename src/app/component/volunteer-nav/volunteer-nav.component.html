@@ -1,0 +1,13 @@
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side" opened>
+    <a routerLink="home" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">home</mat-icon>Home</div></a>
+    <a routerLink="request" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">calendar_today</mat-icon>Request Appointment</div></a>
+    <hr>
+    <a  routerLink="/loginVol" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">launch</mat-icon>Logout</div></a>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

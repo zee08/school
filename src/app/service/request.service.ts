@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Resource, Tutorial } from '../model/resource.model';
+import { Resource, Tutorial } from '../model/request.model';
 import { Subject } from 'rxjs';
-import { CentresService } from './centres.service';
+import { SchoolService } from './school.service';
 
 import { School } from '../model/school.model';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export interface Vaccine{
   providedIn: 'root'
 })
 export class RequestService {
-  constructor(public centreService: CentresService){}
+  constructor(public schoolService: SchoolService){}
   // private vaccines: Vaccine[] = [
   //   {resourceName: "Mobile Device"},
   //   {resourceName: "Personal Computer"},
@@ -24,6 +24,7 @@ export class RequestService {
 
   // ];
   private resources: Resource[] = [];
+  private requests: Request[]=[];
   private resourcesUpdated = new Subject<Resource[]>();
  private tutorials: Tutorial[] = [];
 
@@ -31,7 +32,7 @@ export class RequestService {
 
 
 
-  addResource( description:String, quantity: number, resourceType: String
+  addResource( description:String, quantity: number, resourceType: String, centreID:String
     ) {
       const resource: Resource= {
         //id: "",
@@ -39,7 +40,7 @@ export class RequestService {
         //resourceID: resourceID,
         //resourceNumber: resourceNumber,
         quantity: quantity,
-        //centre: centreID,
+        school: centreID,
         //vaccine: vaccine,
         resourceType:resourceType,
 
@@ -51,7 +52,8 @@ export class RequestService {
   getResources(){
     return this.resources;
   }
-  addTutorial(description:String, date:Date, time:Time, numOfStudents:number, studentLevel:String, status:String){
+  addTutorial(description:String, date:Date, time:Time, numOfStudents:number, studentLevel:String, status:String,
+    centreID: String){
     const tutorial: Tutorial={
       description:description,
       date:date,
@@ -59,12 +61,37 @@ export class RequestService {
       numOfStudents:numOfStudents,
       studentLevel:studentLevel,
       status: 'New',
+      school: centreID,
     }
     this.tutorials.push(tutorial)
   }
 
   getTutorials(){
     return this.tutorials;
+  }
+
+  getSchoolsofRequestbyTutorial(status: String){
+    let schools: School[]=[];
+    for(let i=0; i<this.requests.length; i++){
+      if(this.tutorials[i].status === status){
+        let school = this.schoolService.getschoolByID(this.tutorials[i].school);
+        if(school!= null)
+        schools.push(school);
+      }
+    }
+    return schools;
+  }
+
+  getSchoolsofRequestbyResources(resourceType: String){
+    let schools: School[]=[];
+    for(let i=0; i<this.requests.length; i++){
+      if(this.resources[i].resourceType === resourceType){
+        let school = this.schoolService.getschoolByID(this.resources[i].school);
+        if(school!= null)
+        schools.push(school);
+      }
+    }
+    return schools;
   }
 
 

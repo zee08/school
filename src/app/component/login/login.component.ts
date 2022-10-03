@@ -2,7 +2,7 @@
 import  { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { School } from 'src/app/model/school.model';
-import { CentresService } from 'src/app/service/centres.service';
+import { SchoolService } from 'src/app/service/school.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
@@ -27,7 +27,7 @@ schools:School[]=[];
   Auth='';centre='';centreID='';vacName='';
   newCentreSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
-    public centresService:CentresService, public currentUserService:CurrentUserService
+    public schoolService:SchoolService, public currentUserService:CurrentUserService
 
     ) {
 this.page=0;
@@ -39,7 +39,7 @@ this.page=0;
 
 ngOnInit(): void {
 this.users=this.userService.getUsers();
-this.schools=this.centresService.getschools();
+this.schools=this.schoolService.getschools();
 }
 
   // ngOnInit(): void {
@@ -111,7 +111,7 @@ this.schools=this.centresService.getschools();
   existingCentre(form: NgForm){
     // if (form.invalid){console.log("invalid exist centre");return;}
     // this.inputCentreID=form.value.centre;
-    this.schools = this.centresService.getschools();
+    this.schools = this.schoolService.getschools();
     this.page=4;
 
   }
@@ -126,7 +126,7 @@ this.schools=this.centresService.getschools();
 
       return;
     }
-    this.centresService.addSchool( form.value.centreID, form.value.centreName, form.value.centreAddress,
+    this.schoolService.addSchool( form.value.centreID, form.value.centreName, form.value.centreAddress,
       form.value.centrePos, form.value.centreState);
       this.dialog.open(RegSuccessDialog);
       this.page=4;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Resource, Tutorial } from 'src/app/model/resource.model';
+import { Resource, Tutorial } from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Vaccine } from 'src/app/service/request.service';
@@ -39,7 +39,7 @@ export class AdminRequestComponent implements OnInit {
     }
     this.requestService.addTutorial(form.value.description,
       form.value.date, form.value.time, form.value.numOfStudents,
-      form.value.studentLevel, form.value.status)
+      form.value.studentLevel, form.value.status, form.value.centreID)
   }
 
   onAddResource(form: NgForm){
@@ -48,7 +48,7 @@ export class AdminRequestComponent implements OnInit {
       return;
     }
     this.requestService.addResource(form.value.description,
-      form.value.quantity, form.value.resourceType);
+      form.value.quantity, form.value.resourceType, form.value.centreID);
   }
 
 
