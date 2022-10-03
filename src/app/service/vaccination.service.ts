@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Vaccination } from '../model/vaccination.model';
 import { User } from '../model/user.model';
-import { CentresService } from './centres.service';
+import { SchoolService } from './school.service';
 import { RequestService } from './request.service';
 
 import { School } from '../model/school.model';
@@ -15,7 +15,7 @@ export class VaccinationService {
   private vaccinations: Vaccination[] = [];
   private vaccinationUpdated = new Subject<Vaccination[]>();
 
-  constructor(public centreService:CentresService, public vaccineService:RequestService){}
+  constructor(public schoolService:SchoolService, public vaccineService:RequestService){}
 
   getVaccinations(){
     // this.http.get<{message: string, vaccinations: any}>('http://localhost:3000/api/vaccinations')
