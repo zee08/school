@@ -16,12 +16,6 @@ import { Vaccine } from 'src/app/service/request.service';
 import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 
-export interface Dessert {
-  id: number;
-
-  status: string;
-  date:string;
-}
 
 
 @Component({
