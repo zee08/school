@@ -1,7 +1,7 @@
 export interface School{
-  centreID: String;
-  centreName: String;
-  centreAddress: String;
-  centrePos: number;
-  centreState: String;
+  schoolID: String;
+  name: String;
+  address: String;
+  city: String;
+
 }
