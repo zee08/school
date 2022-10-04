@@ -23,14 +23,14 @@ export class SchoolService {
     // })
   }
 
-  addSchool(centreID: String, centreName: String, centreAddress: String,
-    centrePos:number, centreState:String) {
+  addSchool(schoolID: String, name: String, address: String,
+    city:string) {
     const school: School = {
-      centreID: centreID,
-      centreName: centreName,
-      centreAddress: centreAddress,
-      centrePos: centrePos,
-      centreState: centreState,
+      schoolID: schoolID,
+      name: name,
+      address: address,
+      city: city,
+
     }//var storing values
 
     this.schools.push(school);
@@ -45,16 +45,16 @@ export class SchoolService {
   getschoolByID(schoolID: String){
     for (let i=0;i<this.schools.length;i++){
 
-      if (this.schools[i].centreID === schoolID)
+      if (this.schools[i].schoolID === schoolID)
         return this.schools[i]
     }
     return;
   }
 
   getSchoolIDbyName(name:string,address:string){
-    let found = this.schools.find(i=>i.centreName === name&&i.centreAddress===address);
+    let found = this.schools.find(i=>i.name === name&&i.address===address);
     if (typeof(found) != "undefined")
-      return found.centreID;
+      return found.schoolID;
     return;
   }
 

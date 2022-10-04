@@ -1,13 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 
 
 import { RequestService } from 'src/app/service/request.service';
+=======
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
+
+>>>>>>> 0ffea67e294f091968a290bba90faf624ee47bff
 import { VaccinationService } from 'src/app/service/vaccination.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Vaccination } from 'src/app/model/vaccination.model';
 
 import { UserService } from 'src/app/service/user.service';
+<<<<<<< HEAD
 
+=======
+import { Router } from '@angular/router';
+>>>>>>> 0ffea67e294f091968a290bba90faf624ee47bff
 import { Tutorial } from 'src/app/model/request.model';
 import { Resource} from 'src/app/model/request.model';
 
@@ -30,11 +40,19 @@ export class ViewRequestComponent implements OnInit {
   vacName:String="";
   resources:Resource[] = [];
   request:Resource[] = [];
+<<<<<<< HEAD
 
 
   constructor( public vaccinationService:VaccinationService,
     public currentUserService:CurrentUserService, public requestService:RequestService,public userService:UserService,
      ) { }
+=======
+
+
+  constructor(private route: ActivatedRoute, public vaccinationService:VaccinationService,
+    public currentUserService:CurrentUserService, public requestService:RequestService,public userService:UserService,
+    public dialog: MatDialog, private _snackBar: MatSnackBar, private router:Router) { }
+>>>>>>> 0ffea67e294f091968a290bba90faf624ee47bff
 
 
   ngOnInit(): void {
@@ -45,6 +63,7 @@ export class ViewRequestComponent implements OnInit {
   }
 
 
+<<<<<<< HEAD
 
 
 
@@ -58,5 +77,7 @@ export class ViewRequestComponent implements OnInit {
       form.value.studentLevel, form.value.status, form.value.centreID)
 
   }
+=======
+>>>>>>> 0ffea67e294f091968a290bba90faf624ee47bff
 
 }

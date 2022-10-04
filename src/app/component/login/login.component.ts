@@ -20,11 +20,11 @@ page: number;
 users:User[]=[];
 schools:School[]=[];
   ICoptionValue:any;
-  inputEmail='';inputUser='';inputName='';inputPhone=0;inputIC='';inputICType='';inputPassword='';inputFirstDose=false;inputStaffID='';inputCentreID='';
+  inputEmail='';inputUser='';inputName='';inputPhone=0;inputIC='';inputICType='';inputPassword='';inputFirstDose=false;inputStaffID='';inputSchoolID='';
   inputPosition=''; inputOccupation=''; inputDateofbirth='';
   placeholderName:string;
   durationInMiliSeconds = 3000;
-  Auth='';centre='';centreID='';vacName='';
+  Auth='';school='';schoolID='';vacName='';
   newCentreSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
     public schoolService:SchoolService, public currentUserService:CurrentUserService
@@ -105,32 +105,32 @@ this.schools=this.schoolService.getschools();
       //new centre
       return;
     }
-    this.inputCentreID=form.value.centre;
+    this.inputSchoolID=form.value.school;
   }
 
   existingCentre(form: NgForm){
-    // if (form.invalid){console.log("invalid exist centre");return;}
-    // this.inputCentreID=form.value.centre;
+    if (form.invalid){console.log("invalid exist centre");return;}
+    this.inputSchoolID=form.value.centre;
     this.schools = this.schoolService.getschools();
-    this.page=4;
+    this.page=3;
 
   }
 
   newCentre(form: NgForm){
-    // if (form.invalid){console.log("invalid new centre");return;}
-    // let id = Math.floor(Math.random()*999999).toString( );
-    // this.centresService.addCentre(id, form.value.centreName,
-    // form.value.centreAddress,form.value.postcode, form.value.centreState)
-    // this.inputCentreID=id;
+    if (form.invalid){console.log("invalid new centre");return;}
+    let id = Math.floor(Math.random()*999999).toString( );
+    this.schoolService.addSchool(id, form.value.name,
+    form.value.address,form.value.city)
+    this.inputSchoolID=id;
     if(form.invalid){
 
       return;
     }
-    this.schoolService.addSchool( form.value.centreID, form.value.centreName, form.value.centreAddress,
-      form.value.centrePos, form.value.centreState);
+    // this.schoolService.addSchool( form.value.schoolID, form.value.name, form.value.address,
+    //   form.value.city);
       this.dialog.open(RegSuccessDialog);
       this.page=4;
-
+      form.resetForm();
   }
 
   login(form: NgForm){
@@ -172,7 +172,7 @@ return;
   public registerPatient() {
     this.userService.addVolunteer(Math.floor(Math.random()*999999).toString( ),this.inputUser,this.inputEmail,
     this.inputPassword,this.inputName,this.inputIC,this.inputICType,this.inputPhone, this.inputPosition,
-    this.inputOccupation, this.inputDateofbirth,this.inputStaffID, this.centreID
+    this.inputOccupation, this.inputDateofbirth,this.inputStaffID, this.schoolID
     );
     this.page=0;
     this.dialog.open(RegSuccessDialog);
@@ -189,7 +189,7 @@ return;
     this.inputStaffID=form.value.staffID;
     this.userService.addAdmin(Math.floor(Math.random()*999999).toString( )
     ,this.inputUser,this.inputEmail,this.inputPassword, this.inputName,
-    this.inputCentreID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.centreID)
+    this.inputSchoolID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.schoolID)
     this.page=0;
     this.dialog.open(RegSuccessDialog);
   }

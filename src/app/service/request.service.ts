@@ -32,7 +32,8 @@ export class RequestService {
 
 
 
-  addResource( description:String, quantity: number, resourceType: String, centreID:String
+  addResource( description:String, quantity: number, resourceType: String, centreID:String,
+    status:String
     ) {
       const resource: Resource= {
         //id: "",
@@ -43,6 +44,7 @@ export class RequestService {
         school: centreID,
         //vaccine: vaccine,
         resourceType:resourceType,
+        status:status
 
       }
 

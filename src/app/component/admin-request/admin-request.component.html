@@ -52,6 +52,10 @@ mat-raised-button color="accent"
               <mat-icon>numbers</mat-icon>Quantity: {{resource.quantity}}
             </div></mat-grid-tile>
 
+            <mat-grid-tile colspan="2"><div class="vac-tiles">
+              <mat-icon>numbers</mat-icon>Status: {{resource.status}}
+            </div></mat-grid-tile>
+
 
       </mat-grid-list>
     </mat-card>
@@ -89,7 +93,7 @@ mat-raised-button color="accent"
 
   <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Number of Students</mat-label>
-    <input matInput type="number" name="numOfStudents" #numOfStudents="ngModel" ngModel required min="20">
+    <input matInput type="number" name="numOfStudents" #numOfStudents="ngModel" ngModel required min="0">
   </mat-form-field>
 
   <button

@@ -98,91 +98,6 @@ style="margin-top: 2em;">
 </mat-card>
 
 
-
-
-<!--admin Register-->
-<!-- <mat-card class="login-card" *ngIf="page===3"
-
-style="margin-top: 2em;">
-  <div>
-    <h1>Register for Admin</h1>
-    <mat-progress-bar mode="determinate" ></mat-progress-bar>
-    <br>
-    <p>
-    Please fill in the fields.
-    </p>
-    <form (submit)="verifyAdmin(adminForm)" #adminForm="ngForm">
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your username</mat-label>
-        <input matInput type="email" name="username" #username="ngModel" ngModel required minlength="6">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your password</mat-label>
-        <input matInput type="password" name="password" #password="ngModel" ngModel required minlength="6">
-        <mat-hint>Password must be 6 or more characters</mat-hint>
-
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your full name</mat-label>
-        <input matInput type="text" name="fullname" #fullname="ngModel" ngModel required minlength="3">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width">
-        <mat-label>Select idendity type:</mat-label>
-        <mat-select ngModel name="type" #type="ngModel" required [(ngModel)]="ICoptionValue">
-          <mat-option value="IC">New IC</mat-option>
-          <mat-option value="Passport">Passport</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width"
-
-      *ngIf="ICoptionValue == 'Passport'">
-        <mat-label>Enter your Passport No.</mat-label>
-        <input type="text" matInput name="passport"
-          ngModel #passport="ngModel"
-          pattern="^[A-PR-WYa-pr-wy][1-9]\d\s?\d{4}[1-9]$"
-          placeholder="Eg. A123456789" required>
-        <mat-hint>Make sure your passport No. is valid.</mat-hint>
-
-
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width"
-
-      *ngIf="ICoptionValue == 'IC'">
-        <mat-label>Enter your IC No.</mat-label>
-        <input type="tel" matInput name="ICno"
-          ngModel #ICno="ngModel"
-          pattern="[0-9]{12}"
-          placeholder="Eg. 901010105555" required>
-        <mat-hint>Make sure your IC No. is valid.</mat-hint>
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width"
-      >
-        <mat-label>Enter your phone No.</mat-label>
-        <input type="tel" matInput name="phone"
-          ngModel #phone="ngModel"
-          pattern="[0-9]{10,11}"
-          placeholder="Eg. 0123335433" required>
-        <mat-hint>Make sure your phone No. is valid.</mat-hint>
-
-      </mat-form-field>
-      <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!adminForm.valid">
-      Proceed</button>
-      </form>
-  </div>
-</mat-card> -->
-
 <!--admin verify and loc-->
 <mat-card class="login-card"
 *ngIf="page===4"
@@ -193,60 +108,49 @@ style="margin-top: 5em;">
     <br>
 
       <p>
-        <mat-checkbox name="newCentreSelect"  [formControl]="newCentreSelect">New healthcare centre</mat-checkbox>
+        <mat-checkbox name="newCentreSelect"  [formControl]="newCentreSelect">New School</mat-checkbox>
       </p>
 
       <form (submit)="existingCentre(AdminCentreForm)" #AdminCentreForm="ngForm" *ngIf="!newCentreSelect.value">
       <mat-form-field appearance="fill" class="login-card-full-width"
    >
-        <mat-label>Select from existing centres:</mat-label>
-        <mat-select ngModel name="centre" #centre="ngModel" required
-        [disabled]="newCentreSelect.value">
-          <mat-option *ngFor="let school of schools" [value]="school.centreID">
-          <b>{{school.centreName}}</b>, {{school.centreState}}
+        <mat-label>Select from existing schools:</mat-label>
+        <mat-select ngModel name="school" #school="ngModel" required
+        [disabled]="newCentreSelect.value" >
+          <mat-option *ngFor="let school of schools" [value]="school.schoolID">
+          <b>{{school.name}}</b>, {{school.city}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!AdminCentreForm.valid">
+        [disabled]="!AdminCentreForm.valid" >
       Proceed</button>
       </form>
 
       <form (submit)="newCentre(AdminForm)" #AdminForm="ngForm" *ngIf="newCentreSelect.value">
       <mat-form-field appearance="fill" class="login-card-full-width"
        *ngIf="newCentreSelect.value">
-        <mat-label>Enter centre name</mat-label>
-        <input matInput type="text" name="centreName" #centreName="ngModel" ngModel required minlength="6">
-        <mat-hint>Centre name must be 4 or more characters</mat-hint>
-        <mat-error *ngIf="centreName.hasError('minlength')">Must be <strong>4 or more</strong> characters!</mat-error>
+        <mat-label>Enter school name</mat-label>
+        <input matInput type="text" name="name" #name="ngModel" ngModel required minlength="6">
+        <mat-hint>School name must be 4 or more characters</mat-hint>
+        <mat-error *ngIf="name.hasError('minlength')">Must be <strong>4 or more</strong> characters!</mat-error>
 
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="login-card-full-width"
        *ngIf="newCentreSelect.value">
-        <mat-label>Enter centre address</mat-label>
-        <input matInput type="text" name="centreAddress" #centreAddress="ngModel" ngModel required minlength="6">
+        <mat-label>Enter school address</mat-label>
+        <input matInput type="text" name="address" #address="ngModel" ngModel required minlength="6">
         <mat-hint>Enter a valid address.</mat-hint>
 
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width"
-       *ngIf="newCentreSelect.value">
-        <mat-label>Enter centre postcode</mat-label>
-        <input type="tel" matInput name="postcode"
-          ngModel #postcode="ngModel"
-          pattern="[0-9]{5}"
-          placeholder="Eg. 51000" required>
-        <mat-hint>Make sure your postcode is valid.</mat-hint>
-
-
-      </mat-form-field>
 
       <mat-form-field appearance="fill" class="login-card-full-width"
        *ngIf="newCentreSelect.value">
-        <mat-label>Enter centre State</mat-label>
-        <input matInput type="text" name="centreState" #centreState="ngModel" ngModel required minlength="6">
-        <mat-hint>Enter a valid State.</mat-hint>
+        <mat-label>Enter city</mat-label>
+        <input matInput type="text" name="city" #city="ngModel" ngModel required minlength="6">
+        <mat-hint>Enter a valid City.</mat-hint>
 
       </mat-form-field>
 
@@ -264,7 +168,7 @@ style="margin-top: 5em;">
 
 style="margin-top: 5em;">
   <div>
-    <h1>Register</h1>
+    <h1>Register Admin</h1>
 
     <br>
     <p>
@@ -347,8 +251,7 @@ style="margin-top: 10em;">
   <div>
     <h1>Welcome back, {{placeholderName}}.</h1>
     <p>
-        Make sure to keep your password private.
-        Never share it to anyone.
+
         <a onclick="this.ngOnInit()">Try another Email</a>.
     </p>
 

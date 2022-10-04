@@ -29,7 +29,7 @@ export class CurrentUserService {
       dateofbirth:"",
       role: "",
       phone:0,
-      centreID:"",
+      schoolID:"",
 
 
     };
@@ -67,8 +67,8 @@ export class CurrentUserService {
     return this.user.password
   }
 
-  getCentreID(){
-    return this.user.centreID
+  getSchoolID(){
+    return this.user.schoolID
   }
 
   getStaffID(){
@@ -100,7 +100,7 @@ export class CurrentUserService {
       staffid:"",
       position: "",
       phone:0,
-      centreID:"",
+      schoolID:"",
 
     };
     if (!this.isAdmin()){
@@ -147,7 +147,7 @@ export class CurrentUserService {
       staffid:"",
       position:"",
       phone:0,
-      centreID:"",
+      schoolID:"",
 
     };
     this.user=user;
