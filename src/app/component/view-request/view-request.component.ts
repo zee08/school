@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
-import { VaccineService } from 'src/app/service/vaccine.service';
+
 import { VaccinationService } from 'src/app/service/vaccination.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Vaccination } from 'src/app/model/vaccination.model';
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 import { Router } from '@angular/router';
-import { Tutorial } from 'src/app/model/batch.model';
+import { Tutorial } from 'src/app/model/request.model';
 import { Resource} from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
 import { Vaccine } from 'src/app/service/request.service';
@@ -37,10 +37,10 @@ export class ViewRequestComponent implements OnInit {
   vacName:String="";
   resources:Resource[] = [];
   request:Resource[] = [];
-  requestService: any;
+
 
   constructor(private route: ActivatedRoute, public vaccinationService:VaccinationService,
-    public currentUserService:CurrentUserService, public vaccineService:VaccineService,public userService:UserService,
+    public currentUserService:CurrentUserService, public requestService:RequestService,public userService:UserService,
     public dialog: MatDialog, private _snackBar: MatSnackBar, private router:Router) { }
 
 
@@ -51,51 +51,7 @@ export class ViewRequestComponent implements OnInit {
     //this.vaccines = this.vaccineService.getVaccines();
   }
 
-  onApprove(vacID:String){
-    let vac = this.vaccinationService.getVaccinationbyID(vacID);
-    // if (vac!=undefined){
-    //   this.vaccinationService.approveVaccination(vac);
-    //   this. openApprovedSnackBar();
-    // };
-    this.ngOnInit();
-  }
 
-  onComplete(vacID:String){
-    let vac = this.vaccinationService.getVaccinationbyID(vacID);
-    // if (vac!=undefined){
-    //   this.vaccinationService.completeVaccination(vac);
-    //   this.openCompleteSnackBar();
-    // };
-    this.ngOnInit();
-  }
-
-  onReject(vac: Vaccination){
-    this.vaccinationService.declineVaccination(vac);
-    this.ngOnInit();
-  }
-
-  getUser(userID:String){
-    return this.userService.getUserByID(userID);
-  }
-  getBatch(batchID:String){
-    return this.vaccineService.getBatchbyID(batchID);
-  }
-  countAvailable(batchID: String){
-
-  }
-  getBatchManufacturer(batchID: String){
-    return this.vaccineService.getManufacturerbyBatchID(batchID);
-  }
-  onAddResource(form: NgForm){
-
-    if(form.invalid){
-      return;
-    }
-    this.requestService.addTutorial(form.value.description,
-      form.value.date, form.value.time, form.value.numOfStudents,
-      form.value.studentLevel, form.value.status, form.value.centreID)
-
-  }
 
 }
 

@@ -63,6 +63,7 @@ import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-hom
 import { VolunteerNavComponent } from './component/volunteer-nav/volunteer-nav.component';
 import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer-school.component';
 import { VolunteerRequestComponent } from './component/volunteer-request/volunteer-request.component';
+import { ViewRequestComponent } from './component/view-request/view-request.component';
 const appRoutes: Routes = [
   {path:'login',component:LoginComponent},
   {path: 'signup', component: SignupComponent},
@@ -82,7 +83,7 @@ const appRoutes: Routes = [
   {path:'volunteer', component:VolunteerNavComponent,
     children:[
       {path:'home', component:VolunteerHomeComponent},
-      {path:'request', component:VolunteerRequestComponent},
+      {path:'request', component:ViewRequestComponent},
       {path:'request/schools/:tutorial', component:VolunteerSchoolComponent},
 
     ]},
@@ -110,7 +111,7 @@ LoginComponent,
     VolunteerNavComponent,
     VolunteerSchoolComponent,
     VolunteerRequestComponent,
-
+    ViewRequestComponent,
 
 
 
