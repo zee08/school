@@ -48,7 +48,7 @@ export class AdminRequestComponent implements OnInit {
       return;
     }
     this.requestService.addResource(form.value.description,
-      form.value.quantity, form.value.resourceType, form.value.centreID);
+      form.value.quantity, form.value.resourceType, form.value.centreID, form.value.status);
   }
 
 

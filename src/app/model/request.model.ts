@@ -7,7 +7,8 @@ export interface Resource{
   description:String;
   quantity: number;
   resourceType:String;
-  school: String
+  school: String;
+  status: String;
   // vaccine: String;
 
 
