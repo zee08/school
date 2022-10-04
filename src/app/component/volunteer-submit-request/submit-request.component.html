@@ -1,0 +1,197 @@
+<h1><b>Submit Request</b></h1>
+<hr>
+
+  <!--<mat-tab label="New">
+     <div style="height: 20px;"></div>
+    <ng-container *ngFor="let vac of vaccinations" multi="true">
+    <mat-card class="center-card" multi= "true" *ngIf="vac.status==='Pending'" >
+      <mat-grid-list cols="5" rowHeight="40px">
+        <mat-grid-tile colspan="3"><div class="vac-tiles" style="font-size: 20px;">
+          <b><mat-icon style="font-size: 17px;padding-right: 0px;"> vpn_key</mat-icon>{{res.vaccinationID}}</b>
+        </div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles" style="text-align: right;display:block;">Requested Date: </div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon>calendar_today</mat-icon>{{vac.Appointdate | date:'MM/dd/yyyy'}}</div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles" style="text-align: right;display:block;">Batch Info:</div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon>vpn_key</mat-icon>{{getResource(res.vaccine)?.resourceID}}</div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon>info</mat-icon>{{getResource(res.vaccine)?.resource}}</div></mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+
+
+        <mat-grid-tile colspan="2"></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles" style="text-align: right;display:block;">Patient Info:</div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon>account_box</mat-icon>{{getUser(vac.user)?.fullname}}</div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon>assignment_ind</mat-icon></div></mat-grid-tile>
+        <mat-grid-tile><div class="vac-tiles"><mat-icon> call</mat-icon>{{getUser(vac.user)?.phone}}</div></mat-grid-tile>
+
+      </mat-grid-list>
+      <mat-toolbar class="toolbars">
+        <mat-toolbar-row class="action-bar">
+          <span class="spacer"></span>
+          <button mat-raised-button color='warn' class="toolbar-end-button" (click)="onReject(vac)">
+            Reject Batch</button>
+          <button mat-stroked-button color='accent' class="toolbar-end-button" (click)="onApprove(vac.vaccinationID)">
+            Appoint Batch</button>
+        </mat-toolbar-row >
+      </mat-toolbar>
+
+    </mat-card>
+  </ng-container>
+    <p style="text-align: center;">There are no new batches.</p> -->
+
+
+    <!-- <p>Please enter batch info:</p>
+
+    <mat-form-field appearance="fill" class="">
+      <mat-label>Enter Resource number:</mat-label>
+      <input matInput [(ngModel)]="data.enteredNumber" type="text" name="number" #number="ngModel" ngModel required minlength="3">
+      <mat-hint>Must be 3 or more characters</mat-hint>
+      <mat-error *ngIf="number.hasError('minlength')">Must be <strong>3 or more</strong> characters!</mat-error>
+
+    </mat-form-field>
+
+    <! <mat-form-field appearance="fill" style="width: 200px;">
+      <mat-label>Enter expiry date:</mat-label>
+      <input matInput [(ngModel)]="data.selecteddate" [matDatepicker]="picker" required
+             (dateInput)="onEvent('input', $event)" (dateChange)="onEvent('change', $event)" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field appearance="fill" class="">
+      <mat-label>Enter Description:</mat-label>
+      <input matInput [(ngModel)]="data.enteredDescription" type="text" name="description" #description="ngModel" ngModel required>
+      <mat-hint>Insert a valid description.</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="">
+      <mat-label>Enter quantity:</mat-label>
+      <input matInput [(ngModel)]="data.enteredQuantity" type="number" name="quantity" #quantity="ngModel" ngModel required min="1">
+      <mat-hint>Insert a valid quantity.</mat-hint>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-button mat-dialog-close [mat-dialog-close]="data"
+      [disabled]="verify||number.errors?.['required']||quantity.errors?.['min']
+      ||number.errors?.['minlength']||quantity.errors?.['required']">Ok</button>
+    </div>  -->
+    <!-- <h1><b>Resource Requests</b></h1> -->
+    <!-- <hr> -->
+    <mat-tab-group>
+
+      <mat-tab label="Resource Request"><p><b>Add Resource To Request.</b></p>
+        <mat-card class="center-card" multi="true">
+
+          <form (submit)="onAddResource(resourceForm)" #resourceForm="ngForm">
+
+              <mat-form-field appearance="fill" class="login-card-full-width">
+                <mat-label>Description</mat-label>
+                <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
+
+              </mat-form-field>
+
+              <mat-form-field appearance="fill"  class="login-card-full-width">
+                <mat-label >Resource Type:</mat-label>
+                <mat-select name="resourceType" #resourceType="ngModel" ngModel required>
+                  <mat-option value="mobile device">Mobile Device</mat-option>
+                  <mat-option value="personal computer">Personal Computer</mat-option>
+                  <mat-option value="networking device">Networking Device</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+                <mat-form-field appearance="fill" class="login-card-full-width">
+                  <mat-label>Quantity:</mat-label>
+                  <input matInput type="number" name="quantity" #quantity="ngModel" ngModel required min="0">
+                </mat-form-field>
+
+              <button
+    mat-raised-button color="accent"
+      type="submit">Submit</button>
+          </form>
+        </mat-card>
+
+        <mat-card class="center-card" multi="true" *ngFor="let resource of resources">
+          <mat-grid-list cols="7" rowHeight="40px">
+
+              <mat-grid-tile colspan="3"><div class="vac-tiles">
+                <mat-icon>description</mat-icon>Description: {{resource.description}}
+                </div></mat-grid-tile>
+
+                <mat-grid-tile colspan="2"><div class="vac-tiles">
+                  <mat-icon>list</mat-icon>Remark: {{resource.resourceType}}
+                </div></mat-grid-tile>
+
+                <mat-grid-tile colspan="2"><div class="vac-tiles">
+                  <mat-icon>numbers</mat-icon>Quantity: {{resource.quantity}}
+                </div></mat-grid-tile>
+
+
+          </mat-grid-list>
+        </mat-card>
+        <p *ngIf="resources.length <1" style="text-align: center;">No resources added</p>
+
+        </mat-tab>
+
+
+        <mat-tab label="Tutorial Request"><p><b>Add Submission to Request.</b></p>
+
+        <mat-card class="center-card" multi= "true">
+          <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label >Description</mat-label>
+            <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label >Required Date</mat-label>
+            <input matInput type="date" name="date" #date="ngModel" ngModel required min="20">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label >Required Time</mat-label>
+            <input matInput type="time" name="time" #time="ngModel" ngModel required min="20">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label >Student Level</mat-label>
+            <input matInput type="text" name="studentLevel" #studentLevel="ngModel" ngModel required min="20">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="login-card-full-width">
+            <mat-label >Number of Students</mat-label>
+            <input matInput type="number" name="numOfStudents" #numOfStudents="ngModel" ngModel required min="20">
+          </mat-form-field>
+
+          <button
+        mat-raised-button color="accent"
+          type="submit">Submit</button>
+        </form>
+        </mat-card>
+
+        <mat-card class="center-card" multi="true" *ngFor="let tutorial of tutorials">
+          <mat-grid-list cols="6" rowHeight="40px">
+            <mat-grid-tile colspan="2"><div class="vac-tiles">
+              <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
+            </div></mat-grid-tile>
+            <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{tutorial.date}}</div></mat-grid-tile>
+            <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>description</mat-icon>
+             Description: {{tutorial.description}}
+            </div></mat-grid-tile>
+            <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>numbers</mat-icon>
+              No of Students: {{tutorial.numOfStudents}}
+            </div></mat-grid-tile>
+            <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+              Student Level: {{tutorial.studentLevel}}
+            </div></mat-grid-tile>
+            <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+              Status: {{tutorial.status}}
+            </div></mat-grid-tile>
+          </mat-grid-list>
+        </mat-card>
+
+        <p *ngIf="tutorials.length<1" style="text-align: center;">There are no added tutorials.</p>
+        </mat-tab>
+
+        </mat-tab-group>
