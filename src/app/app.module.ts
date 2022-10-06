@@ -40,6 +40,7 @@ import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { SignupComponent } from './component/signup/signup.component';
 import {MatCardModule} from '@angular/material/card';
+import {MatAccordion} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { LoginComponent } from './component/login/login.component';
 import { Routes, RouterModule} from '@angular/router';
@@ -65,6 +66,7 @@ import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer
 import { VolunteerRequestComponent } from './component/volunteer-request/volunteer-request.component';
 import { ViewRequestComponent } from './component/view-request/view-request.component';
 import { SubmitRequestComponent } from './component/volunteer-submit-request/submit-request.component';
+
 const appRoutes: Routes = [
   {path:'login',component:LoginComponent},
   {path: 'signup', component: SignupComponent},
@@ -114,7 +116,7 @@ LoginComponent,
     VolunteerSchoolComponent,
     VolunteerRequestComponent,
     ViewRequestComponent,
-    SubmitRequestComponent
+    SubmitRequestComponent,
 
 
   ],
@@ -154,10 +156,14 @@ LoginComponent,
     CommonModule,
     MatRippleModule,
 
+
+
     RouterModule.forRoot(appRoutes),
 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

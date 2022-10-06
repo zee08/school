@@ -1,5 +1,35 @@
-<h1><b>Submit Request</b></h1>
+<h1><b>Submit Offer</b></h1>
 <hr>
+
+<mat-card class="center-card" multi="true" *ngFor="let tutorial of tutorials">
+  <mat-grid-list cols="6" rowHeight="40px">
+    <mat-grid-tile colspan="2"><div class="vac-tiles">
+      <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{tutorial.date}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>description</mat-icon>
+     Description: {{tutorial.description}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>numbers</mat-icon>
+      No of Students: {{tutorial.numOfStudents}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+      Student Level: {{tutorial.studentLevel}}
+    </div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
+      Status: {{tutorial.status}}
+    </div></mat-grid-tile>
+  </mat-grid-list>
+  <mat-action-row>
+    <button mat-button color="primary">Edit</button>
+    <button mat-button color="warn">Delete</button>
+  </mat-action-row>
+</mat-card>
+
+<p *ngIf="tutorials.length<1" style="text-align: center;">There are no added tutorials.</p>
+
+
+
 
   <!--<mat-tab label="New">
      <div style="height: 20px;"></div>
@@ -189,6 +219,7 @@
               Status: {{tutorial.status}}
             </div></mat-grid-tile>
           </mat-grid-list>
+
         </mat-card>
 
         <p *ngIf="tutorials.length<1" style="text-align: center;">There are no added tutorials.</p>
