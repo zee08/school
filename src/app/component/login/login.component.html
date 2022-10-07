@@ -18,7 +18,7 @@ style="margin-top: 2em;">
     <br>
     <h2>Register As:</h2>
     <button mat-stroked-button class="patient-button"
-    color="accent" (click)="gotoPatientReg()">
+    color="accent" (click)="gotoVolunteerReg()">
       A Volunteer</button>
     <button mat-stroked-button class="admin-button"
     color="primary" (click)="gotoAdminReg()">
@@ -39,7 +39,7 @@ style="margin-top: 2em;">
     <p>
     Please fill in the fields.
     </p>
-    <form (submit)="verifyPatient(patientForm)" #patientForm="ngForm">
+    <form (submit)="verifyVolunteer(volForm)" #volForm="ngForm">
       <mat-form-field appearance="fill" class="login-card-full-width" >
         <mat-label>Enter your username</mat-label>
         <input matInput type="email" name="username" #username="ngModel" ngModel required minlength="6">
@@ -91,7 +91,7 @@ style="margin-top: 2em;">
 
       </mat-form-field>
       <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!patientForm.valid" routerLink="/loginVol">
+        [disabled]="!volForm.valid" routerLink="/loginVol">
       Proceed</button>
       </form>
   </div>
@@ -108,28 +108,28 @@ style="margin-top: 5em;">
     <br>
 
       <p>
-        <mat-checkbox name="newCentreSelect"  [formControl]="newCentreSelect">New School</mat-checkbox>
+        <mat-checkbox name="newSchoolSelect"  [formControl]="newSchoolSelect">New School</mat-checkbox>
       </p>
 
-      <form (submit)="existingCentre(AdminCentreForm)" #AdminCentreForm="ngForm" *ngIf="!newCentreSelect.value">
+      <form (submit)="existingSchool(AdminSchoolForm)" #AdminSchoolForm="ngForm" *ngIf="!newSchoolSelect.value">
       <mat-form-field appearance="fill" class="login-card-full-width"
    >
         <mat-label>Select from existing schools:</mat-label>
         <mat-select ngModel name="school" #school="ngModel" required
-        [disabled]="newCentreSelect.value" >
+        [disabled]="newSchoolSelect.value" >
           <mat-option *ngFor="let school of schools" [value]="school.schoolID">
           <b>{{school.name}}</b>, {{school.city}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!AdminCentreForm.valid" >
+        [disabled]="!AdminSchoolForm.valid" >
       Proceed</button>
       </form>
 
-      <form (submit)="newCentre(AdminForm)" #AdminForm="ngForm" *ngIf="newCentreSelect.value">
+      <form (submit)="newSchool(AdminForm)" #AdminForm="ngForm" *ngIf="newSchoolSelect.value">
       <mat-form-field appearance="fill" class="login-card-full-width"
-       *ngIf="newCentreSelect.value">
+       *ngIf="newSchoolSelect.value">
         <mat-label>Enter school name</mat-label>
         <input matInput type="text" name="name" #name="ngModel" ngModel required minlength="6">
         <mat-hint>School name must be 4 or more characters</mat-hint>
@@ -138,7 +138,7 @@ style="margin-top: 5em;">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="login-card-full-width"
-       *ngIf="newCentreSelect.value">
+       *ngIf="newSchoolSelect.value">
         <mat-label>Enter school address</mat-label>
         <input matInput type="text" name="address" #address="ngModel" ngModel required minlength="6">
         <mat-hint>Enter a valid address.</mat-hint>
@@ -147,7 +147,7 @@ style="margin-top: 5em;">
 
 
       <mat-form-field appearance="fill" class="login-card-full-width"
-       *ngIf="newCentreSelect.value">
+       *ngIf="newSchoolSelect.value">
         <mat-label>Enter city</mat-label>
         <input matInput type="text" name="city" #city="ngModel" ngModel required minlength="6">
         <mat-hint>Enter a valid City.</mat-hint>

@@ -25,7 +25,7 @@ schools:School[]=[];
   placeholderName:string;
   durationInMiliSeconds = 3000;
   Auth='';school='';schoolID='';vacName='';
-  newCentreSelect=new FormControl(false);
+  newSchoolSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
     public schoolService:SchoolService, public currentUserService:CurrentUserService
 
@@ -42,26 +42,7 @@ this.users=this.userService.getUsers();
 this.schools=this.schoolService.getschools();
 }
 
-  // ngOnInit(): void {
-  //   this.userService.getUsers();
-  //   this.userSub = this.userService.getUserUpdateListener()
-  //    .subscribe((users:User[]) => {
-  //      this.users=users;
-  //    });
-  //   this.centresService.getCentres();
-  //    this.centreSub = this.centresService.getCentreUpdateListener()
-  //    .subscribe((centres:Centre[]) => {
-  //      this.centres=centres;
-  //    });
-  //    this.sub = this.route.params.subscribe(params => {
-  //        this.centreID = params['centreID'];
-  //        this.vacName = params['vacname'];
-  //     })
-  // }
-  // ngOnDestroy(){
-  //   this.userSub?.unsubscribe();
-  //   this.centreSub?.unsubscribe();
-  // }
+
   openSnackBar() {
     this._snackBar.openFromComponent(InvalidLoginSnackbarComponent, {
       duration: this.durationInMiliSeconds,
@@ -81,8 +62,8 @@ this.schools=this.schoolService.getschools();
 
   }
 
-  verifyPatient(form: NgForm){
-    if (form.invalid){console.log("invalid patient");return;}
+  verifyVolunteer(form: NgForm){
+    if (form.invalid){console.log("invalid Volunteer");return;}
     this.inputUser=form.value.username;
     this.inputPassword=form.value.password;
     this.inputName=form.value.fullname;
@@ -101,23 +82,23 @@ this.schools=this.schoolService.getschools();
 
 
   verifyAdmin(form:NgForm) {
-    if (this.newCentreSelect.value){
+    if (this.newSchoolSelect.value){
       //new centre
       return;
     }
     this.inputSchoolID=form.value.school;
   }
 
-  existingCentre(form: NgForm){
-    if (form.invalid){console.log("invalid exist centre");return;}
-    this.inputSchoolID=form.value.centre;
+  existingSchool(form: NgForm){
+    if (form.invalid){console.log("invalid school");return;}
+    this.inputSchoolID=form.value.school;
     this.schools = this.schoolService.getschools();
     this.page=3;
 
   }
 
-  newCentre(form: NgForm){
-    if (form.invalid){console.log("invalid new centre");return;}
+  newSchool(form: NgForm){
+    if (form.invalid){console.log("invalid school");return;}
     let id = Math.floor(Math.random()*999999).toString( );
     this.schoolService.addSchool(id, form.value.name,
     form.value.address,form.value.city)
@@ -126,8 +107,6 @@ this.schools=this.schoolService.getschools();
 
       return;
     }
-    // this.schoolService.addSchool( form.value.schoolID, form.value.name, form.value.address,
-    //   form.value.city);
       this.dialog.open(RegSuccessDialog);
       this.page=4;
       form.resetForm();
@@ -148,7 +127,7 @@ this.schools=this.schoolService.getschools();
     return;
   }
 
-  public gotoPatientReg():any {
+  public gotoVolunteerReg():any {
     this.page=2;
     return;
 
@@ -165,11 +144,8 @@ return;
   //   this.progress = number;
   // }
 
-  public setFirstDose(bool:boolean){
-    this.inputFirstDose = bool;
-  }
 
-  public registerPatient() {
+  public registerVolunteer() {
     this.userService.addVolunteer(Math.floor(Math.random()*999999).toString( ),this.inputUser,this.inputEmail,
     this.inputPassword,this.inputName,this.inputIC,this.inputICType,this.inputPhone, this.inputPosition,
     this.inputOccupation, this.inputDateofbirth,this.inputStaffID, this.schoolID
@@ -190,7 +166,7 @@ return;
     this.userService.addAdmin(Math.floor(Math.random()*999999).toString( )
     ,this.inputUser,this.inputEmail,this.inputPassword, this.inputName,
     this.inputSchoolID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.schoolID)
-    this.page=0;
+    //this.page=0;
     this.dialog.open(RegSuccessDialog);
   }
 }

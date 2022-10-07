@@ -17,12 +17,7 @@ export interface Vaccine{
 })
 export class RequestService {
   constructor(public schoolService: SchoolService){}
-  // private vaccines: Vaccine[] = [
-  //   {resourceName: "Mobile Device"},
-  //   {resourceName: "Personal Computer"},
-  //   {resourceName: "Networking Equipment"},
 
-  // ];
   private resources: Resource[] = [];
   private requests: Request[]=[];
   private resourcesUpdated = new Subject<Resource[]>();
@@ -36,13 +31,12 @@ export class RequestService {
     status:String
     ) {
       const resource: Resource= {
-        //id: "",
+
         description:description,
-        //resourceID: resourceID,
-        //resourceNumber: resourceNumber,
+
         quantity: quantity,
         school: centreID,
-        //vaccine: vaccine,
+
         resourceType:resourceType,
         status:status
 

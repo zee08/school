@@ -9,18 +9,13 @@ import { Subject } from 'rxjs';
 export class SchoolService {
   private schools: School[] = [
   ];
-   //set type to post array(model) and assign to empty array
-  // private centresUpdated = new Subject<Centre[]>();
+
 
   constructor() {}
 
   getschools(){
     return this.schools;
-    // this.http.get<{message: string, centres: Centre[]}>('http://localhost:3000/api/centres')
-    // .subscribe((centreData)=>{
-    //   this.centres = centreData.centres;
-    //   this.centresUpdated.next([...this.centres]);
-    // })
+
   }
 
   addSchool(schoolID: String, name: String, address: String,
@@ -34,12 +29,7 @@ export class SchoolService {
     }//var storing values
 
     this.schools.push(school);
-    // this.http.post<{message: string}>('http://localhost:3000/api/centres', centre)
-    // .subscribe((responseData)=>{
-    //   console.log(responseData.message);
-    //   this.centres.push(centre);
-    //   this.centresUpdated.next([...this.centres]);
-    // })
+
   }
 
   getschoolByID(schoolID: String){
@@ -58,9 +48,5 @@ export class SchoolService {
     return;
   }
 
-//   getCentreUpdateListener()
-//   {
-//     return this.centresUpdated.asObservable();
-//   }
-// }
+
 }
