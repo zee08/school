@@ -112,23 +112,6 @@ export class CurrentUserService {
             return;
           }
 
-    // this.http.post <{token:string,user: User}>('http://localhost:3000/api/users/login', authData)
-    //   .subscribe(response => {
-    //     const token = response.token;
-    //     this.token = token;
-    //     this.authService.setToken(token);
-    //     this.authStatusListener.next(true);
-    //     this.loginstatus=true;
-    //     this.user = response.user;
-    //     if (!this.isAdmin()){
-    //         this.router.navigate(['/patient/home']);
-    //         return;
-    //       }
-    //     else if (this.isAdmin()){
-    //       this.router.navigate(['/admin/home']);
-    //       return;
-    //     }
-    //   });
 
 
   }

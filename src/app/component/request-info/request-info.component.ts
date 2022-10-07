@@ -4,11 +4,11 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { Resource, Tutorial } from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
-import { VaccinationService } from 'src/app/service/vaccination.service';
+
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Vaccine } from 'src/app/service/request.service';
+
 import { Time } from '@angular/common';
 
 export interface DialogData {
@@ -25,7 +25,7 @@ export interface DialogData {
 })
 
 export class RequestInfoComponent implements OnInit {
-  constructor(private router:Router,private route: ActivatedRoute, public vaccinationService:VaccinationService,
+  constructor(private router:Router,private route: ActivatedRoute,
     public currentUserService:CurrentUserService, public requestService:RequestService,
     public dialog: MatDialog) {}
 
@@ -38,9 +38,8 @@ export class RequestInfoComponent implements OnInit {
   resources_:Resource[] = [];
   resources:Resource[] = [];
   tutorials: Tutorial[]=[];
-  vaccines:Vaccine[] = [];
-  private batchSub:Subscription | undefined;
-  private sub: any;
+
+
 
   ngOnInit() {
     this.resources = this.requestService.getResources();

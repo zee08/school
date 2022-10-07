@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { School } from '../model/school.model';
-import { Subject } from 'rxjs';
+
 
 
 @Injectable({
@@ -26,7 +26,7 @@ export class SchoolService {
       address: address,
       city: city,
 
-    }//var storing values
+    }
 
     this.schools.push(school);
 

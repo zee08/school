@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { SchoolService } from './school.service';
 
 import { School } from '../model/school.model';
-import { map } from 'rxjs/operators';
+
 import { Time } from '@angular/common';
 
 export interface Vaccine{

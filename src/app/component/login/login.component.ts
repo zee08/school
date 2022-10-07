@@ -8,7 +8,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model/user.model';
-import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: 'login.component.html',
@@ -20,11 +20,20 @@ page: number;
 users:User[]=[];
 schools:School[]=[];
   ICoptionValue:any;
-  inputEmail='';inputUser='';inputName='';inputPhone=0;inputIC='';inputICType='';inputPassword='';inputFirstDose=false;inputStaffID='';inputSchoolID='';
-  inputPosition=''; inputOccupation=''; inputDateofbirth='';
+  inputEmail='';
+  inputUser='';
+  inputUserID='';
+  inputFullName='';
+  inputPhone=0;
+  inputPassword='';
+  inputStaffID='';
+  inputSchoolID='';
+  inputPosition='';
+  inputOccupation='';
+  inputDateofbirth='';
   placeholderName:string;
   durationInMiliSeconds = 3000;
-  Auth='';school='';schoolID='';vacName='';
+  Auth='';school='';schoolID='';
   newSchoolSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
     public schoolService:SchoolService, public currentUserService:CurrentUserService
@@ -66,13 +75,10 @@ this.schools=this.schoolService.getschools();
     if (form.invalid){console.log("invalid Volunteer");return;}
     this.inputUser=form.value.username;
     this.inputPassword=form.value.password;
-    this.inputName=form.value.fullname;
-    this.inputICType=form.value.type;
+    this.inputFullName=form.value.fullname;
+
     this.inputPhone=form.value.phone;
-    if (form.value.ICno!='')
-      this.inputIC=form.value.ICno;
-    if (form.value.Passport!='')
-      this.inputIC=form.value.Passport;
+
       this.page=0;
 
     this.dialog.open(RegSuccessDialog);
@@ -121,8 +127,8 @@ this.schools=this.schoolService.getschools();
     return;
    }
 
-  //page manipulation
-  public returnToFirst(){ //clear all form data
+
+  public returnToFirst(){
     this.page=0;
     return;
   }
@@ -140,16 +146,11 @@ return;
 
 
 
-  // public setProgress(number:number) {
-  //   this.progress = number;
-  // }
 
-
-  public registerVolunteer() {
-    this.userService.addVolunteer(Math.floor(Math.random()*999999).toString( ),this.inputUser,this.inputEmail,
-    this.inputPassword,this.inputName,this.inputIC,this.inputICType,this.inputPhone, this.inputPosition,
-    this.inputOccupation, this.inputDateofbirth,this.inputStaffID, this.schoolID
-    );
+   registerVolunteer(form: NgForm) {
+    this.userService.addVolunteer(form.value.username, form.value.password, form.value.fullname, form.value.dateofbirth,
+      form.value.occupation, form.value.position, form.value.schoolID, form.value.staffid, form.value.phone, form.value.userID,
+      form.value.email)
     this.page=0;
     this.dialog.open(RegSuccessDialog);
   }
@@ -158,25 +159,20 @@ return;
     if (form.invalid){console.log("invalid admin");return;}
     this.inputUser=form.value.username;
     this.inputPassword=form.value.password;
-    this.inputName=form.value.fullname;
+    this.inputFullName=form.value.fullname;
     this.inputStaffID=form.value.staffID;
     this.inputPosition=form.value.position;
     this.inputEmail=form.value.email;
     this.inputStaffID=form.value.staffID;
     this.userService.addAdmin(Math.floor(Math.random()*999999).toString( )
-    ,this.inputUser,this.inputEmail,this.inputPassword, this.inputName,
+    ,this.inputUser,this.inputEmail,this.inputPassword, this.inputFullName,
     this.inputSchoolID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.schoolID)
     //this.page=0;
     this.dialog.open(RegSuccessDialog);
   }
 }
 
-// export class MyErrorStateMatcher implements ErrorStateMatcher {
-//   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-//     const isSubmitted = form && form.submitted;
-//     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-//   }
-// }
+
 
 @Component({
   selector: 'reg-success-dialog',

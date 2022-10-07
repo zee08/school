@@ -3,7 +3,7 @@ import { Resource, Tutorial } from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Vaccine } from 'src/app/service/request.service';
-import { Vaccination } from 'src/app/model/vaccination.model';
+
 import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 @Component({
@@ -52,7 +52,4 @@ export class AdminRequestComponent implements OnInit {
   }
 
 
-  // getTotalBatches(vaccine:Vaccine) {
-  //   return this.vaccineService.getTotalResources(vaccine,this.currentUserService.getCentreID());
-  // }
 }

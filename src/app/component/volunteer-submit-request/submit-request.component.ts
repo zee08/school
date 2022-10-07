@@ -3,7 +3,7 @@ import { Resource, Tutorial } from 'src/app/model/request.model';
 import { RequestService } from 'src/app/service/request.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Vaccine } from 'src/app/service/request.service';
-import { Vaccination } from 'src/app/model/vaccination.model';
+
 import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 @Component({
@@ -14,7 +14,7 @@ import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 export class SubmitRequestComponent implements OnInit {
   resources:Resource[] = [];
-  vaccines:Vaccine[] = [];
+
   tutorials: Tutorial[]=[];
 
 
@@ -25,7 +25,7 @@ export class SubmitRequestComponent implements OnInit {
   ngOnInit(): void {
     this.resources = this.requestService.getResources();
     this.tutorials=this.requestService.getTutorials();
-    //this.vaccines = this.vaccineService.getVaccines();
+
 
 
   }
@@ -52,8 +52,4 @@ export class SubmitRequestComponent implements OnInit {
 
   }
 
-
-  // getTotalBatches(vaccine:Vaccine) {
-  //   return this.vaccineService.getTotalResources(vaccine,this.currentUserService.getCentreID());
-  // }
 }

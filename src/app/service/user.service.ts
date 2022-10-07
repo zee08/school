@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
 import { Subject } from 'rxjs';
-import { GlobalPositionStrategy } from '@angular/cdk/overlay';
+
 
 
 
@@ -61,16 +61,11 @@ export class UserService {
       role: "admin"
     }
     this.users.push(user);
-    // this.http.post<{message:string}>('http://localhost:3000/api/users',user)
-    // .subscribe((responseData) => {
-    //   console.log(responseData.message);
-    //   this.users.push(user);
-    //   this.usersUpdated.next([...this.users]);
-    // });
+
   }
 
   addVolunteer(userID: string,username: string,email: string,
-    password: string, fullname: string,IDno: String,IDtype: String,
+    password: string, fullname: string,
     phone: number, occupation: string, dateofbirth: string, position:string, staffid:string, schoolID: String,
   ){
       const user:User = {
@@ -82,20 +77,17 @@ export class UserService {
         fullname:fullname,
         occupation:occupation,
         dateofbirth:dateofbirth,
-        phone: phone,
+        phone: 0,
         staffid:staffid,
         position:position,
         schoolID: schoolID,
 
-        //first: first,
+
         role: "volunteer"
       }
-      // this.http.post<{message:string}>('http://localhost:3000/api/users',user)
-      // .subscribe((responseData) => {
-      //   console.log(responseData.message);
+
         this.users.push(user);
-      //   this.usersUpdated.next([...this.users]);
-      //  });
+
   }
 
   getUserByID(userID:String){
