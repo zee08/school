@@ -1,15 +1,13 @@
 import { Time } from "@angular/common";
 
 export interface Resource{
-  // id: String;
-  // resourceID: String;
-  // resourceNumber: String;
+
   description:String;
   quantity: number;
   resourceType:String;
   school: String;
   status: String;
-  // vaccine: String;
+
 
 
 
