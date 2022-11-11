@@ -63,7 +63,7 @@ import { ViewOfferComponent } from './component/view-offer/view-offer.component'
 import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-home.component';
 import { VolunteerNavComponent } from './component/volunteer-nav/volunteer-nav.component';
 import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer-school.component';
-import { VolunteerRequestComponent } from './component/volunteer-request/volunteer-request.component';
+
 import { ViewRequestComponent } from './component/view-request/view-request.component';
 import { SubmitRequestComponent } from './component/volunteer-submit-request/submit-request.component';
 
@@ -114,7 +114,7 @@ LoginComponent,
     ViewOfferComponent,
     VolunteerNavComponent,
     VolunteerSchoolComponent,
-    VolunteerRequestComponent,
+  
     ViewRequestComponent,
     SubmitRequestComponent,
 
