@@ -1,19 +1,34 @@
 <mat-card  *ngIf="page===0" style="background-color:rgb(255, 255, 255);">
   <div>
     <h1>Welcome to School HELP</h1>
+    <!-- <form (submit)="verifyUser(emailForm)" #emailForm="ngForm">
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Please enter your Username..</mat-label>
+      <input type="text" matInput name="username"
+      ngModel #username="ngModel"
+
+      placeholder="username" required>
+
+      </mat-form-field>
+      <button
+      [disabled]=" username.errors?.['required']"
+      type="submit" mat-raised-button class="login-button" color="accent">Proceed</button>
+    </form> -->
+
 
 </div>
 </mat-card>
-
-
-
 <!--If user not exist-->
 <mat-card
 *ngIf="page===0"
-style="margin-top: 2em;">
+style="margin-top: 2em; width: 50%; display: inline-block; " >
 <div>
-  <h1>Please Select To</h1>
-
+  <!-- <h1>Please Select To</h1> -->
+  <!-- <p>
+    No account was found with <b>{{inputUser}}</b>.
+    Register now or
+    <a href="">try again</a>.
+  </p> -->
 
     <br>
     <h2>Register As:</h2>
@@ -23,84 +38,84 @@ style="margin-top: 2em;">
     <button mat-stroked-button class="admin-button"
     color="primary" (click)="gotoAdminReg()">
       Admin</button>
-  </div>
+      </div>
 
 
 </mat-card>
 
+<mat-card
+*ngIf="page===0"
+style="margin-top: 2em; width: 40%;  display: inline-block;">
+<div>
+
+    <h2>Login:</h2>
+    <button mat-stroked-button class="patient-button"
+    color="accent" (click)="gotoLogin()">
+      Login</button>
+
+      </div>
+
+
+</mat-card>
 <!--Client Register-->
  <mat-card class="login-card" *ngIf="page===2"
 
 style="margin-top: 2em;">
   <div>
     <h1>Register for Volunteer</h1>
-    <mat-progress-bar mode="determinate" ></mat-progress-bar>
     <br>
     <p>
     Please fill in the fields.
     </p>
-    <form (submit)="verifyVolunteer(volForm)" #volForm="ngForm">
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your username</mat-label>
-        <input matInput type="email" name="username" #username="ngModel" ngModel required minlength="6">
-
+    <form (submit)="registerVolunteer(volForm)" #volForm="ngForm" appearance="fill" class="login-card-full-width">
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="text" [placeholder]="'Username'" name="username" ngModel #usernameInput="ngModel" required
+          username />
+        <mat-error *ngIf="usernameInput.invalid">Please enter a valied username.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="email" [placeholder]="'E-mail address'" name="email" ngModel #emailInput="ngModel" required
+          email />
+        <mat-error *ngIf="emailInput.invalid">Please enter a valied e-mail.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="password" [placeholder]="'Password'" name="password" ngModel #passwordInput="ngModel"
+          required />
+        <mat-error *ngIf="passwordInput.invalid">Please enter a password.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="text" [placeholder]="'Full name'" name="fullname" ngModel #fullnameInput="ngModel"
+          required />
+        <mat-error *ngIf="fullnameInput.invalid">Please enter a fullname.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="tel" [placeholder]="'Phone'" name="phone" ngModel #phoneInput="ngModel"
+          required />
+        <mat-error *ngIf="phoneInput.invalid">Please enter aphone.</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your password</mat-label>
-        <input matInput type="password" name="password" #password="ngModel" ngModel required minlength="6">
-        <mat-hint>Password must be 6 or more characters</mat-hint>
-
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="text" [placeholder]="'Occupation'" name="occupation" ngModel #occupationInput="ngModel"
+          required />
+        <mat-error *ngIf="occupationInput.invalid">Please enter occupation.</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your full name</mat-label>
-        <input matInput type="text" name="fullname" #fullname="ngModel" ngModel required minlength="3">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your Email</mat-label>
-        <input matInput type="email" name="email" #email="ngModel" ngModel required minlength="3">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your Occupation</mat-label>
-        <input matInput type="text" name="occupation" #occupation="ngModel" ngModel required minlength="3">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your Date of birth</mat-label>
-        <input matInput type="date" name="date" #date="ngModel" ngModel required minlength="3">
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <input matInput type="date" [placeholder]="'Date'" name="dateofbirth" ngModel #dateofbirthInput="ngModel"
+          required />
+        <mat-error *ngIf="dateofbirthInput.invalid">Please enter date.</mat-error>
       </mat-form-field>
 
 
-
-      <mat-form-field appearance="fill" class="login-card-full-width"
-      >
-        <mat-label>Enter your phone No.</mat-label>
-        <input type="tel" matInput name="phone"
-          ngModel #phone="ngModel"
-          pattern="[0-9]{10,11}"
-          placeholder="Eg. 0123335433" required>
-        <mat-hint>Make sure your phone No. is valid.</mat-hint>
-
-      </mat-form-field>
-      <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!volForm.valid" routerLink="/loginVol">
-      Proceed</button>
-      </form>
+      <button mat-raised-button color="accent" type="submit">Signup</button>
+    </form>
   </div>
 </mat-card>
 
 
 <!--admin verify and loc-->
 <mat-card class="login-card"
-*ngIf="page===4"
+*ngIf="page===3"
 style="margin-top: 5em;">
   <div>
     <h1>Select School or Register a new school.</h1>
@@ -115,10 +130,10 @@ style="margin-top: 5em;">
       <mat-form-field appearance="fill" class="login-card-full-width"
    >
         <mat-label>Select from existing schools:</mat-label>
-        <mat-select ngModel name="school" #school="ngModel" required
+        <mat-select ngModel name="school" #school="ngModel" requireds
         [disabled]="newSchoolSelect.value" >
           <mat-option *ngFor="let school of schools" [value]="school.schoolID">
-          <b>{{school.name}}</b>, {{school.city}}
+          <b>{{school.schoolname}}</b>, {{school.city}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -131,9 +146,9 @@ style="margin-top: 5em;">
       <mat-form-field appearance="fill" class="login-card-full-width"
        *ngIf="newSchoolSelect.value">
         <mat-label>Enter school name</mat-label>
-        <input matInput type="text" name="name" #name="ngModel" ngModel required minlength="6">
+        <input matInput type="text" name="schoolname" #schoolname="ngModel" ngModel required minlength="6">
         <mat-hint>School name must be 4 or more characters</mat-hint>
-        <mat-error *ngIf="name.hasError('minlength')">Must be <strong>4 or more</strong> characters!</mat-error>
+        <mat-error *ngIf="schoolname.hasError('minlength')">Must be <strong>4 or more</strong> characters!</mat-error>
 
       </mat-form-field>
 
@@ -164,7 +179,7 @@ style="margin-top: 5em;">
 
 
 <!--admin register-->
-<mat-card class="login-card" *ngIf="page===3"
+<mat-card class="login-card" *ngIf="page===4"
 
 style="margin-top: 5em;">
   <div>
@@ -174,71 +189,58 @@ style="margin-top: 5em;">
     <p>
       Please fill in the fields.
     </p>
-    <form (submit)="regAdmin(AdminForm)" #AdminForm="ngForm">
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your username</mat-label>
-        <input matInput type="text" name="username" #username="ngModel" ngModel required minlength="6">
-        <mat-hint>Username must be 6 or more characters</mat-hint>
-        <mat-error *ngIf="username.hasError('minlength')">Must be <strong>6 or more</strong> characters!</mat-error>
-
+    <form (submit)="onSignup(AdminForm)" #AdminForm="ngForm">
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Username</mat-label>
+        <input matInput name="username" ngModel type="text" placeholder="Username"
+        #usernameInput="ngModel" required username>
+        <mat-error *ngIf="usernameInput.invalid">Enter valid username</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your password</mat-label>
-        <input matInput type="password" name="password" #password="ngModel" ngModel required minlength="6">
-        <mat-hint>Password must be 6 or more characters</mat-hint>
-
-
-        <mat-error *ngIf="password.hasError('minlength')">Must be <strong>6 or more</strong> characters!</mat-error>
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" ngModel type="email" placeholder="Email"
+        #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">Enter valid email</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your full name</mat-label>
-        <input matInput type="text" name="fullname" #fullname="ngModel" ngModel required minlength="3">
-        <mat-hint>Name must be 3 or more characters</mat-hint>
-        <mat-error *ngIf="fullname.hasError('minlength')">Must be <strong>3 or more</strong> characters!</mat-error>
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" ngModel type="password" placeholder="Password"
+        #passwordInput="ngModel" required password autocomplete="on">
+        <mat-error *ngIf="passwordInput.invalid">Enter valid Password</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your Email</mat-label>
-        <input matInput type="email" name="email" #email="ngModel" ngModel required minlength="3">
-        <mat-hint>Name must be 3 or more characters</mat-hint>
-        <mat-error *ngIf="fullname.hasError('minlength')">Must be <strong>3 or more</strong> characters!</mat-error>
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Full name</mat-label>
+        <input matInput name="fullname" ngModel type="text" placeholder="Full name"
+        #fullnameInput="ngModel" required fullname>
+        <mat-error *ngIf="fullnameInput.invalid">Enter valid Full name</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width"
-      >
-        <mat-label>Enter your phone No.</mat-label>
-        <input type="tel" matInput name="phone"
-          ngModel #phone="ngModel"
-          pattern="[0-9]{10,11}"
-          placeholder="Eg. 0123335433" required>
-        <mat-hint>Make sure your phone No. is valid.</mat-hint>
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Position</mat-label>
+        <input matInput name="position" ngModel type="text" placeholder="Position"
+        #positionInput="ngModel" required position>
+        <mat-error *ngIf="positionInput.invalid">Enter valid Position</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your StaffID</mat-label>
-        <input matInput type="text" name="staffID" #staffID="ngModel" ngModel required minlength="3">
-        <mat-hint>Name must be 3 or more characters</mat-hint>
-        <mat-error *ngIf="staffID.hasError('minlength')">Must be <strong>3 or more</strong> characters!</mat-error>
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Staff ID</mat-label>
+        <input matInput name="staffid" ngModel type="text" placeholder="Staff ID"
+        #staffidInput="ngModel" required staffid>
+        <mat-error *ngIf="staffidInput.invalid">Enter valid Staff ID</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="login-card-full-width" >
-        <mat-label>Enter your position</mat-label>
-        <input matInput type="text" name="position" #position="ngModel" ngModel required minlength="3">
-
-
-
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Phone No:</mat-label>
+        <input matInput name="phone" ngModel type="tel" placeholder="Phone No"
+        #phoneInput="ngModel" required phone>
+        <mat-error *ngIf="phoneInput.invalid">Enter valid phone</mat-error>
       </mat-form-field>
-
-
 
       <button type="submit" mat-raised-button class="login-button" color="accent"
-        [disabled]="!AdminForm.valid" routerLink="/signup">
+        [disabled]="!AdminForm.valid">
       Proceed</button>
     </form>
   </div>
@@ -250,16 +252,22 @@ style="margin-top: 5em;">
 style="margin-top: 10em;">
   <div>
     <h1>Welcome back, {{placeholderName}}.</h1>
-    <p>
 
-        <a onclick="this.ngOnInit()">Try another Email</a>.
-    </p>
 
     <br>
     <form (submit)="login(LoginForm)" #LoginForm="ngForm">
+
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Enter your Username</mat-label>
+        <input matInput type="text" name="username" #username="ngModel" ngModel required
+       >
+
+      </mat-form-field>
+
       <mat-form-field appearance="fill" class="login-card-full-width">
         <mat-label>Enter your password</mat-label>
-        <input matInput type="password" name="password" #password="ngModel" ngModel required>
+        <input matInput type="password" name="password" #password="ngModel" ngModel required
+        autocomplete="on">
         <mat-hint> </mat-hint>
 
       </mat-form-field>
@@ -270,5 +278,4 @@ style="margin-top: 10em;">
     </form>
   </div>
 </mat-card>
-
 

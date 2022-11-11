@@ -6,7 +6,7 @@
 <mat-card class="center-card" multi= "true" *ngFor="let school of schools" matRipple [matRippleColor]="'#fcc2c2'">
   <mat-grid-list cols="5" rowHeight="40px">
     <mat-grid-tile colspan="5"><div class="vac-tiles" style="font-size: 16px;">
-      <b>{{school.name}}</b>
+      <b>{{school.schoolname}}</b>
     </div></mat-grid-tile>
     <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon>location_on</mat-icon>{{school.address}}</div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>location_city</mat-icon>

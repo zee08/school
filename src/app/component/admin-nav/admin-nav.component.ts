@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
+
 @Component({
   selector: 'app-admin-nav',
   templateUrl: './admin-nav.component.html',
@@ -8,10 +10,16 @@ import { Router } from '@angular/router';
 })
 export class AdminNavComponent implements OnInit{
   showFiller = false;
-  constructor(private router:Router, private currentUserService: CurrentUserService){}
+  userName: String;
+  currentUser: any;
 
-  ngOnInit(): void {
+  constructor(private router:Router, private currentUserService: CurrentUserService,
+    private userService: UserService){}
 
+
+
+  ngOnInit(){
+    this.currentUser = this.currentUserService.getUser();
 
   }
   isLogin() {
@@ -21,5 +29,8 @@ export class AdminNavComponent implements OnInit{
   logout() {
     this.currentUserService.logout();
     return;
+  }
+  getUser(){
+    this.currentUserService.getUsername();
   }
 }

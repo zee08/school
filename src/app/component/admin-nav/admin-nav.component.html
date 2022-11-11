@@ -1,5 +1,6 @@
 <mat-drawer-container class="container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side" opened>
+  <mat-drawer #drawer class="sidenav" mode="side" opened *ngIf="currentUser">
+    <a routerLink="home" mat-button class="sidenav-btn"><div class="icon-text" *ngIf="currentUser"><mat-icon class="sidenav-icon" >account_circle</mat-icon>{{currentUser.username}}</div></a>
     <a routerLink="home" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">home</mat-icon>Home</div></a>
     <a routerLink="request" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">list</mat-icon>Manage Requests</div></a>
     <a routerLink="offer" mat-button class="sidenav-btn"><div class="icon-text"><mat-icon class="sidenav-icon">check_box</mat-icon>View Offers</div></a>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Resource, Tutorial } from 'src/app/model/request.model';
-import { RequestService } from 'src/app/service/request.service';
+//import { Request } from 'src/app/model/request.model';
+//import { RequestService } from 'src/app/service/request.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
-import { Vaccine } from 'src/app/service/request.service';
+//import { Vaccine } from 'src/app/service/request.service';
 
 import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
@@ -12,45 +12,15 @@ import { NgForm, FormControl, FormBuilder } from "@angular/forms";
   styleUrls: ['view-request.component.css']
 })
 
-export class ViewRequestComponent implements OnInit {
-  resources:Resource[] = [];
-
-  tutorials: Tutorial[]=[];
+export class ViewRequestComponent {
+  resources:Request[] = [];
 
 
 
-  constructor(public requestService:RequestService,
-    public currentUserService:CurrentUserService) { }
-
-  ngOnInit(): void {
-    this.resources = this.requestService.getResources();
-    this.tutorials=this.requestService.getTutorials();
 
 
+  constructor() { }
+onAddPost(form: NgForm){
 
-  }
-  ngOnDestroy(){
-
-  }
-  onAddPost(form: NgForm){
-
-    if(form.invalid){
-      return;
-    }
-    this.requestService.addTutorial(form.value.description,
-      form.value.date, form.value.time, form.value.numOfStudents,
-      form.value.studentLevel, form.value.status, form.value.centreID)
-  }
-
-  onAddResource(form: NgForm){
-
-    if(form.invalid){
-      return;
-    }
-    this.requestService.addResource(form.value.description,
-      form.value.quantity, form.value.resourceType, form.value.centreID, form.value.status);
-
-  }
-
-
+}
 }

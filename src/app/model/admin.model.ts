@@ -1,4 +1,4 @@
-export interface User{
+export interface Admin{
   id: String;
   userID: String;
   username: String;
@@ -6,11 +6,9 @@ export interface User{
   fullname: String;
   email: String;
   phone: Number;
-  occupation: String;
-  position: String,
-  dateofbirth: String;
   staffid: String;
+  position: String;
   schoolID: String;
-schoolname: String;
   role: String;
+
 }

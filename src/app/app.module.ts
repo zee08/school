@@ -63,11 +63,12 @@ import { ViewOfferComponent } from './component/view-offer/view-offer.component'
 import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-home.component';
 import { VolunteerNavComponent } from './component/volunteer-nav/volunteer-nav.component';
 import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer-school.component';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ViewRequestComponent } from './component/view-request/view-request.component';
 import { SubmitRequestComponent } from './component/volunteer-submit-request/submit-request.component';
-
+import { AuthInterceptor } from 'backend/auth/auth-interceptor';
 const appRoutes: Routes = [
+  {path:'',component:LoginComponent},
   {path:'login',component:LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path:'loginVol', component:LoginVolComponent},
@@ -114,7 +115,7 @@ LoginComponent,
     ViewOfferComponent,
     VolunteerNavComponent,
     VolunteerSchoolComponent,
-  
+
     ViewRequestComponent,
     SubmitRequestComponent,
 
@@ -155,13 +156,15 @@ LoginComponent,
     MatTableModule,
     CommonModule,
     MatRippleModule,
+HttpClientModule,
+
 
 
 
     RouterModule.forRoot(appRoutes),
 
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 

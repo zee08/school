@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
-import { Resource, Tutorial } from 'src/app/model/request.model';
-import { RequestService } from 'src/app/service/request.service';
+//import { Request } from 'src/app/model/request.model';
+//import { RequestService } from 'src/app/service/request.service';
 
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { Router } from '@angular/router';
@@ -26,7 +26,7 @@ export interface DialogData {
 
 export class RequestInfoComponent implements OnInit {
   constructor(private router:Router,private route: ActivatedRoute,
-    public currentUserService:CurrentUserService, public requestService:RequestService,
+    public currentUserService:CurrentUserService,
     public dialog: MatDialog) {}
 
     selecteddate: "" | undefined;
@@ -35,14 +35,14 @@ export class RequestInfoComponent implements OnInit {
   enteredDescription="";
   resourceID:String="";
   resName:String="";
-  resources_:Resource[] = [];
-  resources:Resource[] = [];
-  tutorials: Tutorial[]=[];
+
+  request:Request[] = [];
+
 
 
 
   ngOnInit() {
-    this.resources = this.requestService.getResources();
+    //this.requestService.getResources();
 
   }
 

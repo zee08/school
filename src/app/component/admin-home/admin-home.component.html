@@ -1,38 +1,47 @@
 <h1><b>Home</b>
   <br>
 </h1><hr>
-<h2>Profile for James</h2>
+<div *ngIf="currentUser">
+<h3 >Profile for {{currentUser.username}}, {{currentUser.position}}</h3>
+<h3>School ID: {{currentUser.schoolID}}, {{currentUser.s}}</h3>
+</div>
 <mat-grid-list cols="2" rowHeight="3:2" [gutterSize]="'20px'">
 
 
   <mat-card class="center-card" multi= "true">
     <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>Full Name:</mat-label>
-      <input matInput value="james" [disabled]="inactive">
+      <mat-label>Full name:</mat-label>
+      <input matInput value={{currentUser.fullname}} [disabled]="inactive">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Password:</mat-label>
+      <input matInput value={{currentUser.password}} [disabled]="inactive">
 
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Email:</mat-label>
-      <input matInput value="jame@gmail.com" [disabled]="inactive">
+      <input matInput value={{currentUser.email}} [disabled]="inactive">
 
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Phone:</mat-label>
-      <input matInput value="01234567899" [disabled]="inactive">
+      <input matInput value={{currentUser.phone}} [disabled]="inactive">
 
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Staff ID:</mat-label>
-      <input matInput value="S001" [disabled]="inactive">
+      <input matInput value={{currentUser.staffid}} [disabled]="inactive">
 
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 100%;">
       <mat-label>Position:</mat-label>
-      <input matInput value="HOD" [disabled]="inactive">
+      <input matInput value={{currentUser.position}} [disabled]="inactive">
 
     </mat-form-field>
     <mat-action-row>

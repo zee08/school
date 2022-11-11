@@ -1,40 +1,43 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
 import { UserService } from './user.service';
-
-import { Subject } from 'rxjs';
-import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { AuthService } from 'backend/auth/auth.service';
+import { Router, TitleStrategy } from '@angular/router';
+import { Admin } from '../model/admin.model';
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentUserService {
   private user:User;
+  userRole :string;
   private loginstatus:boolean = false;
+  private loggedUser = new BehaviorSubject<User>(<User>{});
   private token: string ="";
   private authStatusListener = new Subject<boolean>();
 
-  constructor(public userservice:UserService,private authService:AuthService,private router:Router){
+  constructor(public userservice:UserService,private authService:AuthService,private router:Router,
+    private http:HttpClient)
+    {
     this.user ={
       id:"",
       userID:"",
       username:'',
-      email:"",
       password:"",
       fullname:"",
-      staffid: "",
-      position: "",
-      occupation:"",
-      dateofbirth:"",
-      role: "",
+      email:"",
       phone:0,
+      occupation:"",
+      position: "",
+      dateofbirth:"",
+      staffid: "",
       schoolID:"",
-
-
+      schoolname: "",
+      role: "",
     };
-  }
 
+    }
   getToken(){
     return this.token;
   }
@@ -55,7 +58,7 @@ export class CurrentUserService {
     return this.user.email
   }
 
-  getName(){
+  getFullName(){
     return this.user.fullname
   }
 
@@ -69,6 +72,10 @@ export class CurrentUserService {
 
   getSchoolID(){
     return this.user.schoolID
+  }
+
+  getSchoolname() {
+    return this.user.schoolname;
   }
 
   getStaffID(){
@@ -88,49 +95,92 @@ export class CurrentUserService {
     return this.loginstatus
   }
 
-  login(username:string,password:string){
+
+
+
+  login(username:String,password:String){
     const authData: User = {username:username, password:password,
       id:"",
       userID:'',
-      email:'',
       fullname:"",
-      role:"",
+      email:'',
+      phone:0,
       occupation:'',
+      position: '',
       dateofbirth:'',
       staffid:"",
-      position: "",
-      phone:0,
       schoolID:"",
-
+      schoolname: "",
+      role:"",
     };
-    if (!this.isAdmin()){
-              this.router.navigate(['/patient/home']);
-              return;
-            }
-          else if (this.isAdmin()){
-            this.router.navigate(['/admin/home']);
-            return;
-          }
+    this.http.post <{token:string,user: User}>('http://localhost:3000/api/users/login', authData)
+    .subscribe(response => {
 
+      const token = response.token;
+      this.token = token;
+      this.authService.setToken(token);
+      this.authStatusListener.next(true);
+      this.loggedUser.next(this.user);
+      this.loginstatus=true;
+      this.user = response.user;
 
+      if (!this.isAdmin()){
+          this.router.navigate(['/volunteer/home']);
+          return;
+        }
+      else if(this.isAdmin()){
+        this.router.navigate(['/admin/home']);
+        return;
+      }
+    });
 
   }
+  getUserName(){
+    return this.loggedUser.getValue().username;
+  }
+  // loginAdmin(username:String,password:String){
+  //   const authAdminData: Admin = {username:username, password:password,
+  //     id:"",
+  //     userID:'',
+  //     email:'',
+  //     fullname:"",
+  //     role:"",
+  //     staffid:"",
+  //     position: "",
+  //     phone:0,
+  //     schoolID:"",
+
+  //   };
+  //   this.http.post <{token:string,admin: Admin}>('http://localhost:3000/api/admins/login', authAdminData)
+  //   .subscribe(response => {
+  //     const token = response.token;
+  //     this.token = token;
+  //     this.authService.setToken(token);
+  //     this.authStatusListener.next(true);
+  //     this.loginstatus=true;
+  //     this.admin = response.admin;
+  //     this.router.navigate(['/admin/home']);
+
+  //   });
+  // }
+
 
   logout(){
     let user:User ={
-      id: "",
-      userID:"",
+      id:"",
+      userID:'',
       username:'',
-      email:"",
-      password:"",
+      password:'',
       fullname:"",
-      role:"",
-      dateofbirth:"",
-      occupation:"",
-      staffid:"",
-      position:"",
+      email:'',
       phone:0,
+      occupation:'',
+      position: '',
+      dateofbirth:'',
+      staffid:"",
       schoolID:"",
+      schoolname: "",
+      role:"",
 
     };
     this.user=user;
@@ -141,14 +191,40 @@ export class CurrentUserService {
     return;
   }
 
+  // logoutAdmin(){
+  //   let admin:Admin ={
+  //     id: "",
+  //     userID:"",
+  //     username:'',
+  //     email:"",
+  //     password:"",
+  //     fullname:"",
+  //     role:"",
+  //     //dateofbirth:"",
+  //     //occupation:"",
+  //     staffid:"",
+  //     position:"",
+  //     phone:0,
+  //     schoolID:"",
+
+  //   };
+  //   this.admin=admin;
+  //   this.loginstatus=false;
+  //   this.token = "";
+  //   this.authService.setToken(this.token);
+  //   this.authStatusListener.next(false);
+  //   return;
+  // }
+
   isAdmin(){
-    if (typeof(this.user)!="undefined"){
-      if (this.user.role ==="admin")
-        return true;
-      return false;
+    if(typeof(this.user)!="undefined"){
+      if(this.user.role === "admin")
+      return true;
+    return false;
     }
     return false;
   }
+
 
   checkPassword(Password:String, user:User){
     if(user.password === Password){
@@ -156,9 +232,14 @@ export class CurrentUserService {
     }
     return false;
   }
+  checkPasswordAdmin(Password:String, admin:User){
+    if(admin.password === Password){
+      return true;
+    }
+    return false;
+  }
 
-
-  setPassword(password:string){
+  setPassword(password:String){
     this.user.password = password;
     return;
   }

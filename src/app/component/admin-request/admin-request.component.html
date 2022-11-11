@@ -44,7 +44,7 @@ mat-raised-button color="accent"
           <mat-grid-tile colspan="3"><div class="vac-tiles">
             <mat-icon>description</mat-icon>Description: {{resource.description}}
             </div></mat-grid-tile>
-
+            <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>blur_on</mat-icon>From: {{getTotalResources(resource)}}</div></mat-grid-tile>
             <mat-grid-tile colspan="2"><div class="vac-tiles">
               <mat-icon>list</mat-icon>Type: {{resource.resourceType}}
             </div></mat-grid-tile>
@@ -70,16 +70,16 @@ mat-raised-button color="accent"
 <mat-tab label="Tutorial Request"><p><b>Add tutorial to request.</b></p>
 
 <mat-card class="center-card" multi= "true">
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <form (submit)="onAddTutorial(tutorialForm)" #tutorialForm="ngForm">
   <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Description</mat-label>
     <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="login-card-full-width">
+  <!-- <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Required Date</mat-label>
     <input matInput type="date" name="date" #date="ngModel" ngModel required min="20">
-  </mat-form-field>
+  </mat-form-field> -->
 
 
   <mat-form-field appearance="fill" class="login-card-full-width">
@@ -106,20 +106,20 @@ mat-raised-button color="accent"
 <mat-card class="center-card" multi="true" *ngFor="let tutorial of tutorials">
   <mat-grid-list cols="6" rowHeight="40px">
     <mat-grid-tile colspan="2"><div class="vac-tiles">
-      <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
+       <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{tutorial.date}}</div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>description</mat-icon>
      Description: {{tutorial.description}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>numbers</mat-icon>
-      No of Students: {{tutorial.numOfStudents}}
+       No of Students: {{tutorial.numOfStudents}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
-      Student Level: {{tutorial.studentLevel}}
+     Student Level: {{tutorial.studentLevel}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
-      Status: {{tutorial.status}}
+       Status: {{tutorial.status}}
     </div></mat-grid-tile>
   </mat-grid-list>
 </mat-card>

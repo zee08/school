@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Resource, Tutorial } from 'src/app/model/request.model';
+//import {Request } from 'src/app/model/request.model';
 import { School } from 'src/app/model/school.model';
 import { SchoolService } from 'src/app/service/school.service';
-import { RequestService } from 'src/app/service/request.service';
+//import { RequestService } from 'src/app/service/request.service';
 
 @Component({
   selector: 'app-volunteer-home',
@@ -14,12 +14,12 @@ export class VolunteerHomeComponent implements OnInit {
 
   requests: Request[]=[];
   schools: School[]=[];
-  constructor(public requestsService: RequestService,
+  constructor(
     public schoolService: SchoolService) { }
 
   ngOnInit():void {
-    this.requestsService.getResources();
-    this.requestsService.getTutorials();
+    //this.requestsService.getResources();
+    //this.requestsService.getAllRequests();
     this.schoolService.getschools();
    }
 }

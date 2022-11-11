@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+
 import { NgForm } from "@angular/forms";
 import { RouterLink } from '@angular/router';
 

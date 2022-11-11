@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { School } from '../model/school.model';
+import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -9,26 +11,36 @@ import { School } from '../model/school.model';
 export class SchoolService {
   private schools: School[] = [
   ];
+  private schoolsUpdated = new Subject<School[]>();
 
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getschools(){
-    return this.schools;
+    //return this.schools;
+    this.http.get<{message: String, schools: School[]}>('http://localhost:3000/api/schools')
+    .subscribe((schoolData)=>{
+      this.schools = schoolData.schools;
+      this.schoolsUpdated.next([...this.schools]);
+    })
 
   }
 
-  addSchool(schoolID: String, name: String, address: String,
+  addSchool(schoolID: String, schoolname: String, address: String,
     city:string) {
     const school: School = {
       schoolID: schoolID,
-      name: name,
+      schoolname: schoolname,
       address: address,
       city: city,
 
     }
-
-    this.schools.push(school);
+    this.http.post<{message: string}>('http://localhost:3000/api/schools', school)
+    .subscribe((responseData)=>{
+      console.log(responseData.message);
+      this.schools.push(school);
+      this.schoolsUpdated.next([...this.schools]);
+    })
 
   }
 
@@ -41,12 +53,14 @@ export class SchoolService {
     return;
   }
 
-  getSchoolIDbyName(name:string,address:string){
-    let found = this.schools.find(i=>i.name === name&&i.address===address);
+  getSchoolIDbyName(schoolname:string,city:string){
+    let found = this.schools.find(i=>i.schoolname === schoolname&&i.city===city);
     if (typeof(found) != "undefined")
       return found.schoolID;
     return;
   }
 
-
+getSchoolUpdateListener(){
+  return this.schoolsUpdated.asObservable();
+}
 }

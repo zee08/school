@@ -2,7 +2,32 @@
   <span>
     <a routerLink="/">School Help</a>
    </span>
-   <span class="spacer"></span>
+   <div class="spacer"></div>
+   <button mat-button>Contact Us</button>
+   <button mat-button>About</button>
+   <button *ngIf="!userIsAuthenticated" mat-button routerLink="/login">Login/Sign Up</button>
+   <!-- <button *ngIf="userIsAuthenticated" (click)="logout()" mat-button routerLink="/login">Logout</button> -->
+   <div class="navbar-start" style="margin-top: 6px;" *ngIf="userRole" >
+    <div style="padding: 4px;margin-right: -10px;">
+
+    </div>
+    <a class="navbar-item subtitle" style="color: azure;">
+      Admin
+    </a>
+  </div>
+
+  <div class="navbar-start" style="margin-top: 6px;" *ngIf="volunteerRole" >
+    <div style="padding: 4px;margin-right: -10px;">
+
+    </div>
+    <a class="navbar-item subtitle" style="color: azure;">
+      Volunteer
+    </a>
+  </div>
+
+
+
+   <!-- <span class="spacer"></span>
   <ul>
 
    <li>
@@ -16,6 +41,6 @@
    </li>
 
 
-   <!-- 108 -->
-  </ul>
+  108
+  </ul> -->
 </mat-toolbar>

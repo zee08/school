@@ -7,6 +7,39 @@ import { CurrentUserService } from '../service/currentUser.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent  {
-constructor(){}
+export class HeaderComponent implements OnInit {
+  public userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
+  username: string;
+  role: string;
+  userRole = false;
+  adminRole = false;
+  volunteerRole = false;
+constructor(private currentUserService: CurrentUserService){}
+
+ngOnInit(){
+  this.authListenerSubs = this.currentUserService.getAuthStatusListener()
+  .subscribe(
+    isAuthenticated=>{
+      this.userIsAuthenticated = isAuthenticated;
+    });
+
+
+
+
+
+};
+
+isLogin(){
+  return this.currentUserService.getLoginStatus();
+}
+
+logout(){
+  this.currentUserService.logout();
+  console.log('logout');
+  return;
+}
+onViewUsername(username: string){
+  this.username = username;
+}
 }

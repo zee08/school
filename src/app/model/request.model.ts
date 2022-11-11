@@ -1,7 +1,8 @@
-import { Time } from "@angular/common";
+
 
 export interface Resource{
-
+  id: String;
+  resID: String;
   description:String;
   quantity: number;
   resourceType:String;
@@ -9,16 +10,6 @@ export interface Resource{
   status: String;
 
 
-
-
 }
 
-export interface Tutorial{
-  description: String;
-  date: Date;
-  time: Time;
-  studentLevel: String;
-  numOfStudents: number;
-  status: String;
-  school: String;
-}
+

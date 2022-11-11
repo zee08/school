@@ -1,8 +1,14 @@
 const http = require ('http');
 
-const server = http.createServer((req, res) => {
+const app = require('./backend/app');
 
-  res.end('this is irst respinec')
-});
+const port = 3000;
 
-server.listen(3000);
+app.set('port', port)
+
+
+
+const server = http.createServer(app);
+
+
+server.listen(port);

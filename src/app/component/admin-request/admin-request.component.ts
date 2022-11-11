@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Resource, Tutorial } from 'src/app/model/request.model';
-import { RequestService } from 'src/app/service/request.service';
+import { Resource } from 'src/app/model/request.model';
+import { ResourceService } from 'src/app/service/resource.service';
 import { CurrentUserService } from 'src/app/service/currentUser.service';
-import { Vaccine } from 'src/app/service/request.service';
-
 import { NgForm, FormControl, FormBuilder } from "@angular/forms";
-
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Tutorial } from 'src/app/model/tutorial.model';
+import { TutorialService } from 'src/app/service/tutorial.service';
 @Component({
   selector: 'app-admin-request',
   templateUrl: 'admin-request.component.html',
@@ -14,32 +15,70 @@ import { NgForm, FormControl, FormBuilder } from "@angular/forms";
 
 export class AdminRequestComponent implements OnInit {
   resources:Resource[] = [];
-  vaccines:Vaccine[] = [];
   tutorials: Tutorial[]=[];
+  inputDescription: '';
+  inputResType: '';
+  inputQuantity: 0;
+  inputStatus: '';
+  inputResID: '';
+  inputTutID:'';
+  inputDate:Date;
+  inputTime:'';
+  inputStudentLevel:'';
+  inputNumOfStudents:0;
+  inputSchool:any;
+  school:'';
+  schoolID:'';
+private resourceSub: Subscription | undefined;
+private tutorialSub: Subscription | undefined;
 
-
-
-  constructor(public requestService:RequestService,
-    public currentUserService:CurrentUserService) { }
+resourceType: String='';
+private sub: any;
+  constructor(public resourceService:ResourceService,
+    public currentUserService:CurrentUserService, private route: ActivatedRoute, public tutorialsService:TutorialService) { }
 
   ngOnInit(): void {
-    this.resources = this.requestService.getResources();
-    this.tutorials=this.requestService.getTutorials();
-    //this.vaccines = this.vaccineService.getVaccines();
+
+  this.resourceService.getResources();
+  this.tutorialsService.getTutorials();
+
+    //this.resourceService.getAllResources();
+    this.resourceSub = this.resourceService.getresourcesUpdateListener()
+    .subscribe((resources: Resource[])=>{
+      this.resources = resources;
+this.inputSchool = this.currentUserService.getSchoolID();
+
+
+    });
+
+
 
 
   }
+
   ngOnDestroy(){
+    this.resourceSub.unsubscribe();
+    this.tutorialSub.unsubscribe();
 
   }
-  onAddPost(form: NgForm){
+  getTotalResources(resource: Resource){
+    return this.resourceService.getTotalResource(resource,this.currentUserService.getSchoolID())
+  }
 
-    if(form.invalid){
-      return;
-    }
-    this.requestService.addTutorial(form.value.description,
-      form.value.date, form.value.time, form.value.numOfStudents,
-      form.value.studentLevel, form.value.status, form.value.centreID)
+  onAddTutorial(form: NgForm){
+
+   if(form.invalid){
+    return;
+   }
+   this.inputTutID = form.value.tutID;
+    this.inputDescription = form.value.description;
+    this.inputDate = form.value.date;
+    this.inputTime = form.value.time;
+    this.inputStudentLevel = form.value.studentLevel;
+    this.inputNumOfStudents = form.value.numOfStudents;
+    this.tutorialsService.addTutorial(Math.floor(Math.random()*999999).toString( ),this.inputDescription,
+    this.inputDate, this.inputTime,this.inputStudentLevel, this.inputNumOfStudents, this.inputSchool, this.inputStatus)
+
   }
 
   onAddResource(form: NgForm){
@@ -47,9 +86,16 @@ export class AdminRequestComponent implements OnInit {
     if(form.invalid){
       return;
     }
-    this.requestService.addResource(form.value.description,
-      form.value.quantity, form.value.resourceType, form.value.centreID, form.value.status);
+    this.inputResID = form.value.resID;
+    this.inputDescription = form.value.description;
+    this.inputQuantity = form.value.quantity;
+    this.inputResType = form.value.resourceType;
+    this.inputStatus = form.value.status;
+    this.resourceService.addResource(Math.floor(Math.random()*999999).toString( ),this.inputDescription, this.inputQuantity, this.inputResType,
+    this.inputSchool, this.inputStatus);
   }
+
+  on
 
 
 }

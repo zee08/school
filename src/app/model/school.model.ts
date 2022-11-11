@@ -1,6 +1,6 @@
 export interface School{
   schoolID: String;
-  name: String;
+  schoolname: String;
   address: String;
   city: String;
 

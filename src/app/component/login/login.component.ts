@@ -8,6 +8,9 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import { CurrentUserService } from 'src/app/service/currentUser.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model/user.model';
+import { Admin } from 'src/app/model/admin.model';
+import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +21,17 @@ import { User } from 'src/app/model/user.model';
 export class LoginComponent {
 page: number;
 users:User[]=[];
+///admins:Admin[]=[];
+private usersSub: Subscription | undefined;
+private adminsSub: Subscription | undefined;
+private schoolSub:Subscription | undefined;
+private sub: any;
 schools:School[]=[];
   ICoptionValue:any;
   inputEmail='';
   inputUser='';
   inputUserID='';
-  inputFullName='';
+  inputFullname='';
   inputPhone=0;
   inputPassword='';
   inputStaffID='';
@@ -31,12 +39,14 @@ schools:School[]=[];
   inputPosition='';
   inputOccupation='';
   inputDateofbirth='';
-  placeholderName:string;
+  inputSchoolname="";
+  placeholderName:String;
   durationInMiliSeconds = 3000;
   Auth='';school='';schoolID='';
   newSchoolSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
-    public schoolService:SchoolService, public currentUserService:CurrentUserService
+    public schoolService:SchoolService, public currentUserService:CurrentUserService, private router: Router,
+    private route:ActivatedRoute,
 
     ) {
 this.page=0;
@@ -47,8 +57,24 @@ this.page=0;
     ]);
 
 ngOnInit(): void {
-this.users=this.userService.getUsers();
-this.schools=this.schoolService.getschools();
+this.userService.getUsers();
+this.usersSub = this.userService.getUserUpdateListener()
+.subscribe((users: User[])=>{
+  this.users = users;
+});
+
+this.schoolService.getschools();
+this.schoolSub = this.schoolService.getSchoolUpdateListener().
+subscribe((schools:School[])=>{
+  this.schools = schools;
+});
+
+
+}
+ngOnDestroy(){
+  this.usersSub.unsubscribe();
+  this.schoolSub.unsubscribe();
+  //this.adminsSub.unsubscribe();
 }
 
 
@@ -59,27 +85,31 @@ this.schools=this.schoolService.getschools();
   }
 
   //form controll
-  verifyEmail(form: NgForm) {
+  verifyUser(form: NgForm) {
      if (form.invalid){console.log("invalid email");return;}
-   this.inputEmail = form.value.email;
-    let found=this.userService.getUserByEmail(this.inputEmail)
+   this.inputUser = form.value.username;
+    let found=this.userService.getUserByUsername(this.inputUser)
     if (found!=undefined){
       this.placeholderName=found.username;
-      this.page=6;
+      this.page=5;
       return;
     }
-
+this.page=0;
   }
+
+
 
   verifyVolunteer(form: NgForm){
     if (form.invalid){console.log("invalid Volunteer");return;}
     this.inputUser=form.value.username;
     this.inputPassword=form.value.password;
-    this.inputFullName=form.value.fullname;
-
+    this.inputFullname=form.value.fullname;
+    this.inputEmail = form.value.email;
+    this.inputOccupation = form.value.occupation;
+    this.inputDateofbirth = form.value.dateofbirth;
     this.inputPhone=form.value.phone;
 
-      this.page=0;
+      this.page=2;
 
     this.dialog.open(RegSuccessDialog);
 
@@ -98,35 +128,39 @@ this.schools=this.schoolService.getschools();
   existingSchool(form: NgForm){
     if (form.invalid){console.log("invalid school");return;}
     this.inputSchoolID=form.value.school;
-    this.schools = this.schoolService.getschools();
-    this.page=3;
+    this.page=4;
 
   }
 
   newSchool(form: NgForm){
     if (form.invalid){console.log("invalid school");return;}
     let id = Math.floor(Math.random()*999999).toString( );
-    this.schoolService.addSchool(id, form.value.name,
+    this.schoolService.addSchool(id, form.value.schoolname,
     form.value.address,form.value.city)
     this.inputSchoolID=id;
-    if(form.invalid){
+    this.page=4;
 
-      return;
-    }
-      this.dialog.open(RegSuccessDialog);
-      this.page=4;
-      form.resetForm();
   }
 
   login(form: NgForm){
-    if (form.invalid){this.openSnackBar();console.log("invalid login detail");return;}
-    this.currentUserService.login(this.inputEmail,form.value.password);
-     this.currentUserService.getToken();
+    if (form.invalid){this.openSnackBar();
+      console.log("invalid login detail");
+      return;
+    }
+    this.currentUserService.login(form.value.username,form.value.password);
+    let hasToken = this.currentUserService.getToken();
     this.openSnackBar();
     form.reset();
     return;
    }
-
+  //  loginAdmin(form: NgForm){
+  //   if (form.invalid){this.openSnackBar();console.log("invalid login detail");return;}
+  //   this.currentUserService.loginAdmin(this.inputUser,form.value.password);
+  //   let hasToken = this.currentUserService.getToken();
+  //   this.openSnackBar();
+  //   form.reset();
+  //   return;
+  //  }
 
   public returnToFirst(){
     this.page=0;
@@ -140,34 +174,57 @@ this.schools=this.schoolService.getschools();
   }
 
   public gotoAdminReg() {
-this.page=4;
+this.page=3;
 return;
   }
+  public gotoLogin():any {
+    this.page=5;
+    return;
 
+  }
 
-
-
+  public gotoAdminLog() {
+this.page=6;
+return;
+  }
    registerVolunteer(form: NgForm) {
-    this.userService.addVolunteer(form.value.username, form.value.password, form.value.fullname, form.value.dateofbirth,
-      form.value.occupation, form.value.position, form.value.schoolID, form.value.staffid, form.value.phone, form.value.userID,
-      form.value.email)
-    this.page=0;
+    if(form.invalid){
+      return;
+    }
+    this.inputUser=form.value.username;
+    this.inputEmail = form.value.email;
+    this.inputPassword=form.value.password;
+    this.inputFullname=form.value.fullname;
+    this.inputPhone = form.value.phone;
+    this.inputOccupation = form.value.occupation;
+    this.inputDateofbirth=form.value.dateofbirth;
+    this.userService.addVolunteer(Math.floor(Math.random()*999999).toString( ),this.inputUser, this.inputEmail,
+    this.inputPassword, this.inputFullname, this.inputPhone, this.inputOccupation, this.inputDateofbirth,
+       )
+    this.page=5;
     this.dialog.open(RegSuccessDialog);
   }
 
-  regAdmin(form: NgForm){
-    if (form.invalid){console.log("invalid admin");return;}
+  onSignup(form: NgForm){
+    if(form.invalid){
+      return;
+    }
+
     this.inputUser=form.value.username;
     this.inputPassword=form.value.password;
-    this.inputFullName=form.value.fullname;
-    this.inputStaffID=form.value.staffID;
-    this.inputPosition=form.value.position;
-    this.inputEmail=form.value.email;
-    this.inputStaffID=form.value.staffID;
-    this.userService.addAdmin(Math.floor(Math.random()*999999).toString( )
-    ,this.inputUser,this.inputEmail,this.inputPassword, this.inputFullName,
-    this.inputSchoolID,this.inputStaffID, this.inputPosition, this.inputOccupation, this.schoolID)
-    //this.page=0;
+    this.inputFullname=form.value.fullname;
+    this.inputEmail = form.value.email;
+    this.inputPhone = form.value.phone;
+    this.inputStaffID=form.value.staffid;
+    this.inputPosition = form.value.position;
+    this.userService.addAdmin(Math.floor(Math.random()*999999).toString( ),
+    this.inputUser, this.inputPassword, this.inputFullname, this.inputEmail, this.inputPhone, this.inputStaffID,
+    this.inputPosition, this.inputSchoolID, this.inputSchoolname)
+    // this.userService.addAdmin(form.value.username, form.value.password, form.value.fullname,
+    //    form.value.position, form.value.schoolID, form.value.staffid, form.value.phone, form.value.userID,
+    //   form.value.email);
+
+    this.page=5;
     this.dialog.open(RegSuccessDialog);
   }
 }

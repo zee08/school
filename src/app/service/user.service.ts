@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
 import { Subject } from 'rxjs';
-
-
+import { HttpClient } from '@angular/common/http';
+import { Admin } from '../model/admin.model';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -10,12 +11,27 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
   private users:User [] = [];
+  private admins: Admin[]=[];
   private usersUpdated = new Subject<User[]>();
-
-  constructor(){}
+  private adminsUpdated = new Subject<Admin[]>();
+  constructor(private http: HttpClient, private router: Router){}
 
   getUsers(){
-    return this.users;
+    // return this.users;
+    this.http.get<{message: string, users: User[]}>('http://localhost:3000/api/users')
+    .subscribe((userData)=>{
+      this.users = userData.users;
+      this.usersUpdated.next([...this.users]);
+    })
+  }
+
+  getAdmins(){
+    // return this.admins;
+    this.http.get<{message: string, admins: Admin[]}>('http://localhost:3000/api/admins')
+    .subscribe((adminData)=>{
+      this.admins = adminData.admins;
+      this.adminsUpdated.next([...this.admins]);
+    })
   }
 
   getUserByEmail(email:String){
@@ -42,54 +58,64 @@ export class UserService {
     return false;
   }
 
-  addAdmin(userID: string,username: string,email: string,password: string,
-   fullname: string, staffid: string, position: string, occupation:string, dateofbirth:string, schoolID:String) {
+  addAdmin(userID: String,username: String,password: String,
+   fullname: String, email: String,  phone: Number, staffid: String, position: String, schoolID: String, schoolname:String) {
     const user:User  = {
-      id: "",
+      id: null,
       userID:userID,
       username:username,
-      email:email,
       password:password,
       fullname:fullname,
-      position:position,
+      email:email,
+      phone: phone,
       staffid:staffid,
-      occupation:occupation,
-      dateofbirth:dateofbirth,
-      phone: 0,
+      position:position,
       schoolID:schoolID,
-
-      role: "admin"
+      schoolname:schoolname,
+      occupation: '',
+      dateofbirth:'',
+      role: "admin",
     }
-    this.users.push(user);
+    this.http.post<{message:string}>('http://localhost:3000/api/users',user)
+      .subscribe((responseData) => {
 
-  }
+        console.log(responseData.message);
+        this.users.push(user);
+        this.usersUpdated.next([...this.users]);
 
-  addVolunteer(userID: string,username: string,email: string,
-    password: string, fullname: string,
-    phone: number, occupation: string, dateofbirth: string, position:string, staffid:string, schoolID: String,
+       });
+}
+
+
+  addVolunteer(userID: String,username: String,email: String,
+    password: String, fullname: String,
+    phone: Number, occupation: String, dateofbirth: String
   ){
       const user:User = {
         id:"",
-        userID:userID,
+        userID: userID,
         username:username,
         email:email,
         password:password,
         fullname:fullname,
+        phone:phone,
         occupation:occupation,
+        position: '',
         dateofbirth:dateofbirth,
-        phone: 0,
-        staffid:staffid,
-        position:position,
-        schoolID: schoolID,
-
-
-        role: "volunteer"
+        staffid: '',
+        schoolID: '',
+        schoolname:'',
+        role:'volunteer',
       }
+      this.http.post<{message:string}>('http://localhost:3000/api/users',user)
+      .subscribe((responseData) => {
 
+        console.log(responseData.message);
         this.users.push(user);
+        this.usersUpdated.next([...this.users]);
+       });
 
-  }
-
+    }
   getUserByID(userID:String){
     let found=this.users.find(i=>i.userID === userID);
     if (typeof(found)!="undefined"){
@@ -102,4 +128,10 @@ export class UserService {
   {
     return this.usersUpdated.asObservable();
   }
+
+  getAdminUpdateListener()
+  {
+    return this.adminsUpdated.asObservable();
+  }
 }
+
