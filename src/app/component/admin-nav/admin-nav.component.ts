@@ -26,9 +26,10 @@ export class AdminNavComponent implements OnInit{
     return this.currentUserService.getLoginStatus();
   }
 
-  logout() {
-    this.currentUserService.logout();
+  onlogout() {
+    this.currentUser.logout();
     return;
+
   }
   getUser(){
     this.currentUserService.getUsername();

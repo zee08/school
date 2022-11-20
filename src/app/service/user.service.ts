@@ -59,7 +59,7 @@ export class UserService {
   }
 
   addAdmin(userID: String,username: String,password: String,
-   fullname: String, email: String,  phone: Number, staffid: String, position: String, schoolID: String, schoolname:String) {
+   fullname: String, email: String,  phone: Number, staffid: String, position: String,  schoolname:String, schoolID:String, city:String) {
     const user:User  = {
       id: null,
       userID:userID,
@@ -70,8 +70,9 @@ export class UserService {
       phone: phone,
       staffid:staffid,
       position:position,
-      schoolID:schoolID,
       schoolname:schoolname,
+      schoolID: schoolID,
+      city:city,
       occupation: '',
       dateofbirth:'',
       role: "admin",
@@ -103,8 +104,9 @@ export class UserService {
         position: '',
         dateofbirth:dateofbirth,
         staffid: '',
-        schoolID: '',
         schoolname:'',
+        schoolID: '',
+        city:'',
         role:'volunteer',
       }
       this.http.post<{message:string}>('http://localhost:3000/api/users',user)
@@ -134,4 +136,3 @@ export class UserService {
     return this.adminsUpdated.asObservable();
   }
 }
-

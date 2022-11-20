@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
+const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const school = require('./school');
 
 const userSchema = mongoose.Schema({
   userID: {type: String,  require: true},
@@ -12,13 +17,11 @@ const userSchema = mongoose.Schema({
   position: {type: String, require: false},
   dateofbirth: {type: String, require: true},
 staffid: {type: String, require: false},
-schoolID: {type: String, require: false},
-schoolname: {type: String, require: false},
- role: {type: String, require: true}
-
-
-
-})
+schoolname: {type: String, require: true},
+schoolID: {type: String, require: true},
+city:{type:String, require:true},
+ role: {type: String, require: true},
+});
 
 userSchema.plugin(uniqueValidator);
 

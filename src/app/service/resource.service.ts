@@ -13,7 +13,7 @@ export class ResourceService {
   constructor(public schoolService: SchoolService, private http: HttpClient,){}
 
   private resources: Resource[] = [];
-
+private resource:Resource;
   private resourceUpdated = new Subject<Resource[]>();
 
   getAllResources(){
@@ -21,7 +21,7 @@ export class ResourceService {
     .pipe(map((resData)=>{
       return resData.resources.map((resource:
         {_id: any, resID: any, description: any, quantity: any,
-        resourceType: any, school: any, status: any;})=>{
+        resourceType: any, school: any, status: any; })=>{
           return{
             id: resource._id,
             resID: resource.resID,
@@ -30,11 +30,12 @@ export class ResourceService {
             resourceType: resource.resourceType,
             school: resource.school,
             Status: resource.status,
+            //creator: resource.creator
           }
         })
     }))
     .subscribe((transformedResources)=>{
-      this.resources= transformedResources;
+      this.resources= transformedResources.resources;
       this.resourceUpdated.next([...this.resources]);
     })
   }
@@ -54,7 +55,7 @@ export class ResourceService {
     return schools;
   }
 
-  addResource(resID:String, description:String, quantity: number, resourceType: String, schoolID:String,
+  addResource(resID:String, description:String, quantity: number, resourceType: String, schoolname:String,
     status:String
     ) {
       const resource:  Resource= {
@@ -63,12 +64,15 @@ export class ResourceService {
         description:description,
         quantity: quantity,
         resourceType:resourceType,
-        school: schoolID,
-        status:'New'
+        school: schoolname,
+        status:'New',
+     // creator:''
 
       }
-      this.http.post<{message: string}>('http://localhost:3000/api/resources', resource)
+      this.http.post<{message: string, resourceId: string}>('http://localhost:3000/api/resources', resource)
       .subscribe((responseData)=>{
+        const id = responseData.resourceId;
+      resource.id = id;
         console.log(responseData.message);
         this.resources.push(resource);
         this.resourceUpdated.next([...this.resources]);
@@ -79,23 +83,41 @@ export class ResourceService {
   {
     return this.resourceUpdated.asObservable();
   }
-getTotalResource(resource: Resource, schoolID: String){
+getTotalResource(resource: Resource, schoolname: String){
   let i =0;
   for(let o=0; o<this.resources.length; o++){
-    if(this.resources[o].school == schoolID&&this.resources[o].resourceType === resource.resourceType){
+    if(this.resources[o].school == schoolname&&this.resources[o].resourceType === resource.resourceType){
       i++;
     }
   }
   return i;
 }
-getResources(){
-  //return this.schools;
-  this.http.get<{message: String, resources: Resource[]}>('http://localhost:3000/api/resources')
-  .subscribe((resData)=>{
-    this.resources = resData.resources;
-    this.resourceUpdated.next([...this.resources]);
-  })
 
+getStatus(){
+  this.resource.status;
+}
+
+getResources(){
+  // return this.posts;
+  this.http.get<{message:string, resources: any}>('http://localhost:3000/api/resources')
+ .pipe(map((resourceData)=>{
+  return resourceData.resources.map(resource =>{
+    return {
+      resID: resource.resID,
+      description: resource.description,
+      quantity:resource.quantity,
+      resourceType: resource.resourceType,
+      school: resource.school,
+      status: resource.status,
+      id: resource._id,
+    //  creator: resource.creator
+    };
+    });
+ }))
+ .subscribe(transformedResources =>{
+  this.resources = transformedResources;
+  this.resourceUpdated.next([...this.resources]);
+ })
 }
 // getResources(schoolID: String, resource: Resource){
 //   let resources = [];
@@ -110,6 +132,15 @@ getResources(){
 //   return resources;
 
 // }
+deleteResource(resourceId:string){
+  this.http.delete('http://localhost:3000/api/resources/'+resourceId)
+  .subscribe(()=> {
+    const updatedResources = this.resources.filter(resource =>resource.id !== resourceId);
+    this.resources = updatedResources;
+    this.resourceUpdated.next([...this.resources]);
+
+  });
+}
 hasSchool(schoolID: String){
   if(this.resources.find(p=>p.school===schoolID))
   return true;

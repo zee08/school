@@ -11,6 +11,7 @@ import { User } from 'src/app/model/user.model';
 import { Admin } from 'src/app/model/admin.model';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ private adminsSub: Subscription | undefined;
 private schoolSub:Subscription | undefined;
 private sub: any;
 schools:School[]=[];
+cities:School[]=[];
   ICoptionValue:any;
   inputEmail='';
   inputUser='';
@@ -40,9 +42,10 @@ schools:School[]=[];
   inputOccupation='';
   inputDateofbirth='';
   inputSchoolname="";
+  inputCity="";
   placeholderName:String;
   durationInMiliSeconds = 3000;
-  Auth='';school='';schoolID='';
+  Auth='';school='';schoolID='';city='';
   newSchoolSelect=new FormControl(false);
   constructor(public userService:UserService, private dialog:MatDialog, private _snackBar:MatSnackBar,
     public schoolService:SchoolService, public currentUserService:CurrentUserService, private router: Router,
@@ -67,6 +70,8 @@ this.schoolService.getschools();
 this.schoolSub = this.schoolService.getSchoolUpdateListener().
 subscribe((schools:School[])=>{
   this.schools = schools;
+
+
 });
 
 
@@ -153,14 +158,8 @@ this.page=0;
     form.reset();
     return;
    }
-  //  loginAdmin(form: NgForm){
-  //   if (form.invalid){this.openSnackBar();console.log("invalid login detail");return;}
-  //   this.currentUserService.loginAdmin(this.inputUser,form.value.password);
-  //   let hasToken = this.currentUserService.getToken();
-  //   this.openSnackBar();
-  //   form.reset();
-  //   return;
-  //  }
+
+
 
   public returnToFirst(){
     this.page=0;
@@ -217,9 +216,11 @@ return;
     this.inputPhone = form.value.phone;
     this.inputStaffID=form.value.staffid;
     this.inputPosition = form.value.position;
+    this.inputSchoolname = form.value.schoolname,
+    this.inputCity = form.value.city;
     this.userService.addAdmin(Math.floor(Math.random()*999999).toString( ),
     this.inputUser, this.inputPassword, this.inputFullname, this.inputEmail, this.inputPhone, this.inputStaffID,
-    this.inputPosition, this.inputSchoolID, this.inputSchoolname)
+    this.inputPosition, this.inputSchoolname, this.inputSchoolID, this.inputCity);
     // this.userService.addAdmin(form.value.username, form.value.password, form.value.fullname,
     //    form.value.position, form.value.schoolID, form.value.staffid, form.value.phone, form.value.userID,
     //   form.value.email);

@@ -10,7 +10,8 @@ export interface User{
   position: String,
   dateofbirth: String;
   staffid: String;
-  schoolID: String;
 schoolname: String;
+schoolID: String;
+city:String;
   role: String;
 }

@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Submit Offer</h1>
+<mat-dialog-content>Enter remarks</mat-dialog-content>
+<br>
+<mat-form-field appearance="outline" class="center-block" style="width: 100%;">
+    <mat-label>Remarks</mat-label>
+
+    <input matInput type="text" placeholder="Remarks" name="remarks" ngModel required minlength="3" #remarks="ngModel">
+
+</mat-form-field>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close mat-raised-button color="accent">Add remark</button>
+
+</mat-dialog-actions>

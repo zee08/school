@@ -1,6 +1,6 @@
 <!--Resource request-->
 <h1><b>Resource Requests</b></h1>
-<h2><b>Utama School</b></h2>
+<!-- //<h3><b>For School:{{currentUser.schoolname}}</b></h3> -->
 <hr>
 <mat-tab-group>
 
@@ -38,29 +38,34 @@ mat-raised-button color="accent"
       </form>
     </mat-card>
 
-    <mat-card class="center-card" multi="true" *ngFor="let resource of resources">
+    <mat-card class="center-card" multi="true" *ngFor="let request of requests">
       <mat-grid-list cols="7" rowHeight="40px">
 
           <mat-grid-tile colspan="3"><div class="vac-tiles">
-            <mat-icon>description</mat-icon>Description: {{resource.description}}
+            <mat-icon>description</mat-icon>Description: {{request.description}}
             </div></mat-grid-tile>
-            <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>blur_on</mat-icon>From: {{getTotalResources(resource)}}</div></mat-grid-tile>
+            <!-- <mat-grid-tile colspan="1"><div class="vac-tiles"><mat-icon>blur_on</mat-icon>From: {{getTotalResources(resource)}}</div></mat-grid-tile> -->
             <mat-grid-tile colspan="2"><div class="vac-tiles">
-              <mat-icon>list</mat-icon>Type: {{resource.resourceType}}
-            </div></mat-grid-tile>
-
-            <mat-grid-tile colspan="2"><div class="vac-tiles">
-              <mat-icon>numbers</mat-icon>Quantity: {{resource.quantity}}
+              <mat-icon>list</mat-icon>Type: {{request.resourceType}}
             </div></mat-grid-tile>
 
             <mat-grid-tile colspan="2"><div class="vac-tiles">
-              <mat-icon>numbers</mat-icon>Status: {{resource.status}}
+              <mat-icon>numbers</mat-icon>Quantity: {{request.quantity}}
+            </div></mat-grid-tile>
+
+            <mat-grid-tile colspan="2"><div class="vac-tiles">
+              <mat-icon>numbers</mat-icon>Status: {{request.status}}
             </div></mat-grid-tile>
 
 
       </mat-grid-list>
+      <!-- <mat-action-row>
+        <button mat-button color="primary" [routerLink]="['/edit',requestid]">Edit</button>
+        <button mat-button color="warn"
+        (click)="onDelete(resource.id)">Delete</button>
+        </mat-action-row> -->
     </mat-card>
-    <p *ngIf="resources.length <1" style="text-align: center;">No resources added</p>
+    <p *ngIf="requests.length <1" style="text-align: center;">No resources added</p>
 
     </mat-tab>
 
@@ -73,13 +78,13 @@ mat-raised-button color="accent"
   <form (submit)="onAddTutorial(tutorialForm)" #tutorialForm="ngForm">
   <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Description</mat-label>
-    <input matInput type="text" name="description" #description="ngModel" ngModel required min="20">
+    <input matInput type="text" name="tutDescription" #tutDescription="ngModel" ngModel required min="20">
   </mat-form-field>
 
-  <!-- <mat-form-field appearance="fill" class="login-card-full-width">
+  <mat-form-field appearance="fill" class="login-card-full-width">
     <mat-label >Required Date</mat-label>
-    <input matInput type="date" name="date" #date="ngModel" ngModel required min="20">
-  </mat-form-field> -->
+    <input matInput type="date" name="tutdate" #tutdate="ngModel" ngModel required min="20">
+  </mat-form-field>
 
 
   <mat-form-field appearance="fill" class="login-card-full-width">
@@ -103,28 +108,28 @@ mat-raised-button color="accent"
 </form>
 </mat-card>
 
-<mat-card class="center-card" multi="true" *ngFor="let tutorial of tutorials">
+<mat-card class="center-card" multi="true" *ngFor="let request of requests">
   <mat-grid-list cols="6" rowHeight="40px">
     <mat-grid-tile colspan="2"><div class="vac-tiles">
-       <mat-icon> access_time</mat-icon>Tutoral Time: {{tutorial.time}}
+       <mat-icon> access_time</mat-icon>Tutoral Time: {{request.time}}
     </div></mat-grid-tile>
-    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{tutorial.date}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>date_range</mat-icon>Date: {{request.tutdate}}</div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>description</mat-icon>
-     Description: {{tutorial.description}}
+     Description: {{request.tutDescription}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>numbers</mat-icon>
-       No of Students: {{tutorial.numOfStudents}}
+       No of Students: {{request.numOfStudents}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
-     Student Level: {{tutorial.studentLevel}}
+     Student Level: {{request.studentLevel}}
     </div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>class</mat-icon>
-       Status: {{tutorial.status}}
+       Status: {{request.status}}
     </div></mat-grid-tile>
   </mat-grid-list>
 </mat-card>
 
-<p *ngIf="tutorials.length<1" style="text-align: center;">There are no added tutorials.</p>
+<p *ngIf="requests.length<1" style="text-align: center;">There are no added tutorials.</p>
 </mat-tab>
 
 

@@ -8,9 +8,9 @@
     <mat-grid-tile colspan="5"><div class="vac-tiles" style="font-size: 16px;">
       <b>{{school.schoolname}}</b>
     </div></mat-grid-tile>
-    <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon>location_on</mat-icon>{{school.address}}</div></mat-grid-tile>
+    <mat-grid-tile colspan="5"><div class="vac-tiles"><mat-icon>location_on</mat-icon>{{school.city}}</div></mat-grid-tile>
     <mat-grid-tile colspan="2"><div class="vac-tiles"><mat-icon>location_city</mat-icon>
-      {{school.city}}
+      {{school.address}}
     </div></mat-grid-tile>
 
 
@@ -19,8 +19,9 @@
     <span class="spacer"></span>
     <button mat-stroked-button color='accent' routerLink='{{school.schoolID}}'
     style="display: block;margin-left: auto;margin-right: 0px;">
-    Select school</button>
+    Select schools</button>
   </mat-toolbar-row >
 </mat-card>
 
 
+<p *ngIf="schools.length<1" style="text-align: center;">There are no healthcare centre providing this vaccine.</p>

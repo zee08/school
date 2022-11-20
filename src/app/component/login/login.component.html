@@ -239,6 +239,26 @@ style="margin-top: 5em;">
         <mat-error *ngIf="phoneInput.invalid">Enter valid phone</mat-error>
       </mat-form-field>
 
+       <mat-form-field appearance="fill" class="login-card-full-width">
+      <mat-label>Select from existing schools:</mat-label>
+        <mat-select ngModel name="schoolname" #schoolname="ngModel" required
+        [disabled]="newSchoolSelect.value" >
+          <mat-option *ngFor="let school of schools" [value]="school.schoolID">
+          <b>{{school.schoolname}}</b>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="login-card-full-width">
+        <mat-label>Select from existing schools:</mat-label>
+          <mat-select ngModel name="city" #city="ngModel" required
+          [disabled]="newSchoolSelect.value" >
+            <mat-option *ngFor="let school of schools" [value]="school.city">
+            {{school.city}}, <b>{{school.schoolname}}</b>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
       <button type="submit" mat-raised-button class="login-button" color="accent"
         [disabled]="!AdminForm.valid">
       Proceed</button>
@@ -259,19 +279,19 @@ style="margin-top: 10em;">
 
       <mat-form-field appearance="fill" class="login-card-full-width">
         <mat-label>Enter your Username</mat-label>
-        <input matInput type="text" name="username" #username="ngModel" ngModel required
+        <input matInput type="text" name="username" #username="ngModel" ngModel required usernameInput
        >
 
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="login-card-full-width">
         <mat-label>Enter your password</mat-label>
-        <input matInput type="password" name="password" #password="ngModel" ngModel required
+        <input matInput type="password" name="password" #password="ngModel" ngModel required passwordInput
         autocomplete="on">
         <mat-hint> </mat-hint>
 
       </mat-form-field>
-      <button type="submit" mat-raised-button class="login-button" color="accent"
+      <button type="submit"  mat-raised-button class="login-button" color="accent"
       [disabled]="!LoginForm.valid" >
         Login
       </button>

@@ -66,37 +66,9 @@ import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ViewRequestComponent } from './component/view-request/view-request.component';
 import { SubmitRequestComponent } from './component/volunteer-submit-request/submit-request.component';
-import { AuthInterceptor } from 'backend/auth/auth-interceptor';
-const appRoutes: Routes = [
-  {path:'',component:LoginComponent},
-  {path:'login',component:LoginComponent},
-  {path: 'signup', component: SignupComponent},
-  {path:'loginVol', component:LoginVolComponent},
-  {path: 'admin',redirectTo: 'admin/home', pathMatch: 'full' },
-  {path:'admin',component:AdminNavComponent,
-    children:[
-      {path:'home',component:AdminHomeComponent},
-      {path:'request', component:AdminRequestComponent},
-      {path:'request/:resname/resources', component:RequestInfoComponent},
-      {path:'offer', component:ViewOfferComponent},
-      {path:'offer/:resname/:resourceID', component:ViewOfferComponent},
-
-    ]
-  },
-  {path:'volunteer', redirectTo:'volunteer/home', pathMatch:'full'},
-  {path:'volunteer', component:VolunteerNavComponent,
-    children:[
-      {path:'home', component:VolunteerHomeComponent},
-      {path:'request', component:ViewRequestComponent},
-      {path:'submit', component:SubmitRequestComponent},
-      {path:'request/schools/:tutorial', component:VolunteerSchoolComponent},
-
-    ]},
-
-
-
-
-]
+import { AuthInterceptor } from 'src/app/auth/auth-interceptor';
+import { AppRoutingModule } from './app-routing.module';
+import { RequestDialogComponent } from './component/view-request/view-request.component';
 @NgModule({
   declarations: [
 
@@ -115,9 +87,9 @@ LoginComponent,
     ViewOfferComponent,
     VolunteerNavComponent,
     VolunteerSchoolComponent,
-
+    RequestDialogComponent,
     ViewRequestComponent,
-    SubmitRequestComponent,
+    //SubmitRequestComponent,
 
 
   ],
@@ -157,11 +129,7 @@ LoginComponent,
     CommonModule,
     MatRippleModule,
 HttpClientModule,
-
-
-
-
-    RouterModule.forRoot(appRoutes),
+AppRoutingModule,
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

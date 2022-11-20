@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
 import { UserService } from './user.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { AuthService } from 'backend/auth/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Router, TitleStrategy } from '@angular/router';
 import { Admin } from '../model/admin.model';
+import { WebRequestService } from './web-request.service';
+import { shareReplay, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +20,7 @@ export class CurrentUserService {
   private authStatusListener = new Subject<boolean>();
 
   constructor(public userservice:UserService,private authService:AuthService,private router:Router,
-    private http:HttpClient)
+    private http:HttpClient, private webService: WebRequestService)
     {
     this.user ={
       id:"",
@@ -32,8 +34,9 @@ export class CurrentUserService {
       position: "",
       dateofbirth:"",
       staffid: "",
-      schoolID:"",
       schoolname: "",
+      schoolID:"",
+      city:"",
       role: "",
     };
 
@@ -77,7 +80,9 @@ export class CurrentUserService {
   getSchoolname() {
     return this.user.schoolname;
   }
-
+getCity(){
+  return this.user.city;
+}
   getStaffID(){
     return this.user.staffid
   }
@@ -109,8 +114,9 @@ export class CurrentUserService {
       position: '',
       dateofbirth:'',
       staffid:"",
-      schoolID:"",
       schoolname: "",
+      schoolID:"",
+      city:"",
       role:"",
     };
     this.http.post <{token:string,user: User}>('http://localhost:3000/api/users/login', authData)
@@ -122,6 +128,7 @@ export class CurrentUserService {
       this.authStatusListener.next(true);
       this.loggedUser.next(this.user);
       this.loginstatus=true;
+
       this.user = response.user;
 
       if (!this.isAdmin()){
@@ -134,7 +141,8 @@ export class CurrentUserService {
       }
     });
 
-  }
+   }
+
   getUserName(){
     return this.loggedUser.getValue().username;
   }
@@ -178,17 +186,19 @@ export class CurrentUserService {
       position: '',
       dateofbirth:'',
       staffid:"",
-      schoolID:"",
       schoolname: "",
+      schoolID:"",
+      city:"",
       role:"",
 
     };
-    this.user=user;
-    this.loginstatus=false;
-    this.token = "";
-    this.authService.setToken(this.token);
+
+    this.token =null;
+this.user=user;
     this.authStatusListener.next(false);
-    return;
+
+    this.router.navigate(['/']);
+
   }
 
   // logoutAdmin(){
@@ -247,6 +257,43 @@ export class CurrentUserService {
   setPhone(phone:number){
     this.user.phone = phone;
     return;
+  }
+  getAccessToken() {
+    return localStorage.getItem('x-access-token');
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('x-refresh-token');
+  }
+  private setSession(userId: string, accessToken: string, refreshToken: string) {
+    localStorage.setItem('user-id', userId);
+    localStorage.setItem('x-access-token', accessToken);
+    localStorage.setItem('x-refresh-token', refreshToken);
+  }
+  private removeSession() {
+    localStorage.removeItem('user-id');
+    localStorage.removeItem('x-access-token');
+    localStorage.removeItem('x-refresh-token');
+  }
+
+  setAccessToken(accessToken: string) {
+    localStorage.setItem('x-access-token', accessToken)
+  }
+  getUserId() {
+    return localStorage.getItem('user-id');
+  }
+  getNewAccessToken() {
+    return this.http.get(`${this.webService.ROOT_URL}/users/me/access-token`, {
+      headers: {
+        'x-refresh-token': this.getRefreshToken(),
+        '_id': this.getUserId()
+      },
+      observe: 'response'
+    }).pipe(
+      tap((res: HttpResponse<any>) => {
+        this.setAccessToken(res.headers.get('x-access-token'));
+      })
+    )
   }
 
 }

@@ -5,6 +5,7 @@ import { SchoolService } from './school.service';
 import { HttpClient } from '@angular/common/http';
 import { School } from '../model/school.model';
 import { map  } from 'rxjs';
+import { TitleStrategy } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class TutorialService {
   constructor(public schoolService: SchoolService, private http: HttpClient,){}
 
   private tutorials: Tutorial[] = [];
+
+  private schools: School[]=[];
 
   private tutorialUpdated = new Subject<Tutorial[]>();
 
@@ -44,22 +47,22 @@ export class TutorialService {
     return {...this.tutorials.find(p => p.id===id)};
   }
 
-  getSchoolofResource(resourceType: String){
-    let schools: School[]=[];
-    for(let i=0;i<this.tutorials.length;i++){
-      if(this.tutorials[i].tutID === resourceType ){
-        let school = this.schoolService.getschoolByID(this.tutorials[i].school);
-        if(school!=null)
-        schools.push(school);
-      }
-    }
-    return schools;
-  }
+  // getSchoolofResource(resourceType: String){
+  //   let schools: School[]=[];
+  //   for(let i=0;i<this.tutorials.length;i++){
+  //     if(this.tutorials[i].tutID === resourceType ){
+  //       let school = this.schoolService.getschoolByID(this.tutorials[i].school);
+  //       if(school!=null)
+  //       schools.push(school);
+  //     }
+  //   }
+  //   return schools;
+  // }
 
   addTutorial(tutID:String, description:String, date: Date, time: String, studentLevel:String, numOfStudents:Number,
      schoolID:String, status:String
     ) {
-      const tutorial:  Tutorial= {
+      const tutorial: Tutorial= {
         id: null,
         tutID: tutID,
         description:description,
@@ -101,17 +104,17 @@ getTutorials(){
   })
 
 }
-// getResources(schoolID: String, resource: Resource){
-//   let resources = [];
+// getTutorialschool(schoolID: String, tutorials: String){
+//   let tutorial = [];
 //   if(schoolID!=""){
-//     for(let i=0; i<this.resources.length;i++){
-//       if(this.resources[i].school===schoolID&&this.resources[i].resource===resource){
-//         resources.push(this.resources[i]);
+//     for(let i=0; i<this.tutorials.length;i++){
+//       if(this.tutorials[i].school===schoolID&&this.tutorials[i].tutorials===tutorials){
+//         tutorials.push(this.tutorials[i]);
 //       }
 //     }
 
 //   }
-//   return resources;
+//   return tutorial;
 
 // }
 hasSchool(schoolID: String){

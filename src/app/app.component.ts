@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CurrentUserService } from './service/currentUser.service';
 import { UserService } from './service/user.service';
@@ -9,10 +9,13 @@ import { UserService } from './service/user.service';
   styleUrls: ['./app.component.css']
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'SchoolHelp';
 
-  constructor() {
+  constructor(private userservice: UserService) {
 
+  }
+  ngOnInit(){
+    // this.userservice.autoAuthUser();
   }
 }

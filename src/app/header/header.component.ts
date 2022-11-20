@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CurrentUserService } from '../service/currentUser.service';
-
+import { UserService } from '../service/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,14 +14,14 @@ export class HeaderComponent implements OnInit {
   userRole = false;
   adminRole = false;
   volunteerRole = false;
-constructor(private currentUserService: CurrentUserService){}
+constructor(private userService: UserService){}
 
 ngOnInit(){
-  this.authListenerSubs = this.currentUserService.getAuthStatusListener()
-  .subscribe(
-    isAuthenticated=>{
-      this.userIsAuthenticated = isAuthenticated;
-    });
+  // this.authListenerSubs = this.userService.getAuthStatusListener()
+  // .subscribe(
+  //   isAuthenticated=>{
+  //     this.userIsAuthenticated = isAuthenticated;
+  //   });
 
 
 
@@ -30,14 +29,17 @@ ngOnInit(){
 
 };
 
-isLogin(){
-  return this.currentUserService.getLoginStatus();
-}
+// isLogin(){
+//   return this.currentUserService.getLoginStatus();
+// }
 
-logout(){
-  this.currentUserService.logout();
-  console.log('logout');
-  return;
+// logout(){
+//   this.currentUserService.logout();
+//   console.log('logout');
+//   return;
+// }
+ngOnDestroy(){
+  this.authListenerSubs.unsubscribe();
 }
 onViewUsername(username: string){
   this.username = username;

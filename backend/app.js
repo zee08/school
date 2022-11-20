@@ -9,6 +9,7 @@ const checkAuth = require('./middleware/check-auth');
 const app = express()
 const Resource = require('./models/resource');
 const Tutorial = require('./models/tutorial');
+const Request = require('./models/request');
 
 mongoose.connect("mongodb+srv://max:DDu31mUET1tPviXQ@cluster0.losl7ri.mongodb.net/school-help?retryWrites=true&w=majority")
 .then(() =>{
@@ -41,8 +42,9 @@ app.post("/api/users",(req, res, next)=>{
         position: req.body.position,
         dateofbirth: req.body.dateofbirth,
         staffid: req.body.staffid,
-        schoolID: req.body.schoolID,
         schoolname: req.body.schoolname,
+        schoolID: req.body.schoolID,
+        city:req.body.city,
         role: req.body.role,
 
       });
@@ -123,8 +125,9 @@ app.post("/api/users",(req, res, next)=>{
               position: fetchedUser.position,
               dateofbirth: fetchedUser.dateofbirth,
               staffid: fetchedUser.staffid,
-              schoolID: fetchedUser.schoolID,
               schoolname: fetchedUser.schoolname,
+              schoolID: fetchedUser.schoolID,
+              city: fetchedUser.city,
               role: fetchedUser.role,
 
             },
@@ -143,33 +146,100 @@ app.post("/api/users",(req, res, next)=>{
         })
     })
 
-    app.post("/api/resources", (req, res, next)=>{
-      const resources = new Resource({
-        resID: req.body.resID,
-        description: req.body.description,
-        quantity: req.body.quantity,
-        resourceType: req.body.resourceType,
-        school: req.body.school,
-        status: req.body.status
-      });
-      resources.save().then(createdResource => {
-        console.log(resources)
-        res.status(200).json({
-          message: 'Resources added success',
-          resId: createdResource._id
-        });
-      });
+    // app.post("/api/resources", (req, res, next)=>{
+    //   const resources = new Resource({
+    //     resID: req.body.resID,
+    //     description: req.body.description,
+    //     quantity: req.body.quantity,
+    //     resourceType: req.body.resourceType,
+    //     school: req.body.school,
+    //     status: req.body.status
+    //     //creator: req.userData.userId
+    //   });
+    //   resources.save().then(createdResource => {
+    //     console.log(resources)
+    //     res.status(200).json({
+    //       message: 'Resources added success',
+    //       resourceId: createdResource._id
+    //     });
+    //   });
 
-    });
+    // });
 
-    app.get('/api/resources', (req,res,next)=>{
-      Resource.find().then(documents =>{
-        res.status(200).json({
-          message: 'Resources fetched success',
-          resources:documents
-        });
+    // app.get('/api/resources', (req,res,next)=>{
+    //   Resource.find().then(documents =>{
+    //     res.status(200).json({
+    //       message: 'Resources fetched success',
+    //       resources:documents
+    //     });
+    //   })
+    // });
+app.post('/api/requests', (req,res, next)=>{
+  const request = new Request({
+    description: req.body.description,
+    quantity:req.body.quantity,
+  resourceType:req.body.resourceType,
+  tutDescription:req.body.tutDescription,
+  tutdate:req.body.tutdate,
+  time:req.body.time,
+  studentLevel: req.body.studentLevel,
+   numOfStudents: req.body.numOfStudents,
+   reqDate:req.body.reqDate,
+   schoolname:req.body.schoolname,
+   schoolID:req.body.schoolID,
+   city:req.body.city,
+   status: req.body.status,
+    remarks:req.body.remarks,
+  reqType:req.body.reqType,
+  });
+  request.save();
+  console.log(request);
+  res.status(201).json({
+    message:'request add'
+  });
+});
+app.get('/api/requests', (req, res, next) => {
+  Request.find().then(documents => {
+      res.status(200).json({
+          message: "Request fetched successfully",
+          requests: documents
       })
+  })
+});
+app.put("/api/requests/:reqID", (req, res, next)=>{
+  const request = new Request({
+    _id: req.body.reqID,
+    description: req.body.description,
+    quantity:req.body.quantity,
+  resourceType:req.body.resourceType,
+  tutDescription:req.body.tutDescription,
+  tutdate:req.body.tutdate,
+  time:req.body.time,
+  studentLevel: req.body.studentLevel,
+   numOfStudents: req.body.numOfStudents,
+   reqDate:req.body.reqDate,
+   schoolname:req.body.schoolname,
+   schoolID:req.body.schoolID,
+   city:req.body.city,
+   status: req.body.status,
+    remarks:req.body.remarks,
+  reqType:req.body.reqType,
+  });
+  Request.updateOne({_id:req.params.reqID}, request).then(result => {
+    console.log(result);
+    res.status(200).json({message: "request updated"});
+  });
+});
+    app.delete("/api/resources/:id", (req, res, next)=>{
+      Resource.deleteOne({_id:req.params.id}).then(result=>{
+        console.log(result);
+        res.status(200).json({
+          message:"Resource deleted!"
+        });
+      });
     });
+
+
     app.post("/api/tutorials", (req, res, next)=>{
       const tutorials = new Tutorial({
         tutID: req.body.tutID,
