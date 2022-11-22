@@ -10,12 +10,19 @@
 // import { UserService } from 'src/app/service/user.service';
 // import { Router } from '@angular/router';
 // import { Tutorial } from 'src/app/model/resource.model';
-import {Component, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, OnInit} from '@angular/core';
 import {Sort, MatSort} from '@angular/material/sort';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource} from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-
+import { ReqService } from 'src/app/service/request.service';
+import { Request } from 'src/app/model/resource.model';
+import {Subscription} from 'rxjs'
+import { User } from 'src/app/model/user.model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CurrentUserService } from 'src/app/service/currentUser.service';
+import { Offer } from 'src/app/model/offer.model';
+import { OfferService } from 'src/app/service/offer.service';
 
 @Component({
   selector: 'app-view-offer',
@@ -30,184 +37,79 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
   ],
 })
 
-export class ViewOfferComponent implements AfterViewInit {
-  //dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['id', 'date', 'status', 'action'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+export class ViewOfferComponent implements OnInit {
+  requests : Request[] =[];
+  users : User[]=[];
+  offers:Offer[]=[];
+  private requestsSub: Subscription | undefined;
+  private usersSub: Subscription | undefined;
+  private offerSub: Subscription | undefined;
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  dataSource!: MatTableDataSource<Request>;
+  constructor(public dialog: MatDialog, public reqService:ReqService, public offerService:OfferService){
   }
 
-  /** Announce the change in sort state for assistive technology. */
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+  displayedColumns: string[] = ['Description','School Name', 'City'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  expandedElement!: Request | null;
+
+  ngOnInit(){
+    this.reqService.getUsers();
+    this.usersSub = this.reqService.getUserUpdateListener().subscribe((users: User[])=>{
+      this.users = users;
+    })
+
+    this.reqService.getRequest();
+    this.requestsSub = this.reqService.getRequestUpdateListener().subscribe((requests: Request[])=>{
+      this.requests = requests;
+
+      this.dataSource = new MatTableDataSource(requests);
+
+    });
+
+    this.offerService.getOffers();
+    this.offerSub = this.reqService.getOfferUpdateListener().subscribe((offers:Offer[])=>{
+      this.offers = offers;
+
+    })
   }
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement: PeriodicElement | null;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openAcceptOfferDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(AcceptOfferDialogComponent, {
+      width: '400px',
+
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+  openCloseOfferDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CloseOfferDialogComponent, {
+      width: '400px',
+
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+}
+@Component({
+  selector: 'accept-offer-dialog',
+  templateUrl: 'accept-offer-dialog.component.html',
+})
+
+export class AcceptOfferDialogComponent {
+  constructor(public dialogRef: MatDialogRef<AcceptOfferDialogComponent>) {}
 }
 
+@Component({
+  selector: 'close-offer-dialog',
+  templateUrl: 'admin-approved.component.html',
+})
 
-export interface PeriodicElement {
-  date: string;
-  id: number;
-  status: string;
-  edit: string;
-  offerdate: string,
-  remarks: string,
-  name: string,
-  age: number,
-  occupation: string,
+export class CloseOfferDialogComponent {
+  constructor(public dialogRef: MatDialogRef<CloseOfferDialogComponent>) {}
 }
 
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    id: 1,
-    date: '4/10/2022',
-    status: 'PENDING',
-    edit: 'edit',
-    offerdate: '6/10/2022',
-    remarks:'HP laptp, 8 GB',
-    name: 'James',
-    age: 22,
-    occupation: 'student',
-  },
-  {
-    id: 2,
-    date: '5/10/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '8/10/2022',
-    remarks:'Math class, IGCSE level',
-    name: 'Alina',
-    age: 29,
-    occupation: 'teacher',
-  },
-  {
-    id: 3,
-    date: '5/10/22',
-    edit: 'edit',
-    status: 'NEW',
-    offerdate: '10/10/2022',
-    remarks:'Mobile devices: android',
-    name: 'Kim',
-    age: 23,
-    occupation: 'student',
-  },
-  {
-    id: 4,
-    date: '8/10/2022',
-    edit: 'edit',
-    status: 'COMPLETE',
-    offerdate: '12/10/2022',
-    remarks:'Netwroking Device',
-    name: 'Maria',
-    age: 32,
-    occupation: 'Business',
-  },
-  {
-    id: 5,
-    date: '10/10/2022',
-    edit: 'edit',
-    status: 'CLOSED',
-    offerdate: '6/10/2022',
-    remarks:'DELL laptop',
-    name: 'ALi',
-    age: 22,
-    occupation: 'student',
-  },
-  {
-    id: 6,
-    date: '1/11/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '10/10/2022',
-    remarks:'Desktop monitors',
-    name: 'Alina',
-    age: 28,
-    occupation: 'Accountant',
-  },
-  {
-    id: 7,
-    date: '20/22/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '30/10/2022',
-    remarks:'Economics Alevel',
-    name: 'Jennifer',
-    age: 30,
-    occupation: 'Teacher',
-  },
-  {
-    id: 8,
-    date: '1/10/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '6/10/2022',
-    remarks:'HP laptp, 8 GB',
-    name: 'andrew',
-    age: 19,
-    occupation: 'student',
-  },
-  {
-    id: 9,
-    date: '30/9/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '1/10/2022',
-    remarks:'English Language',
-    name: 'Maria',
-    age: 30,
-    occupation: 'Lecturer',
-  },
-  {
-    id: 10,
-    date: '11/10/2022',
-    edit: 'edit',
-    status: 'PENDING',
-    offerdate: '12/10/2022',
-    remarks:'HP laptp, 8 GB',
-    name: 'James',
-    age: 25,
-    occupation: 'student',
-  },
-];
-//   sortData(sort: Sort) {
-//     const data = this.desserts.slice();
-//     if (!sort.active || sort.direction === '') {
-//       this.sortedData = data;
-//       return;
-//     }
-
-//     this.sortedData = data.sort((a, b) => {
-//       const isAsc = sort.direction === 'asc';
-//       switch (sort.active) {
-//         case 'id':
-//           return compare(a.id, b.id, isAsc);
-//         case 'status':
-//           return compare(a.status, b.status, isAsc);
-//         case 'date':
-//           return compare(a.date, b.date, isAsc);
-//         default:
-//           return 0;
-//       }
-//     });
-//   }
-
-
-
-// function compare(a: number | string, b: number | string, isAsc: boolean) {
-//   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-// }

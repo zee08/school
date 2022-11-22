@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const requestSchema = mongoose.Schema({
+  reqID:{type:String, require:true},
   description: {type:String, require:true},
   quantity:{type:Number, require:true},
   resourceType:{type:String, require:true},
@@ -16,6 +17,7 @@ const requestSchema = mongoose.Schema({
    status: {type:String, require:true},
     remarks:{type:String, require:true},
   reqType:{type:String, require:true},
+  username:{type:String, require:true}
 });
 
 module.exports = mongoose.model('Request', requestSchema);

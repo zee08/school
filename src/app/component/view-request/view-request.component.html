@@ -3,18 +3,25 @@
 <mat-tab-group>
 
   <mat-tab label="By school">
-    <section>
+
+
+
+
+    <!-- <section>
+      <mat-form-field appearance="standard" class="filter">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
 
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
 
-          <!-- Position Column -->
-
+          <!-- Position Column
           <ng-container matColumnDef="Description">
               <th mat-header-cell *matHeaderCellDef style="width: 400px;">
                   <mat-icon>description</mat-icon>
                   <span class="aligned-with-icon">Description</span> </th>
               <td mat-cell *matCellDef="let element">
-                  <div *ngIf='element.reqType=== "Tutorial"'>{{element.tutDescription}} </div>
+                  <div *ngIf='element.reqType === "Tutorial"'>{{element.tutDescription}} </div>
                   <div *ngIf='element.reqType === "Resource"'>{{element.description}} </div>
               </td>
           </ng-container>
@@ -23,19 +30,120 @@
                   <mat-icon>school</mat-icon>
                   <span class="aligned-with-icon">School</span>
               </th>
-              <td mat-cell *matCellDef="let element"><b>{{element.schoolname}}</b> </td>
+              <td mat-cell *matCellDef="let element">
+                  <div *ngIf="school.length > 0">
+                      <div *ngFor="let schools of school">
+                          <div *ngIf="element.schoolname==schools.schoolname">{{schools.schoolname}}</div>
+                      </div>
+                  </div>
+              </td>
           </ng-container>
 
           <ng-container matColumnDef="City">
               <th mat-header-cell *matHeaderCellDef style="width: 250px;">
                   <mat-icon>location_city</mat-icon>
+                  <span class="aligned-with-icon ">City</span></th>
+              <td mat-cell *matCellDef="let element">
+                  <div *ngIf="school.length > 0">
+                      <div *ngFor="let schools of school">
+                          <div *ngIf="element.schoolname==schools.schoolname">{{schools.city}}</div>
+                      </div>
+                  </div>
+              </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+              <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+
+              <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns
+          <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                  <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                      <div *ngIf='element.reqType === "Tutorial"'>
+                          <div>
+                              <p style="margin-left: 0;">Date: {{element.tutDate.slice(0,10)}}</p>
+                          </div>
+                          <div>
+                              <p style="margin-left: 0;">Time: {{element.time.slice(11,19)}}</p>
+                          </div>
+                          <div>
+                              <p style="margin-left: 0;">Student Level: {{element.studentLevel}}</p>
+                          </div>
+
+                          <div>
+                              <p style="margin-left: 0;">Number of student: {{element.numOfStudents}}</p>
+                          </div>
+                      </div>
+                      <div *ngIf='element.reqType === "Resource"'>
+                          <div>
+                              <p style="margin-left: 0;">Resource type: {{element.resourceType}}</p>
+                          </div>
+                          <div>
+                              <p style="margin-left: 0;">Number required: {{element.quantity}}</p>
+                          </div>
+                      </div>
+                      <br>
+                      <hr>
+                      <mat-action-row style="float: left;">
+                          <br>
+                          <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog('0ms', '0ms')">Submit Offer</button>
+                          <p><br></p>
+                      </mat-action-row>
+                  </div>
+              </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          <!-- Row shown when there is no matching data. -->
+          <!--<tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+      </table>
+  </section> -->
+    <section>
+
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+
+
+          <ng-container matColumnDef="Description">
+              <th mat-header-cell *matHeaderCellDef style="width: 400px;">
+
+                  <span class="aligned-with-icon">Description</span> </th>
+              <td mat-cell *matCellDef="let element">
+                  <div *ngIf='element.reqType=== "Tutorial"'>{{element.tutDescription}} </div>
+                  <div *ngIf='element.reqType === "Resource"'>{{element.description}} </div>
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="School Name">
+              <th mat-header-cell *matHeaderCellDef style="width: 250px;">
+
+                  <span class="aligned-with-icon">School</span>
+              </th>
+              <td mat-cell *matCellDef="let element"> <b>{{element.schoolname}}</b> </td>
+
+
+          </ng-container>
+
+          <ng-container matColumnDef="City">
+              <th mat-header-cell *matHeaderCellDef style="width: 250px;">
+
                   <span class="aligned-with-icon ">Status</span></th>
               <td mat-cell *matCellDef="let element"> {{element.status}} </td>
           </ng-container>
 
           <ng-container matColumnDef="Resource Type">
             <th mat-header-cell *matHeaderCellDef style="width: 400px;">
-                <mat-icon>description</mat-icon>
+
                 <span class="aligned-with-icon">Resource Type</span> </th>
             <td mat-cell *matCellDef="let element">
                 <div *ngIf='element.reqType=== "Tutorial"'>{{element.reqType}} </div>
@@ -54,7 +162,7 @@
               </td>
           </ng-container>
 
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+
           <ng-container matColumnDef="expandedDetail">
               <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
                   <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
@@ -71,6 +179,9 @@
                           <div>
                               <p style="margin-left: 0;">Number of student: {{element.numOfStudents}}</p>
                           </div>
+                          <div>
+                            <p style="margin-left: 0;">Number of student: {{element.enterremarks}}</p>
+                        </div>
                       </div>
                       <div *ngIf='element.reqType === "Resource"'>
                           <div>
@@ -79,12 +190,15 @@
                           <div>
                               <p style="margin-left: 0;">Number required: {{element.quantity}}</p>
                           </div>
+                          <div>
+                            <p style="margin-left: 0;">Remarks: {{element.remarks}}</p>
+                        </div>
                       </div>
                       <br>
                       <hr>
                       <mat-action-row style="float: left;">
                           <br>
-                          <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog('0ms', '0ms')">Select Request</button>
+                          <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog()">Select Request</button>
                           <p><br></p>
                       </mat-action-row>
                   </div>
@@ -94,7 +208,7 @@
           <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-          <!-- Row shown when there is no matching data. -->
+
 
       </table>
   </section>
@@ -114,7 +228,7 @@
 
         <ng-container matColumnDef="Description">
             <th mat-header-cell *matHeaderCellDef style="width: 400px;">
-                <mat-icon>description</mat-icon>
+
                 <span class="aligned-with-icon">Description</span> </th>
             <td mat-cell *matCellDef="let element">
                 <div *ngIf='element.reqType=== "Tutorial"'>{{element.tutDescription}} </div>
@@ -123,7 +237,7 @@
         </ng-container>
         <ng-container matColumnDef="School Name">
             <th mat-header-cell *matHeaderCellDef style="width: 250px;">
-                <mat-icon>city</mat-icon>
+
                 <span class="aligned-with-icon">City</span>
             </th>
             <td mat-cell *matCellDef="let element"> <b>{{element.city}}</b> </td>
@@ -131,14 +245,14 @@
 
         <ng-container matColumnDef="City">
             <th mat-header-cell *matHeaderCellDef style="width: 250px;">
-                <mat-icon>location_city</mat-icon>
+
                 <span class="aligned-with-icon ">Status</span></th>
             <td mat-cell *matCellDef="let element"> {{element.status}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Resource Type">
           <th mat-header-cell *matHeaderCellDef style="width: 400px;">
-              <mat-icon>description</mat-icon>
+
               <span class="aligned-with-icon">Resource Type</span> </th>
           <td mat-cell *matCellDef="let element">
               <div *ngIf='element.reqType=== "Tutorial"'>{{element.reqType}} </div>
@@ -174,6 +288,9 @@
                         <div>
                             <p style="margin-left: 0;">Number of student: {{element.numOfStudents}}</p>
                         </div>
+                        <div>
+                          <p style="margin-left: 0;">Remarks: {{element.remarks}}</p>
+                      </div>
                     </div>
                     <div *ngIf='element.reqType === "Resource"'>
                         <div>
@@ -182,14 +299,17 @@
                         <div>
                             <p style="margin-left: 0;">Number required: {{element.quantity}}</p>
                         </div>
+                        <div>
+                          <p style="margin-left: 0;">Remarks: {{element.remarks}}</p>
+                      </div>
                     </div>
                     <br>
                     <hr>
                     <mat-action-row style="float: left;">
-                        <br>
-                        <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog('0ms', '0ms')">Select Request</button>
-                        <p><br></p>
-                    </mat-action-row>
+                      <br>
+                      <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog()">Select Request</button>
+                      <p><br></p>
+                  </mat-action-row>
                 </div>
             </td>
         </ng-container>
@@ -211,7 +331,7 @@
 
         <ng-container matColumnDef="Description">
             <th mat-header-cell *matHeaderCellDef style="width: 400px;">
-                <mat-icon>description</mat-icon>
+
                 <span class="aligned-with-icon">Description</span> </th>
             <td mat-cell *matCellDef="let element">
                 <div *ngIf='element.reqType=== "Tutorial"'>{{element.tutDescription}} </div>
@@ -220,7 +340,7 @@
         </ng-container>
         <ng-container matColumnDef="School Name">
             <th mat-header-cell *matHeaderCellDef style="width: 250px;">
-                <mat-icon>date</mat-icon>
+
                 <span class="aligned-with-icon">Date</span>
             </th>
             <td mat-cell *matCellDef="let element"><b>{{element.reqDate.slice(0,10)}}</b> </td>
@@ -228,14 +348,14 @@
 
         <ng-container matColumnDef="City">
             <th mat-header-cell *matHeaderCellDef style="width: 250px;">
-                <mat-icon>location_city</mat-icon>
+
                 <span class="aligned-with-icon ">Status</span></th>
             <td mat-cell *matCellDef="let element"> {{element.status}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Resource Type">
           <th mat-header-cell *matHeaderCellDef style="width: 400px;">
-              <mat-icon>description</mat-icon>
+
               <span class="aligned-with-icon">Resource Type</span> </th>
           <td mat-cell *matCellDef="let element">
               <div *ngIf='element.reqType=== "Tutorial"'>{{element.reqType}} </div>
@@ -254,6 +374,7 @@
             </td>
         </ng-container>
 
+
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
@@ -271,6 +392,9 @@
                         <div>
                             <p style="margin-left: 0;">Number of student: {{element.numOfStudents}}</p>
                         </div>
+                        <div>
+                          <p style="margin-left: 0;">Remarks: {{element.remarks}}</p>
+                      </div>
                     </div>
                     <div *ngIf='element.reqType === "Resource"'>
                         <div>
@@ -279,14 +403,17 @@
                         <div>
                             <p style="margin-left: 0;">Number required: {{element.quantity}}</p>
                         </div>
+                        <div>
+                          <p style="margin-left: 0;">Remarks: {{element.remarks}}</p>
+                      </div>
                     </div>
                     <br>
                     <hr>
                     <mat-action-row style="float: left;">
-                        <br>
-                        <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog('0ms', '0ms')">Select Request</button>
-                        <p><br></p>
-                    </mat-action-row>
+                      <br>
+                      <button mat-button color="primary" mat-raised-button color="accent" mat-button (click)="openDialog()">Select Request</button>
+                      <p><br></p>
+                  </mat-action-row>
                 </div>
             </td>
         </ng-container>

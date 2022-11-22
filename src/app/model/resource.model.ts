@@ -14,7 +14,8 @@ export interface Request{
   // requestdate: Date;
   // remarks: string;
   // volunteerName: string;
-  reqID: String;
+  id: string;
+  reqID:String;
   description:String;
   quantity: number;
   resourceType:String;
@@ -29,5 +30,6 @@ export interface Request{
   city:String,
   status: String;
   remarks:String;
-  reqType:String
+  reqType:String;
+  username:String;
 }

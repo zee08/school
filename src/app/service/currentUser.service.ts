@@ -133,6 +133,7 @@ getCity(){
 
       if (!this.isAdmin()){
           this.router.navigate(['/volunteer/home']);
+          console.log(this.getUser())
           return;
         }
       else if(this.isAdmin()){

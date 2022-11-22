@@ -1,13 +1,10 @@
 export interface Offer{
   id: String;
   offerID: String;
-  resource: String;
-  Tutorial: String;
-  school: String;
-  user: String;
+  request:String;
+  offerDate:Date;
+  username: String;
   status: String;
-  remark: String;
-  
-
+  remarks: String;
 
 }

@@ -69,6 +69,7 @@ import { SubmitRequestComponent } from './component/volunteer-submit-request/sub
 import { AuthInterceptor } from 'src/app/auth/auth-interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { RequestDialogComponent } from './component/view-request/view-request.component';
+import { AcceptOfferDialogComponent } from './component/view-offer/view-offer.component';
 @NgModule({
   declarations: [
 
@@ -89,7 +90,8 @@ LoginComponent,
     VolunteerSchoolComponent,
     RequestDialogComponent,
     ViewRequestComponent,
-    //SubmitRequestComponent,
+    SubmitRequestComponent,
+    AcceptOfferDialogComponent,
 
 
   ],

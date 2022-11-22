@@ -10,7 +10,8 @@ const app = express()
 const Resource = require('./models/resource');
 const Tutorial = require('./models/tutorial');
 const Request = require('./models/request');
-
+const Offer = require('./models/offer');
+const offer = require('./models/offer');
 mongoose.connect("mongodb+srv://max:DDu31mUET1tPviXQ@cluster0.losl7ri.mongodb.net/school-help?retryWrites=true&w=majority")
 .then(() =>{
   console.log('Connected to database');
@@ -176,6 +177,7 @@ app.post("/api/users",(req, res, next)=>{
     // });
 app.post('/api/requests', (req,res, next)=>{
   const request = new Request({
+    reqID:req.body.reqID,
     description: req.body.description,
     quantity:req.body.quantity,
   resourceType:req.body.resourceType,
@@ -191,12 +193,16 @@ app.post('/api/requests', (req,res, next)=>{
    status: req.body.status,
     remarks:req.body.remarks,
   reqType:req.body.reqType,
+  username:req.body.username,
   });
-  request.save();
-  console.log(request);
-  res.status(201).json({
-    message:'request add'
+  request.save().then(createdRequest =>{
+    console.log(request)
+    res.status(200).json({
+      message: 'Request added',
+      reqId: createdRequest._id
+    });
   });
+
 });
 app.get('/api/requests', (req, res, next) => {
   Request.find().then(documents => {
@@ -206,9 +212,10 @@ app.get('/api/requests', (req, res, next) => {
       })
   })
 });
-app.put("/api/requests/:reqID", (req, res, next)=>{
+app.put("/api/requests/:id", (req, res, next)=>{
   const request = new Request({
-    _id: req.body.reqID,
+    _id: req.body.id,
+    reqID: req.body.reqID,
     description: req.body.description,
     quantity:req.body.quantity,
   resourceType:req.body.resourceType,
@@ -224,17 +231,33 @@ app.put("/api/requests/:reqID", (req, res, next)=>{
    status: req.body.status,
     remarks:req.body.remarks,
   reqType:req.body.reqType,
+  username: req.body.username
+
   });
-  Request.updateOne({_id:req.params.reqID}, request).then(result => {
+  Request.updateOne({_id:req.params.id}, request).then(result => {
     console.log(result);
     res.status(200).json({message: "request updated"});
   });
 });
-    app.delete("/api/resources/:id", (req, res, next)=>{
-      Resource.deleteOne({_id:req.params.id}).then(result=>{
+
+app.get("/api/requests/:id",(req, res, next)=>{
+  requestmodel.findById(req.params.id).then(request =>{
+    if(request){
+      res.status(200).json(request);
+    }else{
+      res.status(484).json({message: 'Post not Found!'});
+    }
+  });
+});
+
+
+
+
+    app.delete("/api/requests/:id", (req, res, next)=>{
+      Request.deleteOne({_id:req.params.id}).then(result=>{
         console.log(result);
         res.status(200).json({
-          message:"Resource deleted!"
+          message:"Request deleted!"
         });
       });
     });
@@ -310,4 +333,30 @@ app.get('/api/schools',(req,res,next)=>{
   })
 });
 
+app.post("/api/offers", (req,res,next)=>{
+  const offer = new Offer({
+    offerID: req.body.offerID,
+    offerDate:req.body.offerDate,
+    request:req.body.request,
+    username: req.body.username,
+    status: req.body.status,
+    remarks: req.body.remarks
+  });
+  offer.save().then(createdOffer =>{
+    console.log(offer)
+    res.status(200).json({
+      message: 'offer added',
+      offerId: createdOffer._id
+    });
+  });
+
+});
+app.get('/api/offers', (req,res,next)=>{
+  offer.find().then(documents =>{
+    res.status(200).json({
+      message: 'offer fetched',
+      offer:documents
+    });
+  })
+});
 module.exports = app;

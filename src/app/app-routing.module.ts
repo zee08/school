@@ -12,6 +12,7 @@ import { VolunteerHomeComponent } from './component/volunteer-home/volunteer-hom
 import { ViewRequestComponent } from './component/view-request/view-request.component';
 import { VolunteerSchoolComponent } from './component/volunteer-school/volunteer-school.component';
 import { SubmitRequestComponent } from './component/volunteer-submit-request/submit-request.component';
+import { RequestDialogComponent } from './component/view-request/view-request.component';
 // import { AuthGuard } from 'src/app/auth/auth.guard';
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
     children:[
       {path:'home',component:AdminHomeComponent},
       {path:'request', component:AdminRequestComponent},
-      {path:'request/:resname/resources', component:RequestInfoComponent},
+      {path:'request/:resname/resources', component:AdminRequestComponent},
       {path:'offer', component:ViewOfferComponent},
       {path:'offer/:resname/:resourceID', component:ViewOfferComponent},
 
@@ -36,6 +37,7 @@ const routes: Routes = [
       //{path: 'request/schools/:resname/:schoolID', component:},
       {path:'request', component:ViewRequestComponent},
       {path:'request/schools/:resname', component: VolunteerSchoolComponent},
+      {path: 'request/:reqId', component: ViewRequestComponent},
       {path:'submit', component:SubmitRequestComponent},
       {path:'request/schools/:tutorial', component:VolunteerSchoolComponent},
 

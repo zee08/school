@@ -122,7 +122,7 @@ import { User } from "src/app/model/user.model";
 import { UserService } from "src/app/service/user.service";
 import { CurrentUserService } from "src/app/service/currentUser.service";
 import { NgForm } from "@angular/forms";
-import { AccService } from "src/app/service/account.service";
+import { ReqService } from "src/app/service/request.service";
 import { Request } from 'src/app/model/resource.model';
 import { Subscription } from 'rxjs';
 @Component({
@@ -133,17 +133,18 @@ import { Subscription } from 'rxjs';
 
   export class AdminRequestComponent implements OnInit{
 requests:Request[]=[];
+request:Request;
     resourceType:any;
     user:User;
     currentUser:any;
 
     private requestSub:Subscription | undefined;
 
-    constructor(private accService:AccService, public userService:UserService,
+    constructor(private reqService:ReqService, public userService:UserService,
       public currentService:CurrentUserService){}
 ngOnInit(): void {
-  this.accService.getRequest();
-  this.requestSub = this.accService.getRequestUpdateListener()
+  this.reqService.getRequest();
+  this.requestSub = this.reqService.getRequestUpdateListener()
   .subscribe((requests: Request[])=>{
     this.requests = requests;
 
@@ -160,18 +161,18 @@ onAddResource(form:NgForm){
   var today = new Date();
   form.value.schoolname = this.currentService.getSchoolname();
   form.value.city = this.currentService.getCity();
-  this.accService.AddRequest(form.value.description, form.value.quantity, form.value.resourceType, form.value.tutDescription, form.value.tutdate, form.value.time, form.value.studentLevel, form.value.numOfStudents, form.value.reqDate, form.value.schoolname, form.value.schoolID, form.value.city, form.value.status='New', form.value.remarks, form.value.reqType='Resource')
+  this.reqService.AddRequest(form.value.reqID,form.value.description, form.value.quantity, form.value.resourceType, form.value.tutDescription, form.value.tutdate, form.value.time, form.value.studentLevel, form.value.numOfStudents, form.value.reqDate, form.value.schoolname, form.value.schoolID, form.value.city, form.value.status='New', form.value.remarks, form.value.reqType='Resource', form.value.userVolunteer)
 
 }
 
 onAddTutorial(form:NgForm){
-  if (form.invalid){
-    return;
-  }
-
+  if (form.invalid)
   form.value.schoolname = this.currentService.getSchoolname();
   form.value.city = this.currentService.getCity();
-  this.accService.AddRequest(form.value.description, form.value.quantity, form.value.resourceType, form.value.tutDescription, form.value.tutdate, form.value.time, form.value.studentLevel, form.value.numOfStudents, form.value.reqDate, form.value.schoolname, form.value.schoolID,form.value.city, form.value.status='New', form.value.remarks, form.value.reqType='Tutorial')
-
+  this.reqService.AddRequest(form.value.reqID,form.value.description, form.value.quantity, form.value.resourceType, form.value.tutDescription, form.value.tutdate, form.value.time, form.value.studentLevel, form.value.numOfStudents, form.value.reqDate, form.value.schoolname, form.value.schoolID,form.value.city, form.value.status='New', form.value.remarks, form.value.reqType='Tutorial', form.value.userVolunteer)
 }
+  onDelete(reqId: string){
+    this.reqService.deleteResource(reqId);
   }
+}
+
