@@ -76,15 +76,7 @@ export class ReqService{ //Create a account class
       this.offerUpdated.next([...this.offer]);
     })
   }
-  // addSchool(schoolname: string, schooladdress: string, city: string){ // method to add account with arguments
-  //   const school: School = {schoolID: null as any, schoolname: schoolname, address: schooladdress, city:city}
-  //   this.http
-  //   .post<{message: string}>('http://localhost:3000/api/schools',school)
-  //   .subscribe((responsedata)=>{
-  //     this.school.push(school);
-  //     this.schoolsUpdated.next([...this.school]);
-  //   })
-  // }
+
 
 
 

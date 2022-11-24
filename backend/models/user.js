@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const jwt = require('jsonwebtoken');
-const _ = require('lodash');
-const crypto = require('crypto');
-const bcrypt = require('bcrypt');
-const school = require('./school');
 
 const userSchema = mongoose.Schema({
   userID: {type: String,  require: true},
